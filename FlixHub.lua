@@ -188,92 +188,92 @@ local ScriptDatabase = {
         {
             name = "Infinite Yield",
             description = "Admin commands script with tons of features",
-            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source')()"]]
+            script = loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
         },
         {
             name = "Dark Dex V3",
             description = "Advanced explorer for Roblox games",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true)()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()]]
         },
         {
             name = "Simple Spy",
             description = "Remote spy for debugging and scripting",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/master/SimpleSpy.lua")()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/master/SimpleSpy.lua"))()]]
         },
         {
             name = "Universal ESP",
             description = "See players through walls",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua")()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua"))()]]
         },
         {
             name = "Chat Spammer",
             description = "Spam chat with custom messages",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/koonpeatch/PeatEX/master/SLPRM"))()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/koonpeatch/PeatEX/master/SLPRM"))()]]
         }
     },
     ["Arsenal"] = {
         {
             name = "Arsenal Aimbot",
             description = "Aimbot and ESP for Arsenal",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/thaibao/main/TbaoHubArsenal"()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/thaibao/main/TbaoHubArsenal"))()]]
         },
         {
             name = "Arsenal GUI",
             description = "Full Arsenal hack GUI",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/CriShoux/OwlHub/master/OwlHub.txt"))()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/CriShoux/OwlHub/master/OwlHub.txt"))()]]
         }
     },
     ["Adopt Me"] = {
         {
             name = "Adopt Me GUI",
             description = "Auto farm and trading features",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/CF-Trail/tzechco-elysian/main/source.lua"()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/CF-Trail/tzechco-elysian/main/source.lua"))()]]
         },
         {
             name = "Adopt Me Duper",
             description = "Pet duplication script",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20Adopt%20Me.lua"))()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20Adopt%20Me.lua"))()]]
         }
     },
     ["Brookhaven"] = {
         {
             name = "Brookhaven GUI",
             description = "Teleports, speed, and more",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMael7/NewIceHub/main/Brookhaven"()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMael7/NewIceHub/main/Brookhaven"))()]]
         },
         {
             name = "Brookhaven RP",
             description = "Enhanced roleplay features",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors%20Entity%20Spawner/Source.lua"))()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors%20Entity%20Spawner/Source.lua"))()]]
         }
     },
     ["Blox Fruits"] = {
         {
             name = "Hoho Hub",
             description = "Premium Blox Fruits script",
-            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI'()"]]
+            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI'))()]]
         },
         {
             name = "Thunder Z",
             description = "Auto farm and raid script",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ThunderZ-05/HUB/main/Mobile-Loader"()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ThunderZ-05/HUB/main/Mobile-Loader"))()]]
         },
         {
             name = "Speed Hub X",
             description = "Fast auto farm script",
-            script = [[loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ahmadsgamer2/Script--Game/main/Script%20Game"))()"]]
+            script = [[loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ahmadsgamer2/Script--Game/main/Script%20Game"))()]]
         }
     },
     ["MM2"] = {
         {
             name = "MM2 Admin Panel",
             description = "Murder Mystery 2 hack GUI",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Doggo-cryto/EclipseMM2/master/Script", true()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Doggo-cryto/EclipseMM2/master/Script", true))()]]
         },
         {
             name = "MM2 ESP",
             description = "See murderer and sheriff",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/GamingScripter/DarkHub/main/MM2", true))()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/GamingScripter/DarkHub/main/MM2", true))()]]
         }
     }
 }
@@ -376,7 +376,12 @@ local function createScriptItem(scriptData, index)
         ExecuteButton.BackgroundColor3 = Color3.fromRGB(255, 150, 50)
         
         local success, error = pcall(function()
-            loadstring(scriptData.script)()
+            local func = loadstring(scriptData.script)
+            if func then
+                func()
+            else
+                error("Failed to load script")
+            end
         end)
         
         if success then
