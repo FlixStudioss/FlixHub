@@ -206,9 +206,9 @@ local ScriptDatabase = {
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua"))()]]
         },
         {
-            name = "Chat Spammer",
-            description = "Spam chat with custom messages",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/koonpeatch/PeatEX/master/SLPRM"))()]]
+            name = "Solara Hub",
+            description = "Really Good Scripts",
+            script = [[loadstring(game:HttpGet("https://pastebin.com/raw/ixdvHv2g"))()]]
         }
     },
     ["Grow A Garden"] = {
@@ -237,7 +237,7 @@ local ScriptDatabase = {
             script = [[loadstring(game:HttpGet("https://pastebin.com/raw/5ez3xPtJ"))()]]
         }
     },
-    ["The Strongest Battleground"] = {
+    ["Strongest Battle"] = {
         {
             name = "TSB Auto Farm",
             description = "Auto farm script for The Strongest Battleground",
