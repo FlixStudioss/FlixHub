@@ -222,6 +222,27 @@ local ScriptDatabase = {
             description = "Multi-purpose exploit hub",
             script = [[loadstring(game:HttpGet('https://api.exploitingis.fun/loader', true))()]]
         }
+    },
+    ["Poop Simulator"] = {
+        {
+            name = "AUTO Poop & AUTO Sell",
+            description = "Automatic pooping and selling features",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/sylolua/mine/refs/heads/main/Poop",true))()]]
+        }
+    },
+    ["Slippery Stairs"] = {
+        {
+            name = "INF CRYSTALS",
+            description = "Infinite crystals exploit",
+            script = [[loadstring(game:HttpGet("https://pastebin.com/raw/5ez3xPtJ"))()]]
+        }
+    },
+    ["The Strongest Battleground"] = {
+        {
+            name = "TSB Auto Farm",
+            description = "Auto farm script for The Strongest Battleground",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeCuree2/refs/heads/main/Zertex.lua"))()]]
+        }
     }
 }
 
@@ -413,21 +434,39 @@ end)
 local isMinimized = false
 MinimizeButton.MouseButton1Click:Connect(function()
     if not isMinimized then
-        -- Minimize
+        -- Minimize both MainFrame and Shadow
         local minimizeTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
             Size = UDim2.new(0, 700, 0, 40)
         })
+        local shadowMinimizeTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            Size = UDim2.new(1, 0, 1, 0)
+        })
         minimizeTween:Play()
+        shadowMinimizeTween:Play()
         isMinimized = true
         MinimizeButton.Text = "+"
+        
+        -- Hide other elements when minimized
+        SearchContainer.Visible = false
+        CategoryContainer.Visible = false
+        ScriptContainer.Visible = false
     else
-        -- Restore
+        -- Restore both MainFrame and Shadow
         local restoreTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
             Size = UDim2.new(0, 700, 0, 500)
         })
+        local shadowRestoreTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            Size = UDim2.new(1, 0, 1, 0)
+        })
         restoreTween:Play()
+        shadowRestoreTween:Play()
         isMinimized = false
         MinimizeButton.Text = "-"
+        
+        -- Show other elements when restored
+        SearchContainer.Visible = true
+        CategoryContainer.Visible = true
+        ScriptContainer.Visible = true
     end
 end)
 
