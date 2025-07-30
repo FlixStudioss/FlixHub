@@ -188,22 +188,22 @@ local ScriptDatabase = {
         {
             name = "Infinite Yield",
             description = "Admin commands script with tons of features",
-            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()"]]
+            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source')()"]]
         },
         {
             name = "Dark Dex V3",
             description = "Advanced explorer for Roblox games",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true)()"]]
         },
         {
             name = "Simple Spy",
             description = "Remote spy for debugging and scripting",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/master/SimpleSpy.lua"))()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/master/SimpleSpy.lua")()"]]
         },
         {
             name = "Universal ESP",
             description = "See players through walls",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua"))()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua")()"]]
         },
         {
             name = "Chat Spammer",
@@ -215,7 +215,7 @@ local ScriptDatabase = {
         {
             name = "Arsenal Aimbot",
             description = "Aimbot and ESP for Arsenal",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/thaibao/main/TbaoHubArsenal"))()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/thaibao/main/TbaoHubArsenal"()"]]
         },
         {
             name = "Arsenal GUI",
@@ -227,7 +227,7 @@ local ScriptDatabase = {
         {
             name = "Adopt Me GUI",
             description = "Auto farm and trading features",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/CF-Trail/tzechco-elysian/main/source.lua"))()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/CF-Trail/tzechco-elysian/main/source.lua"()"]]
         },
         {
             name = "Adopt Me Duper",
@@ -239,7 +239,7 @@ local ScriptDatabase = {
         {
             name = "Brookhaven GUI",
             description = "Teleports, speed, and more",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMael7/NewIceHub/main/Brookhaven"))()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMael7/NewIceHub/main/Brookhaven"()"]]
         },
         {
             name = "Brookhaven RP",
@@ -251,12 +251,12 @@ local ScriptDatabase = {
         {
             name = "Hoho Hub",
             description = "Premium Blox Fruits script",
-            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI'))()"]]
+            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI'()"]]
         },
         {
             name = "Thunder Z",
             description = "Auto farm and raid script",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ThunderZ-05/HUB/main/Mobile-Loader"))()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ThunderZ-05/HUB/main/Mobile-Loader"()"]]
         },
         {
             name = "Speed Hub X",
@@ -268,7 +268,7 @@ local ScriptDatabase = {
         {
             name = "MM2 Admin Panel",
             description = "Murder Mystery 2 hack GUI",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Doggo-cryto/EclipseMM2/master/Script", true))()"]]
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Doggo-cryto/EclipseMM2/master/Script", true()"]]
         },
         {
             name = "MM2 ESP",
