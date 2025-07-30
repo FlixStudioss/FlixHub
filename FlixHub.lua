@@ -188,7 +188,7 @@ local ScriptDatabase = {
         {
             name = "Infinite Yield",
             description = "Admin commands script with tons of features",
-            script = loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()]]
         },
         {
             name = "Dark Dex V3",
@@ -211,69 +211,16 @@ local ScriptDatabase = {
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/koonpeatch/PeatEX/master/SLPRM"))()]]
         }
     },
-    ["Arsenal"] = {
+    ["Grow A Garden"] = {
         {
-            name = "Arsenal Aimbot",
-            description = "Aimbot and ESP for Arsenal",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/thaibao/main/TbaoHubArsenal"))()]]
+            name = "No Lag",
+            description = "Reduces lag and improves performance",
+            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/NoLag-id/No-Lag-HUB/refs/heads/main/Garden/Garden-V1.lua'))()]]
         },
         {
-            name = "Arsenal GUI",
-            description = "Full Arsenal hack GUI",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/CriShoux/OwlHub/master/OwlHub.txt"))()]]
-        }
-    },
-    ["Adopt Me"] = {
-        {
-            name = "Adopt Me GUI",
-            description = "Auto farm and trading features",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/CF-Trail/tzechco-elysian/main/source.lua"))()]]
-        },
-        {
-            name = "Adopt Me Duper",
-            description = "Pet duplication script",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20Adopt%20Me.lua"))()]]
-        }
-    },
-    ["Brookhaven"] = {
-        {
-            name = "Brookhaven GUI",
-            description = "Teleports, speed, and more",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMael7/NewIceHub/main/Brookhaven"))()]]
-        },
-        {
-            name = "Brookhaven RP",
-            description = "Enhanced roleplay features",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors%20Entity%20Spawner/Source.lua"))()]]
-        }
-    },
-    ["Blox Fruits"] = {
-        {
-            name = "Hoho Hub",
-            description = "Premium Blox Fruits script",
-            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI'))()]]
-        },
-        {
-            name = "Thunder Z",
-            description = "Auto farm and raid script",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ThunderZ-05/HUB/main/Mobile-Loader"))()]]
-        },
-        {
-            name = "Speed Hub X",
-            description = "Fast auto farm script",
-            script = [[loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ahmadsgamer2/Script--Game/main/Script%20Game"))()]]
-        }
-    },
-    ["MM2"] = {
-        {
-            name = "MM2 Admin Panel",
-            description = "Murder Mystery 2 hack GUI",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Doggo-cryto/EclipseMM2/master/Script", true))()]]
-        },
-        {
-            name = "MM2 ESP",
-            description = "See murderer and sheriff",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/GamingScripter/DarkHub/main/MM2", true))()]]
+            name = "eF Hub",
+            description = "Multi-purpose exploit hub",
+            script = [[loadstring(game:HttpGet('https://api.exploitingis.fun/loader', true))()]]
         }
     }
 }
