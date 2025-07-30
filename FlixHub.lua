@@ -409,6 +409,20 @@ local ScriptDatabase = {
             description = "Auto farm script for The Strongest Battleground",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeCuree2/refs/heads/main/Zertex.lua"))()]]
         }
+    },
+    ["99 Nights Forest"] = {
+        {
+            name = "OP Auto Farm",
+            description = "Overpowered farming script for 99 Nights",
+            script = [[loadstring(game:HttpGet('https://api.exploitingis.fun/loader', true))()]]
+        }
+    },
+    ["Ink Game"] = {
+        {
+            name = "Auto Farm",
+            description = "Automated farming script for Ink Game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/hassanxzayn-lua/NEOXHUBMAIN/refs/heads/main/InkGame"))()]]
+        }
     }
 }
 
