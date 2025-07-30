@@ -24,8 +24,8 @@ MainFrame.Name = "MainFrame"
 MainFrame.Parent = FlixHub
 MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
 MainFrame.BorderSizePixel = 0
-MainFrame.Position = UDim2.new(0.5, -350, 0.5, -250)
-MainFrame.Size = UDim2.new(0, 700, 0, 500)
+MainFrame.Position = UDim2.new(0.5, -250, 0.5, -175)
+MainFrame.Size = UDim2.new(0, 500, 0, 350)
 MainFrame.Active = true
 MainFrame.Draggable = true
 
@@ -207,7 +207,7 @@ SettingsPanel.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
 SettingsPanel.BackgroundTransparency = 0.1
 SettingsPanel.BorderSizePixel = 0
 SettingsPanel.Position = UDim2.new(0.5, -150, 0.5, -100)
-SettingsPanel.Size = UDim2.new(0, 300, 0, 200)
+SettingsPanel.Size = UDim2.new(0, 300, 0, 220)
 SettingsPanel.Visible = false
 SettingsPanel.ZIndex = 10
 
@@ -223,7 +223,7 @@ SettingsShadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 SettingsShadow.BackgroundTransparency = 0.8
 SettingsShadow.BorderSizePixel = 0
 SettingsShadow.Position = UDim2.new(0.5, -145, 0.5, -95)
-SettingsShadow.Size = UDim2.new(0, 300, 0, 200)
+SettingsShadow.Size = UDim2.new(0, 300, 0, 220)
 SettingsShadow.Visible = false
 SettingsShadow.ZIndex = 9
 
@@ -257,14 +257,31 @@ SizeLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 SizeLabel.TextSize = 14
 SizeLabel.TextXAlignment = Enum.TextXAlignment.Left
 
+-- Very Small Size Button (Mobile)
+local VerySmallButton = Instance.new("TextButton")
+VerySmallButton.Name = "VerySmallButton"
+VerySmallButton.Parent = SettingsPanel
+VerySmallButton.BackgroundColor3 = Color3.fromRGB(75, 125, 255)  -- Highlighted as default
+VerySmallButton.BorderSizePixel = 0
+VerySmallButton.Position = UDim2.new(0, 20, 0, 80)
+VerySmallButton.Size = UDim2.new(0, 120, 0, 30)
+VerySmallButton.Font = Enum.Font.GothamMedium
+VerySmallButton.Text = "Very Small (Mobile)"
+VerySmallButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+VerySmallButton.TextSize = 10
+
+local VerySmallCorner = Instance.new("UICorner")
+VerySmallCorner.CornerRadius = UDim.new(0, 6)
+VerySmallCorner.Parent = VerySmallButton
+
 -- Small Size Button
 local SmallButton = Instance.new("TextButton")
 SmallButton.Name = "SmallButton"
 SmallButton.Parent = SettingsPanel
 SmallButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
 SmallButton.BorderSizePixel = 0
-SmallButton.Position = UDim2.new(0, 20, 0, 80)
-SmallButton.Size = UDim2.new(0, 80, 0, 30)
+SmallButton.Position = UDim2.new(0, 160, 0, 80)
+SmallButton.Size = UDim2.new(0, 120, 0, 30)
 SmallButton.Font = Enum.Font.GothamMedium
 SmallButton.Text = "Small"
 SmallButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -278,10 +295,10 @@ SmallCorner.Parent = SmallButton
 local MediumButton = Instance.new("TextButton")
 MediumButton.Name = "MediumButton"
 MediumButton.Parent = SettingsPanel
-MediumButton.BackgroundColor3 = Color3.fromRGB(75, 125, 255)
+MediumButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
 MediumButton.BorderSizePixel = 0
-MediumButton.Position = UDim2.new(0, 110, 0, 80)
-MediumButton.Size = UDim2.new(0, 80, 0, 30)
+MediumButton.Position = UDim2.new(0, 20, 0, 120)
+MediumButton.Size = UDim2.new(0, 120, 0, 30)
 MediumButton.Font = Enum.Font.GothamMedium
 MediumButton.Text = "Medium"
 MediumButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -297,8 +314,8 @@ LargeButton.Name = "LargeButton"
 LargeButton.Parent = SettingsPanel
 LargeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
 LargeButton.BorderSizePixel = 0
-LargeButton.Position = UDim2.new(0, 200, 0, 80)
-LargeButton.Size = UDim2.new(0, 80, 0, 30)
+LargeButton.Position = UDim2.new(0, 160, 0, 120)
+LargeButton.Size = UDim2.new(0, 120, 0, 30)
 LargeButton.Font = Enum.Font.GothamMedium
 LargeButton.Text = "Large"
 LargeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -314,7 +331,7 @@ CloseSettingsButton.Name = "CloseSettingsButton"
 CloseSettingsButton.Parent = SettingsPanel
 CloseSettingsButton.BackgroundColor3 = Color3.fromRGB(200, 75, 75)
 CloseSettingsButton.BorderSizePixel = 0
-CloseSettingsButton.Position = UDim2.new(0.5, -40, 0, 150)
+CloseSettingsButton.Position = UDim2.new(0.5, -40, 0, 170)
 CloseSettingsButton.Size = UDim2.new(0, 80, 0, 30)
 CloseSettingsButton.Font = Enum.Font.GothamMedium
 CloseSettingsButton.Text = "Close"
@@ -569,7 +586,7 @@ SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
 end)
 
 -- Settings functionality
-local currentSize = "Medium" -- Default size
+local currentSize = "Very Small" -- Default size (mobile-friendly)
 
 local function changeHubSize(sizeName, width, height)
     local newMainSize = UDim2.new(0, width, 0, height)
@@ -593,6 +610,7 @@ local function changeHubSize(sizeName, width, height)
     currentSize = sizeName
     
     -- Update button colors
+    VerySmallButton.BackgroundColor3 = sizeName == "Very Small" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
     SmallButton.BackgroundColor3 = sizeName == "Small" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
     MediumButton.BackgroundColor3 = sizeName == "Medium" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
     LargeButton.BackgroundColor3 = sizeName == "Large" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
@@ -612,6 +630,10 @@ SettingsButton.MouseButton1Click:Connect(function()
 end)
 
 -- Size button clicks
+VerySmallButton.MouseButton1Click:Connect(function()
+    changeHubSize("Very Small", 500, 350)
+end)
+
 SmallButton.MouseButton1Click:Connect(function()
     changeHubSize("Small", 600, 400)
 end)
