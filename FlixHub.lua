@@ -416,11 +416,20 @@ local function createCategoryButton(categoryName)
     CategoryButton.Parent = CategoryContainer
     CategoryButton.BackgroundColor3 = categoryName == currentCategory and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(50, 50, 65)
     CategoryButton.BorderSizePixel = 0
-    CategoryButton.Size = UDim2.new(0, 100, 1, 0)
+    
+    -- Responsive button width based on current size
+    local buttonWidth = 100
+    if currentSize == "Very Small" then
+        buttonWidth = 70 -- Smaller buttons for mobile
+    elseif currentSize == "Small" then
+        buttonWidth = 85
+    end
+    
+    CategoryButton.Size = UDim2.new(0, buttonWidth, 1, 0)
     CategoryButton.Font = Enum.Font.GothamMedium
     CategoryButton.Text = categoryName
     CategoryButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    CategoryButton.TextSize = 12
+    CategoryButton.TextSize = currentSize == "Very Small" and 10 or 12
     
     local ButtonCorner = Instance.new("UICorner")
     ButtonCorner.CornerRadius = UDim.new(0, 6)
@@ -439,6 +448,21 @@ local function createCategoryButton(categoryName)
     end)
     
     return CategoryButton
+end
+
+-- Function to refresh category buttons when size changes
+local function refreshCategoryButtons()
+    -- Clear existing category buttons
+    for _, child in pairs(CategoryContainer:GetChildren()) do
+        if child:IsA("TextButton") then
+            child:Destroy()
+        end
+    end
+    
+    -- Recreate category buttons with new responsive sizes
+    for categoryName, _ in pairs(ScriptDatabase) do
+        createCategoryButton(categoryName)
+    end
 end
 
 local function createScriptItem(scriptData, index)
@@ -609,6 +633,9 @@ local function changeHubSize(sizeName, width, height)
     
     currentSize = sizeName
     
+    -- Refresh category buttons with new responsive sizes
+    refreshCategoryButtons()
+    
     -- Update button colors
     VerySmallButton.BackgroundColor3 = sizeName == "Very Small" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
     SmallButton.BackgroundColor3 = sizeName == "Small" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
@@ -659,14 +686,36 @@ end)
 
 -- Minimize functionality
 local isMinimized = false
+local currentHubSize = {width = 500, height = 350} -- Store current size
+
+-- Function to get current size based on currentSize variable
+local function getCurrentSizeValues()
+    if currentSize == "Very Small" then
+        return 500, 350
+    elseif currentSize == "Small" then
+        return 600, 400
+    elseif currentSize == "Medium" then
+        return 700, 500
+    elseif currentSize == "Large" then
+        return 800, 600
+    else
+        return 500, 350 -- Default fallback
+    end
+end
+
 MinimizeButton.MouseButton1Click:Connect(function()
     if not isMinimized then
-        -- Minimize both MainFrame and Shadow
+        -- Store current size before minimizing
+        currentHubSize.width, currentHubSize.height = getCurrentSizeValues()
+        
+        -- Minimize to small Flix icon (80x50)
         local minimizeTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, 700, 0, 40)
+            Size = UDim2.new(0, 80, 0, 50),
+            Position = UDim2.new(0.5, -40, 0.5, -25)
         })
         local shadowMinimizeTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(1, 0, 1, 0)
+            Size = UDim2.new(1, 0, 1, 0),
+            Position = UDim2.new(0, 5, 0, 5)
         })
         minimizeTween:Play()
         shadowMinimizeTween:Play()
@@ -677,13 +726,22 @@ MinimizeButton.MouseButton1Click:Connect(function()
         SearchContainer.Visible = false
         CategoryContainer.Visible = false
         ScriptContainer.Visible = false
+        SettingsButton.Visible = false
+        CloseButton.Visible = false
+        
+        -- Change title to just "Flix"
+        TitleText.Text = "Flix"
+        TitleText.TextSize = 14
+        TitleText.Position = UDim2.new(0, 10, 0, 0)
     else
-        -- Restore both MainFrame and Shadow
+        -- Restore to previous size
         local restoreTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, 700, 0, 500)
+            Size = UDim2.new(0, currentHubSize.width, 0, currentHubSize.height),
+            Position = UDim2.new(0.5, -currentHubSize.width/2, 0.5, -currentHubSize.height/2)
         })
         local shadowRestoreTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(1, 0, 1, 0)
+            Size = UDim2.new(1, 0, 1, 0),
+            Position = UDim2.new(0, 5, 0, 5)
         })
         restoreTween:Play()
         shadowRestoreTween:Play()
@@ -694,6 +752,13 @@ MinimizeButton.MouseButton1Click:Connect(function()
         SearchContainer.Visible = true
         CategoryContainer.Visible = true
         ScriptContainer.Visible = true
+        SettingsButton.Visible = true
+        CloseButton.Visible = true
+        
+        -- Restore title
+        TitleText.Text = "FlixHub v2.0"
+        TitleText.TextSize = 16
+        TitleText.Position = UDim2.new(0, 15, 0, 0)
     end
 end)
 
