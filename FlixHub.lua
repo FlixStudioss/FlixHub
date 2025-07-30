@@ -18,103 +18,192 @@ FlixHub.Parent = playerGui
 FlixHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 FlixHub.ResetOnSpawn = false
 
--- Main Frame
+-- Main Frame with Modern Glassmorphism
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = FlixHub
-MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 25)
+MainFrame.BackgroundTransparency = 0.05
 MainFrame.BorderSizePixel = 0
 MainFrame.Position = UDim2.new(0.5, -250, 0.5, -175)
 MainFrame.Size = UDim2.new(0, 500, 0, 350)
 MainFrame.Active = true
 MainFrame.Draggable = true
 
--- Corner rounding for main frame
+-- Modern rounded corners
 local MainCorner = Instance.new("UICorner")
-MainCorner.CornerRadius = UDim.new(0, 12)
+MainCorner.CornerRadius = UDim.new(0, 20)
 MainCorner.Parent = MainFrame
 
--- Drop shadow effect
-local Shadow = Instance.new("Frame")
-Shadow.Name = "Shadow"
-Shadow.Parent = MainFrame
-Shadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Shadow.BackgroundTransparency = 0.7
-Shadow.BorderSizePixel = 0
-Shadow.Position = UDim2.new(0, 5, 0, 5)
-Shadow.Size = UDim2.new(1, 0, 1, 0)
-Shadow.ZIndex = -1
+-- Glassmorphic backdrop
+local GlassBackdrop = Instance.new("Frame")
+GlassBackdrop.Name = "GlassBackdrop"
+GlassBackdrop.Parent = MainFrame
+GlassBackdrop.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+GlassBackdrop.BackgroundTransparency = 0.95
+GlassBackdrop.BorderSizePixel = 0
+GlassBackdrop.Size = UDim2.new(1, 0, 1, 0)
+GlassBackdrop.ZIndex = -1
 
-local ShadowCorner = Instance.new("UICorner")
-ShadowCorner.CornerRadius = UDim.new(0, 12)
-ShadowCorner.Parent = Shadow
+local GlassCorner = Instance.new("UICorner")
+GlassCorner.CornerRadius = UDim.new(0, 20)
+GlassCorner.Parent = GlassBackdrop
 
--- Title Bar
+-- Enhanced multi-layered shadow
+local Shadow1 = Instance.new("Frame")
+Shadow1.Name = "Shadow1"
+Shadow1.Parent = FlixHub
+Shadow1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Shadow1.BackgroundTransparency = 0.85
+Shadow1.BorderSizePixel = 0
+Shadow1.Position = UDim2.new(0.5, -245, 0.5, -170)
+Shadow1.Size = UDim2.new(0, 500, 0, 350)
+Shadow1.ZIndex = -3
+
+local Shadow1Corner = Instance.new("UICorner")
+Shadow1Corner.CornerRadius = UDim.new(0, 20)
+Shadow1Corner.Parent = Shadow1
+
+-- Deeper shadow layer
+local Shadow2 = Instance.new("Frame")
+Shadow2.Name = "Shadow2"
+Shadow2.Parent = FlixHub
+Shadow2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Shadow2.BackgroundTransparency = 0.92
+Shadow2.BorderSizePixel = 0
+Shadow2.Position = UDim2.new(0.5, -240, 0.5, -165)
+Shadow2.Size = UDim2.new(0, 500, 0, 350)
+Shadow2.ZIndex = -2
+
+local Shadow2Corner = Instance.new("UICorner")
+Shadow2Corner.CornerRadius = UDim.new(0, 20)
+Shadow2Corner.Parent = Shadow2
+
+-- Modern gradient border
+local BorderFrame = Instance.new("Frame")
+BorderFrame.Name = "BorderFrame"
+BorderFrame.Parent = MainFrame
+BorderFrame.BackgroundTransparency = 1
+BorderFrame.BorderSizePixel = 0
+BorderFrame.Size = UDim2.new(1, 2, 1, 2)
+BorderFrame.Position = UDim2.new(0, -1, 0, -1)
+BorderFrame.ZIndex = 1
+
+local BorderStroke = Instance.new("UIStroke")
+BorderStroke.Parent = MainFrame
+BorderStroke.Color = Color3.fromRGB(100, 150, 255)
+BorderStroke.Thickness = 1
+BorderStroke.Transparency = 0.6
+
+-- Modern Title Bar with Gradient
 local TitleBar = Instance.new("Frame")
 TitleBar.Name = "TitleBar"
 TitleBar.Parent = MainFrame
-TitleBar.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+TitleBar.BackgroundColor3 = Color3.fromRGB(20, 25, 40)
+TitleBar.BackgroundTransparency = 0.1
 TitleBar.BorderSizePixel = 0
-TitleBar.Size = UDim2.new(1, 0, 0, 40)
+TitleBar.Size = UDim2.new(1, 0, 0, 50)
 
 local TitleCorner = Instance.new("UICorner")
-TitleCorner.CornerRadius = UDim.new(0, 12)
+TitleCorner.CornerRadius = UDim.new(0, 20)
 TitleCorner.Parent = TitleBar
 
--- Title Text
+-- Title bar gradient overlay
+local TitleGradient = Instance.new("Frame")
+TitleGradient.Name = "TitleGradient"
+TitleGradient.Parent = TitleBar
+TitleGradient.BackgroundTransparency = 1
+TitleGradient.BorderSizePixel = 0
+TitleGradient.Size = UDim2.new(1, 0, 1, 0)
+
+local TitleGradientCorner = Instance.new("UICorner")
+TitleGradientCorner.CornerRadius = UDim.new(0, 20)
+TitleGradientCorner.Parent = TitleGradient
+
+local TitleUIGradient = Instance.new("UIGradient")
+TitleUIGradient.Parent = TitleBar
+TitleUIGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(40, 50, 80)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 25, 40))
+}
+TitleUIGradient.Rotation = 45
+
+-- Modern Title Text with Glow Effect
 local TitleText = Instance.new("TextLabel")
 TitleText.Name = "TitleText"
 TitleText.Parent = TitleBar
 TitleText.BackgroundTransparency = 1
-TitleText.Position = UDim2.new(0, 15, 0, 0)
-TitleText.Size = UDim2.new(0, 200, 1, 0)
+TitleText.Position = UDim2.new(0, 25, 0, 0)
+TitleText.Size = UDim2.new(0, 300, 1, 0)
 TitleText.Font = Enum.Font.GothamBold
-TitleText.Text = "FlixHub v2.0"
+TitleText.Text = "FlixHub v3.0"
 TitleText.TextColor3 = Color3.fromRGB(255, 255, 255)
-TitleText.TextSize = 16
+TitleText.TextSize = 20
 TitleText.TextXAlignment = Enum.TextXAlignment.Left
 
--- Close Button
+-- Title glow effect
+local TitleStroke = Instance.new("UIStroke")
+TitleStroke.Parent = TitleText
+TitleStroke.Color = Color3.fromRGB(100, 150, 255)
+TitleStroke.Thickness = 0.5
+TitleStroke.Transparency = 0.8
+
+-- Modern Close Button
 local CloseButton = Instance.new("TextButton")
 CloseButton.Name = "CloseButton"
 CloseButton.Parent = TitleBar
-CloseButton.BackgroundColor3 = Color3.fromRGB(255, 75, 75)
+CloseButton.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+CloseButton.BackgroundTransparency = 0.1
 CloseButton.BorderSizePixel = 0
-CloseButton.Position = UDim2.new(1, -35, 0, 5)
+CloseButton.Position = UDim2.new(1, -45, 0, 10)
 CloseButton.Size = UDim2.new(0, 30, 0, 30)
 CloseButton.Font = Enum.Font.GothamBold
-CloseButton.Text = "X"
+CloseButton.Text = "✕"
 CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 CloseButton.TextSize = 14
 
 local CloseCorner = Instance.new("UICorner")
-CloseCorner.CornerRadius = UDim.new(0, 6)
+CloseCorner.CornerRadius = UDim.new(0, 15)
 CloseCorner.Parent = CloseButton
 
--- Minimize Button
+local CloseStroke = Instance.new("UIStroke")
+CloseStroke.Parent = CloseButton
+CloseStroke.Color = Color3.fromRGB(255, 150, 150)
+CloseStroke.Thickness = 1
+CloseStroke.Transparency = 0.7
+
+-- Modern Minimize Button
 local MinimizeButton = Instance.new("TextButton")
 MinimizeButton.Name = "MinimizeButton"
 MinimizeButton.Parent = TitleBar
-MinimizeButton.BackgroundColor3 = Color3.fromRGB(255, 200, 75)
+MinimizeButton.BackgroundColor3 = Color3.fromRGB(255, 200, 100)
+MinimizeButton.BackgroundTransparency = 0.1
 MinimizeButton.BorderSizePixel = 0
-MinimizeButton.Position = UDim2.new(1, -70, 0, 5)
+MinimizeButton.Position = UDim2.new(1, -80, 0, 10)
 MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
 MinimizeButton.Font = Enum.Font.GothamBold
-MinimizeButton.Text = "-"
+MinimizeButton.Text = "−"
 MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-MinimizeButton.TextSize = 14
+MinimizeButton.TextSize = 16
 
 local MinimizeCorner = Instance.new("UICorner")
-MinimizeCorner.CornerRadius = UDim.new(0, 6)
+MinimizeCorner.CornerRadius = UDim.new(0, 15)
 MinimizeCorner.Parent = MinimizeButton
 
--- Settings Button
+local MinimizeStroke = Instance.new("UIStroke")
+MinimizeStroke.Parent = MinimizeButton
+MinimizeStroke.Color = Color3.fromRGB(255, 220, 150)
+MinimizeStroke.Thickness = 1
+MinimizeStroke.Transparency = 0.7
+
+-- Modern Settings Button
 local SettingsButton = Instance.new("TextButton")
 SettingsButton.Name = "SettingsButton"
 SettingsButton.Parent = TitleBar
-SettingsButton.BackgroundColor3 = Color3.fromRGB(100, 100, 200)
+SettingsButton.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+SettingsButton.BackgroundTransparency = 0.1
 SettingsButton.BorderSizePixel = 0
-SettingsButton.Position = UDim2.new(1, -105, 0, 5)
+SettingsButton.Position = UDim2.new(1, -115, 0, 10)
 SettingsButton.Size = UDim2.new(0, 30, 0, 30)
 SettingsButton.Font = Enum.Font.GothamBold
 SettingsButton.Text = "⚙"
@@ -122,55 +211,90 @@ SettingsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 SettingsButton.TextSize = 14
 
 local SettingsCorner = Instance.new("UICorner")
-SettingsCorner.CornerRadius = UDim.new(0, 6)
+SettingsCorner.CornerRadius = UDim.new(0, 15)
 SettingsCorner.Parent = SettingsButton
 
--- Search Bar Container
+local SettingsStroke = Instance.new("UIStroke")
+SettingsStroke.Parent = SettingsButton
+SettingsStroke.Color = Color3.fromRGB(150, 180, 255)
+SettingsStroke.Thickness = 1
+SettingsStroke.Transparency = 0.7
+
+-- Modern Search Bar Container with Glassmorphism
 local SearchContainer = Instance.new("Frame")
 SearchContainer.Name = "SearchContainer"
 SearchContainer.Parent = MainFrame
-SearchContainer.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
+SearchContainer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+SearchContainer.BackgroundTransparency = 0.92
 SearchContainer.BorderSizePixel = 0
-SearchContainer.Position = UDim2.new(0, 15, 0, 55)
-SearchContainer.Size = UDim2.new(1, -30, 0, 35)
+SearchContainer.Position = UDim2.new(0, 20, 0, 70)
+SearchContainer.Size = UDim2.new(1, -40, 0, 45)
 
 local SearchCorner = Instance.new("UICorner")
-SearchCorner.CornerRadius = UDim.new(0, 8)
+SearchCorner.CornerRadius = UDim.new(0, 15)
 SearchCorner.Parent = SearchContainer
 
--- Search TextBox
-local SearchBox = Instance.new("TextBox")
-SearchBox.Name = "SearchBox"
-SearchBox.Parent = SearchContainer
-SearchBox.BackgroundTransparency = 1
-SearchBox.Position = UDim2.new(0, 10, 0, 0)
-SearchBox.Size = UDim2.new(1, -50, 1, 0)
-SearchBox.Font = Enum.Font.Gotham
-SearchBox.PlaceholderText = "Search for scripts..."
-SearchBox.Text = ""
-SearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-SearchBox.TextSize = 14
-SearchBox.TextXAlignment = Enum.TextXAlignment.Left
+-- Search bar border glow
+local SearchStroke = Instance.new("UIStroke")
+SearchStroke.Parent = SearchContainer
+SearchStroke.Color = Color3.fromRGB(100, 150, 255)
+SearchStroke.Thickness = 1
+SearchStroke.Transparency = 0.7
 
--- Search Icon
+-- Search Bar Backdrop Blur Effect
+local SearchBackdrop = Instance.new("Frame")
+SearchBackdrop.Name = "SearchBackdrop"
+SearchBackdrop.Parent = SearchContainer
+SearchBackdrop.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+SearchBackdrop.BackgroundTransparency = 0.3
+SearchBackdrop.BorderSizePixel = 0
+SearchBackdrop.Size = UDim2.new(1, 0, 1, 0)
+SearchBackdrop.ZIndex = -1
+
+local SearchBackdropCorner = Instance.new("UICorner")
+SearchBackdropCorner.CornerRadius = UDim.new(0, 15)
+SearchBackdropCorner.Parent = SearchBackdrop
+
+-- Modern Search Bar
+local SearchBar = Instance.new("TextBox")
+SearchBar.Name = "SearchBar"
+SearchBar.Parent = SearchContainer
+SearchBar.BackgroundTransparency = 1
+SearchBar.Position = UDim2.new(0, 50, 0, 0)
+SearchBar.Size = UDim2.new(1, -60, 1, 0)
+SearchBar.Font = Enum.Font.GothamMedium
+SearchBar.PlaceholderText = "Search scripts..."
+SearchBar.PlaceholderColor3 = Color3.fromRGB(180, 180, 200)
+SearchBar.Text = ""
+SearchBar.TextColor3 = Color3.fromRGB(255, 255, 255)
+SearchBar.TextSize = 16
+SearchBar.TextXAlignment = Enum.TextXAlignment.Left
+
+-- Modern Search Icon
 local SearchIcon = Instance.new("TextLabel")
 SearchIcon.Name = "SearchIcon"
 SearchIcon.Parent = SearchContainer
 SearchIcon.BackgroundTransparency = 1
-SearchIcon.Position = UDim2.new(1, -35, 0, 0)
-SearchIcon.Size = UDim2.new(0, 35, 1, 0)
-SearchIcon.Font = Enum.Font.GothamBold
+SearchIcon.Position = UDim2.new(0, 15, 0, 0)
+SearchIcon.Size = UDim2.new(0, 25, 1, 0)
+SearchIcon.Font = Enum.Font.GothamMedium
 SearchIcon.Text = "🔍"
-SearchIcon.TextColor3 = Color3.fromRGB(150, 150, 150)
-SearchIcon.TextSize = 16
+SearchIcon.TextColor3 = Color3.fromRGB(100, 150, 255)
+SearchIcon.TextSize = 18
 
--- Category Container
-local CategoryContainer = Instance.new("Frame")
+-- Category Container (Scrollable)
+local CategoryContainer = Instance.new("ScrollingFrame")
 CategoryContainer.Name = "CategoryContainer"
 CategoryContainer.Parent = MainFrame
 CategoryContainer.BackgroundTransparency = 1
+CategoryContainer.BorderSizePixel = 0
 CategoryContainer.Position = UDim2.new(0, 15, 0, 105)
 CategoryContainer.Size = UDim2.new(1, -30, 0, 40)
+CategoryContainer.ScrollingDirection = Enum.ScrollingDirection.X
+CategoryContainer.ScrollBarThickness = 4
+CategoryContainer.ScrollBarImageColor3 = Color3.fromRGB(75, 75, 100)
+CategoryContainer.ScrollBarImageTransparency = 0.3
+CategoryContainer.CanvasSize = UDim2.new(0, 0, 0, 0) -- Will be calculated dynamically
 
 local CategoryLayout = Instance.new("UIListLayout")
 CategoryLayout.Parent = CategoryContainer
@@ -179,20 +303,43 @@ CategoryLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 CategoryLayout.SortOrder = Enum.SortOrder.LayoutOrder
 CategoryLayout.Padding = UDim.new(0, 10)
 
--- Script Container
+-- Modern Script Container with Glassmorphism
 local ScriptContainer = Instance.new("ScrollingFrame")
 ScriptContainer.Name = "ScriptContainer"
 ScriptContainer.Parent = MainFrame
-ScriptContainer.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+ScriptContainer.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ScriptContainer.BackgroundTransparency = 0.95
 ScriptContainer.BorderSizePixel = 0
-ScriptContainer.Position = UDim2.new(0, 15, 0, 160)
-ScriptContainer.Size = UDim2.new(1, -30, 1, -175)
-ScriptContainer.ScrollBarThickness = 6
-ScriptContainer.ScrollBarImageColor3 = Color3.fromRGB(75, 75, 100)
+ScriptContainer.Position = UDim2.new(0, 20, 0, 165)
+ScriptContainer.Size = UDim2.new(1, -40, 1, -185)
+ScriptContainer.ScrollBarThickness = 8
+ScriptContainer.ScrollBarImageColor3 = Color3.fromRGB(100, 150, 255)
+ScriptContainer.ScrollBarImageTransparency = 0.3
 
 local ScriptCorner = Instance.new("UICorner")
-ScriptCorner.CornerRadius = UDim.new(0, 8)
+ScriptCorner.CornerRadius = UDim.new(0, 18)
 ScriptCorner.Parent = ScriptContainer
+
+-- Script container backdrop blur
+local ScriptBackdrop = Instance.new("Frame")
+ScriptBackdrop.Name = "ScriptBackdrop"
+ScriptBackdrop.Parent = ScriptContainer
+ScriptBackdrop.BackgroundColor3 = Color3.fromRGB(20, 25, 40)
+ScriptBackdrop.BackgroundTransparency = 0.2
+ScriptBackdrop.BorderSizePixel = 0
+ScriptBackdrop.Size = UDim2.new(1, 0, 1, 0)
+ScriptBackdrop.ZIndex = -1
+
+local ScriptBackdropCorner = Instance.new("UICorner")
+ScriptBackdropCorner.CornerRadius = UDim.new(0, 18)
+ScriptBackdropCorner.Parent = ScriptBackdrop
+
+-- Script container border glow
+local ScriptStroke = Instance.new("UIStroke")
+ScriptStroke.Parent = ScriptContainer
+ScriptStroke.Color = Color3.fromRGB(100, 150, 255)
+ScriptStroke.Thickness = 1
+ScriptStroke.Transparency = 0.8
 
 local ScriptLayout = Instance.new("UIListLayout")
 ScriptLayout.Parent = ScriptContainer
@@ -414,26 +561,39 @@ local function createCategoryButton(categoryName)
     local CategoryButton = Instance.new("TextButton")
     CategoryButton.Name = categoryName
     CategoryButton.Parent = CategoryContainer
-    CategoryButton.BackgroundColor3 = categoryName == currentCategory and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(50, 50, 65)
+    CategoryButton.BackgroundColor3 = categoryName == currentCategory and Color3.fromRGB(100, 150, 255) or Color3.fromRGB(255, 255, 255)
+    CategoryButton.BackgroundTransparency = categoryName == currentCategory and 0.1 or 0.9
     CategoryButton.BorderSizePixel = 0
-    
-    -- Responsive button width based on current size
-    local buttonWidth = 100
-    if currentSize == "Very Small" then
-        buttonWidth = 70 -- Smaller buttons for mobile
-    elseif currentSize == "Small" then
-        buttonWidth = 85
-    end
-    
-    CategoryButton.Size = UDim2.new(0, buttonWidth, 1, 0)
-    CategoryButton.Font = Enum.Font.GothamMedium
+    CategoryButton.Size = UDim2.new(0, 120, 1, 0) -- Slightly wider for better aesthetics
+    CategoryButton.Font = Enum.Font.GothamSemibold
     CategoryButton.Text = categoryName
-    CategoryButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    CategoryButton.TextSize = currentSize == "Very Small" and 10 or 12
+    CategoryButton.TextColor3 = categoryName == currentCategory and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(200, 200, 220)
+    CategoryButton.TextSize = 13
     
     local ButtonCorner = Instance.new("UICorner")
-    ButtonCorner.CornerRadius = UDim.new(0, 6)
+    ButtonCorner.CornerRadius = UDim.new(0, 15)
     ButtonCorner.Parent = CategoryButton
+    
+    -- Modern category button effects
+    local CategoryStroke = Instance.new("UIStroke")
+    CategoryStroke.Parent = CategoryButton
+    CategoryStroke.Color = categoryName == currentCategory and Color3.fromRGB(120, 170, 255) or Color3.fromRGB(100, 150, 255)
+    CategoryStroke.Thickness = categoryName == currentCategory and 2 or 1
+    CategoryStroke.Transparency = categoryName == currentCategory and 0.3 or 0.7
+    
+    -- Category button backdrop
+    local CategoryBackdrop = Instance.new("Frame")
+    CategoryBackdrop.Name = "CategoryBackdrop"
+    CategoryBackdrop.Parent = CategoryButton
+    CategoryBackdrop.BackgroundColor3 = categoryName == currentCategory and Color3.fromRGB(80, 120, 200) or Color3.fromRGB(40, 50, 70)
+    CategoryBackdrop.BackgroundTransparency = categoryName == currentCategory and 0.3 or 0.5
+    CategoryBackdrop.BorderSizePixel = 0
+    CategoryBackdrop.Size = UDim2.new(1, 0, 1, 0)
+    CategoryBackdrop.ZIndex = -1
+    
+    local CategoryBackdropCorner = Instance.new("UICorner")
+    CategoryBackdropCorner.CornerRadius = UDim.new(0, 15)
+    CategoryBackdropCorner.Parent = CategoryBackdrop
     
     CategoryButton.MouseButton1Click:Connect(function()
         -- Update category selection
@@ -459,23 +619,53 @@ local function refreshCategoryButtons()
         end
     end
     
-    -- Recreate category buttons with new responsive sizes
+    -- Recreate category buttons
+    local totalCategories = 0
     for categoryName, _ in pairs(ScriptDatabase) do
         createCategoryButton(categoryName)
+        totalCategories = totalCategories + 1
     end
+    
+    -- Calculate canvas size for horizontal scrolling
+    local buttonWidth = 120 -- Updated to match new modern button width
+    local padding = 10
+    local totalWidth = (totalCategories * buttonWidth) + ((totalCategories - 1) * padding) + 20 -- 20 for left/right margins
+    CategoryContainer.CanvasSize = UDim2.new(0, totalWidth, 0, 40)
 end
 
 local function createScriptItem(scriptData, index)
     local ScriptItem = Instance.new("Frame")
     ScriptItem.Name = "ScriptItem" .. index
     ScriptItem.Parent = ScriptContainer
-    ScriptItem.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
+    ScriptItem.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    ScriptItem.BackgroundTransparency = 0.92
     ScriptItem.BorderSizePixel = 0
-    ScriptItem.Size = UDim2.new(1, -12, 0, 70)
+    ScriptItem.Size = UDim2.new(1, -16, 0, 80)
     
     local ItemCorner = Instance.new("UICorner")
-    ItemCorner.CornerRadius = UDim.new(0, 8)
+    ItemCorner.CornerRadius = UDim.new(0, 16)
     ItemCorner.Parent = ScriptItem
+    
+    -- Script item backdrop
+    local ItemBackdrop = Instance.new("Frame")
+    ItemBackdrop.Name = "ItemBackdrop"
+    ItemBackdrop.Parent = ScriptItem
+    ItemBackdrop.BackgroundColor3 = Color3.fromRGB(30, 40, 60)
+    ItemBackdrop.BackgroundTransparency = 0.25
+    ItemBackdrop.BorderSizePixel = 0
+    ItemBackdrop.Size = UDim2.new(1, 0, 1, 0)
+    ItemBackdrop.ZIndex = -1
+    
+    local ItemBackdropCorner = Instance.new("UICorner")
+    ItemBackdropCorner.CornerRadius = UDim.new(0, 16)
+    ItemBackdropCorner.Parent = ItemBackdrop
+    
+    -- Script item border glow
+    local ItemStroke = Instance.new("UIStroke")
+    ItemStroke.Parent = ScriptItem
+    ItemStroke.Color = Color3.fromRGB(100, 150, 255)
+    ItemStroke.Thickness = 1
+    ItemStroke.Transparency = 0.8
     
     -- Script Name
     local ScriptName = Instance.new("TextLabel")
