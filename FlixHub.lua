@@ -782,6 +782,7 @@ MinimizeButton.MouseButton1Click:Connect(function()
 end)
 
 -- Initialize the GUI
+refreshCategoryButtons() -- Initialize category buttons and canvas size for scrolling
 updateScriptList()
 
 -- Notification
