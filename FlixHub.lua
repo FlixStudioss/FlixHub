@@ -402,6 +402,35 @@ local UniversalScripts = {
     }
 }
 
+-- FE Scripts (Not in Games category)
+local FEScripts = {
+    {
+        name = "FE Sus Hub",
+        description = "Frontend exploit Sus Hub script",
+        script = [[loadstring(game:HttpGet("https://protected-roblox-scripts.onrender.com/2219bf48b54cd405ed94c32097f07c21"))()]]
+    },
+    {
+        name = "FE Troll Hub",
+        description = "Frontend exploit Troll Hub script",
+        script = [[loadstring(game:HttpGet("https://pastebin.com/raw/hkyuHQ7Y"))()]]
+    },
+    {
+        name = "FE Jerk Off",
+        description = "Frontend Jerk Off script for R6",
+        script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/imalwaysad/universal-gui/refs/heads/main/jerk%20off%20r6"))()]]
+    },
+    {
+        name = "FE Invisible",
+        description = "Frontend invisible script",
+        script = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invisible-script-20557"))()]]
+    },
+    {
+        name = "FE Fake Lag (R6 & R15)",
+        description = "Frontend fake lag script for R6 and R15",
+        script = [[loadstring(game:HttpGet('https://pastebin.com/raw/VM3b0Thg'))()]]
+    }
+}
+
 -- Game Scripts (Inside Games expandable category)
 local GameScripts = {
     ["Grow A Garden"] = {
@@ -464,6 +493,18 @@ local GameScripts = {
             name = "NeoxHub (Not Tested)",
             description = "Automated farming script for Ink Game",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/hassanxzayn-lua/NEOXHUBMAIN/refs/heads/main/InkGame"))()]]
+        }
+    },
+    ["Steal A Brainrot"] = {
+        {
+            name = "Instant Steal (Not Tested)",
+            description = "Instant steal script for Steal A Brainrot game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/StealaBrainrotMOD"))()]]
+        },
+        {
+            name = "Instant Steal v2 (Not Tested)",
+            description = "Second version of instant steal script (unverified)",
+            script = [[loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ffdfeadf0af798741806ea404682a938.lua"))()]]
         }
     }
 }
@@ -564,9 +605,19 @@ local function refreshTabs()
     end)
     totalTabs = totalTabs + 1
     
+    -- Create FE Tab
+    local feTab = createTab("👁️ FE", false)
+    feTab.LayoutOrder = 3
+    feTab.MouseButton1Click:Connect(function()
+        currentTab = "FE"
+        refreshTabs()
+        updateScriptList()
+    end)
+    totalTabs = totalTabs + 1
+    
     -- Create Games expandable tab
     local gamesTab = createTab("🎮 Games " .. (isGamesExpanded and "▼" or "▶"), false)
-    gamesTab.LayoutOrder = 3
+    gamesTab.LayoutOrder = 4
     gamesTab.MouseButton1Click:Connect(function()
         isGamesExpanded = not isGamesExpanded
         refreshTabs()
@@ -580,7 +631,7 @@ local function refreshTabs()
     
     -- Add game tabs if expanded
     if isGamesExpanded then
-        local gameOrder = 4
+        local gameOrder = 5
         for gameName, _ in pairs(GameScripts) do
             local gameTab = createTab(gameName, true, 1) -- Indented
             gameTab.LayoutOrder = gameOrder
@@ -645,18 +696,18 @@ local function createScriptItem(scriptData, index)
     ScriptDesc.TextXAlignment = Enum.TextXAlignment.Left
     ScriptDesc.TextYAlignment = Enum.TextYAlignment.Top
     
-    -- Execute Button
+    -- Execute Button (Square with Play Icon)
     local ExecuteButton = Instance.new("TextButton")
     ExecuteButton.Name = "ExecuteButton"
     ExecuteButton.Parent = ScriptItem
     ExecuteButton.BackgroundColor3 = Color3.fromRGB(75, 200, 75)
     ExecuteButton.BorderSizePixel = 0
-    ExecuteButton.Position = UDim2.new(1, -120, 0, 20)
-    ExecuteButton.Size = UDim2.new(0, 100, 0, 30)
+    ExecuteButton.Position = UDim2.new(1, -50, 0, 20)
+    ExecuteButton.Size = UDim2.new(0, 30, 0, 30) -- Square button
     ExecuteButton.Font = Enum.Font.GothamBold
-    ExecuteButton.Text = "Execute"
+    ExecuteButton.Text = "▶" -- Play icon
     ExecuteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    ExecuteButton.TextSize = 12
+    ExecuteButton.TextSize = 16
     
     local ExecuteCorner = Instance.new("UICorner")
     ExecuteCorner.CornerRadius = UDim.new(0, 6)
@@ -664,7 +715,7 @@ local function createScriptItem(scriptData, index)
     
     -- Execute Button Click
     ExecuteButton.MouseButton1Click:Connect(function()
-        ExecuteButton.Text = "Executing..."
+        ExecuteButton.Text = "⏳" -- Loading icon
         ExecuteButton.BackgroundColor3 = Color3.fromRGB(255, 150, 50)
         
         local success, error = pcall(function()
@@ -677,15 +728,15 @@ local function createScriptItem(scriptData, index)
         end)
         
         if success then
-            ExecuteButton.Text = "Executed!"
+            ExecuteButton.Text = "✓" -- Checkmark
             ExecuteButton.BackgroundColor3 = Color3.fromRGB(75, 200, 75)
             wait(2)
-            ExecuteButton.Text = "Execute"
+            ExecuteButton.Text = "▶" -- Back to play icon
         else
-            ExecuteButton.Text = "Error!"
+            ExecuteButton.Text = "✗" -- X mark
             ExecuteButton.BackgroundColor3 = Color3.fromRGB(200, 75, 75)
             wait(2)
-            ExecuteButton.Text = "Execute"
+            ExecuteButton.Text = "▶" -- Back to play icon
             ExecuteButton.BackgroundColor3 = Color3.fromRGB(75, 200, 75)
         end
     end)
@@ -714,6 +765,8 @@ function updateScriptList()
     -- Handle different tab types
     elseif currentTab == "Universal" then
         scriptsToShow = UniversalScripts
+    elseif currentTab == "FE" then
+        scriptsToShow = FEScripts
     elseif GameScripts[currentTab] then
         scriptsToShow = GameScripts[currentTab]
     end
@@ -739,6 +792,13 @@ local function searchScripts(query)
     
     -- Search Universal Scripts
     for _, script in pairs(UniversalScripts) do
+        if script.name:lower():find(query) or script.description:lower():find(query) then
+            table.insert(filteredScripts, script)
+        end
+    end
+    
+    -- Search FE Scripts
+    for _, script in pairs(FEScripts) do
         if script.name:lower():find(query) or script.description:lower():find(query) then
             table.insert(filteredScripts, script)
         end
