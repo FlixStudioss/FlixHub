@@ -486,6 +486,26 @@ local GameScripts = {
             name = "FastHub (Only PC)",
             description = "Fast farming hub for 99 Nights in the Forest",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/adibhub1/99-nighit-in-forest/refs/heads/main/99%20night%20in%20forest"))()]]
+        },
+        {
+            name = "OP Script",
+            description = "Best overpowered script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Iliankytb/Iliankytb/main/Best99NightsInTheForest"))()]]
+        },
+        {
+            name = "OP Script v2",
+            description = "Second version of OP script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/adibhub1/99-nighit-in-forest/refs/heads/main/99%20night%20in%20forest"))()]]
+        },
+        {
+            name = "HutaoHub",
+            description = "Hutao Hub script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/SLK-gaming/Hutao-Hub/refs/heads/main/99-Nights-In-The-Forest.txt"))()]]
+        },
+        {
+            name = "Vape Script (Not The Best)",
+            description = "Vape script for 99 Nights in the Forest (basic version)",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/VapeVoidware/VWExtra/main/NightsInTheForest.lua", true))()]]
         }
     },
     ["Ink Game"] = {
