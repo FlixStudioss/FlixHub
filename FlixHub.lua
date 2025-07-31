@@ -125,74 +125,94 @@ local SettingsCorner = Instance.new("UICorner")
 SettingsCorner.CornerRadius = UDim.new(0, 6)
 SettingsCorner.Parent = SettingsButton
 
--- Search Bar Container
+-- Sidebar Container (Left Side)
+local Sidebar = Instance.new("Frame")
+Sidebar.Name = "Sidebar"
+Sidebar.Parent = MainFrame
+Sidebar.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+Sidebar.BorderSizePixel = 0
+Sidebar.Position = UDim2.new(0, 0, 0, 40) -- Below title bar
+Sidebar.Size = UDim2.new(0, 150, 1, -40) -- 150px wide, full height minus title
+
+local SidebarCorner = Instance.new("UICorner")
+SidebarCorner.CornerRadius = UDim.new(0, 0) -- Sharp corners for sidebar
+SidebarCorner.Parent = Sidebar
+
+-- Sidebar Tabs Container (Scrollable)
+local TabContainer = Instance.new("ScrollingFrame")
+TabContainer.Name = "TabContainer"
+TabContainer.Parent = Sidebar
+TabContainer.BackgroundTransparency = 1
+TabContainer.BorderSizePixel = 0
+TabContainer.Position = UDim2.new(0, 0, 0, 10)
+TabContainer.Size = UDim2.new(1, 0, 1, -10)
+TabContainer.ScrollingDirection = Enum.ScrollingDirection.Y
+TabContainer.ScrollBarThickness = 4
+TabContainer.ScrollBarImageColor3 = Color3.fromRGB(75, 75, 100)
+TabContainer.ScrollBarImageTransparency = 0.3
+TabContainer.CanvasSize = UDim2.new(0, 0, 0, 0) -- Will be calculated dynamically
+
+local TabLayout = Instance.new("UIListLayout")
+TabLayout.Parent = TabContainer
+TabLayout.FillDirection = Enum.FillDirection.Vertical
+TabLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+TabLayout.SortOrder = Enum.SortOrder.LayoutOrder
+TabLayout.Padding = UDim.new(0, 5)
+
+-- Main Content Area (Right Side)
+local ContentArea = Instance.new("Frame")
+ContentArea.Name = "ContentArea"
+ContentArea.Parent = MainFrame
+ContentArea.BackgroundTransparency = 1
+ContentArea.Position = UDim2.new(0, 150, 0, 40) -- Next to sidebar, below title
+ContentArea.Size = UDim2.new(1, -150, 1, -40) -- Full width minus sidebar, full height minus title
+
+-- Search Container (Now in Content Area)
 local SearchContainer = Instance.new("Frame")
 SearchContainer.Name = "SearchContainer"
-SearchContainer.Parent = MainFrame
-SearchContainer.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
+SearchContainer.Parent = ContentArea
+SearchContainer.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
 SearchContainer.BorderSizePixel = 0
-SearchContainer.Position = UDim2.new(0, 15, 0, 55)
+SearchContainer.Position = UDim2.new(0, 15, 0, 15)
 SearchContainer.Size = UDim2.new(1, -30, 0, 35)
 
 local SearchCorner = Instance.new("UICorner")
 SearchCorner.CornerRadius = UDim.new(0, 8)
 SearchCorner.Parent = SearchContainer
 
--- Search TextBox
 local SearchBox = Instance.new("TextBox")
 SearchBox.Name = "SearchBox"
 SearchBox.Parent = SearchContainer
 SearchBox.BackgroundTransparency = 1
-SearchBox.Position = UDim2.new(0, 10, 0, 0)
-SearchBox.Size = UDim2.new(1, -50, 1, 0)
+SearchBox.Position = UDim2.new(0, 35, 0, 0)
+SearchBox.Size = UDim2.new(1, -35, 1, 0)
 SearchBox.Font = Enum.Font.Gotham
-SearchBox.PlaceholderText = "Search for scripts..."
+SearchBox.PlaceholderText = "Search scripts..."
+SearchBox.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
 SearchBox.Text = ""
 SearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 SearchBox.TextSize = 14
 SearchBox.TextXAlignment = Enum.TextXAlignment.Left
 
--- Search Icon
 local SearchIcon = Instance.new("TextLabel")
 SearchIcon.Name = "SearchIcon"
 SearchIcon.Parent = SearchContainer
 SearchIcon.BackgroundTransparency = 1
-SearchIcon.Position = UDim2.new(1, -35, 0, 0)
-SearchIcon.Size = UDim2.new(0, 35, 1, 0)
-SearchIcon.Font = Enum.Font.GothamBold
+SearchIcon.Position = UDim2.new(0, 10, 0, 0)
+SearchIcon.Size = UDim2.new(0, 20, 1, 0)
+SearchIcon.Font = Enum.Font.GothamMedium
 SearchIcon.Text = "🔍"
 SearchIcon.TextColor3 = Color3.fromRGB(150, 150, 150)
 SearchIcon.TextSize = 16
 
--- Category Container (Scrollable)
-local CategoryContainer = Instance.new("ScrollingFrame")
-CategoryContainer.Name = "CategoryContainer"
-CategoryContainer.Parent = MainFrame
-CategoryContainer.BackgroundTransparency = 1
-CategoryContainer.BorderSizePixel = 0
-CategoryContainer.Position = UDim2.new(0, 15, 0, 105)
-CategoryContainer.Size = UDim2.new(1, -30, 0, 40)
-CategoryContainer.ScrollingDirection = Enum.ScrollingDirection.X
-CategoryContainer.ScrollBarThickness = 4
-CategoryContainer.ScrollBarImageColor3 = Color3.fromRGB(75, 75, 100)
-CategoryContainer.ScrollBarImageTransparency = 0.3
-CategoryContainer.CanvasSize = UDim2.new(0, 0, 0, 0) -- Will be calculated dynamically
-
-local CategoryLayout = Instance.new("UIListLayout")
-CategoryLayout.Parent = CategoryContainer
-CategoryLayout.FillDirection = Enum.FillDirection.Horizontal
-CategoryLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
-CategoryLayout.SortOrder = Enum.SortOrder.LayoutOrder
-CategoryLayout.Padding = UDim.new(0, 10)
-
--- Script Container
+-- Script Container (Now in Content Area)
 local ScriptContainer = Instance.new("ScrollingFrame")
 ScriptContainer.Name = "ScriptContainer"
-ScriptContainer.Parent = MainFrame
+ScriptContainer.Parent = ContentArea
 ScriptContainer.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
 ScriptContainer.BorderSizePixel = 0
-ScriptContainer.Position = UDim2.new(0, 15, 0, 160)
-ScriptContainer.Size = UDim2.new(1, -30, 1, -175)
+ScriptContainer.Position = UDim2.new(0, 15, 0, 65) -- Below search bar
+ScriptContainer.Size = UDim2.new(1, -30, 1, -80) -- Full content area minus margins
 ScriptContainer.ScrollBarThickness = 6
 ScriptContainer.ScrollBarImageColor3 = Color3.fromRGB(75, 75, 100)
 
@@ -348,35 +368,42 @@ local CloseSettingsCorner = Instance.new("UICorner")
 CloseSettingsCorner.CornerRadius = UDim.new(0, 6)
 CloseSettingsCorner.Parent = CloseSettingsButton
 
--- Script Database
-local ScriptDatabase = {
-    ["Universal"] = {
-        {
-            name = "Infinite Yield",
-            description = "Admin commands script with tons of features",
-            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()]]
-        },
-        {
-            name = "Dark Dex V3",
-            description = "Advanced explorer for Roblox games",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()]]
-        },
-        {
-            name = "Simple Spy",
-            description = "Remote spy for debugging and scripting",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/master/SimpleSpy.lua"))()]]
-        },
-        {
-            name = "Universal ESP",
-            description = "See players through walls",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua"))()]]
-        },
-        {
-            name = "Solara Hub",
-            description = "Really Good Scripts",
-            script = [[loadstring(game:HttpGet("https://pastebin.com/raw/ixdvHv2g"))()]]
-        }
+-- New Tab System Variables
+local currentTab = "Home"
+local isGamesExpanded = false
+local filteredScripts = {}
+
+-- Universal Scripts (Not in Games category)
+local UniversalScripts = {
+    {
+        name = "Infinite Yield",
+        description = "Admin commands script with tons of features",
+        script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()]]
     },
+    {
+        name = "Dark Dex V3",
+        description = "Advanced explorer for Roblox games",
+        script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()]]
+    },
+    {
+        name = "Simple Spy",
+        description = "Remote spy for debugging and scripting",
+        script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/master/SimpleSpy.lua"))()]]
+    },
+    {
+        name = "Universal ESP",
+        description = "See players through walls",
+        script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua"))()]]
+    },
+    {
+        name = "Solara Hub",
+        description = "Really Good Scripts",
+        script = [[loadstring(game:HttpGet("https://pastebin.com/raw/ixdvHv2g"))()]]
+    }
+}
+
+-- Game Scripts (Inside Games expandable category)
+local GameScripts = {
     ["Grow A Garden"] = {
         {
             name = "No Lag",
@@ -412,76 +439,155 @@ local ScriptDatabase = {
     },
     ["99 Nights Forest"] = {
         {
-            name = "OP Auto Farm",
+            name = "eF Hub (Currently Not Working)",
             description = "Overpowered farming script for 99 Nights",
             script = [[loadstring(game:HttpGet('https://api.exploitingis.fun/loader', true))()]]
         }
     },
     ["Ink Game"] = {
         {
-            name = "Auto Farm",
+            name = "NeoxHub (Not Tested)",
             description = "Automated farming script for Ink Game",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/hassanxzayn-lua/NEOXHUBMAIN/refs/heads/main/InkGame"))()]]
         }
     }
 }
 
-local currentCategory = "Universal"
-local filteredScripts = {}
-
--- Functions
-local function createCategoryButton(categoryName)
-    local CategoryButton = Instance.new("TextButton")
-    CategoryButton.Name = categoryName
-    CategoryButton.Parent = CategoryContainer
-    CategoryButton.BackgroundColor3 = categoryName == currentCategory and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(50, 50, 65)
-    CategoryButton.BorderSizePixel = 0
-    CategoryButton.Size = UDim2.new(0, 100, 1, 0) -- Standard size, scrolling handles overflow
-    CategoryButton.Font = Enum.Font.GothamMedium
-    CategoryButton.Text = categoryName
-    CategoryButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    CategoryButton.TextSize = 12
+-- New Tab System Functions
+local function createTab(tabName, isGameTab, indentLevel)
+    local Tab = Instance.new("TextButton")
+    Tab.Name = tabName
+    Tab.Parent = TabContainer
+    Tab.BackgroundColor3 = tabName == currentTab and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(40, 40, 55)
+    Tab.BorderSizePixel = 0
+    Tab.Size = UDim2.new(1, -10, 0, 35) -- Full width minus margins, 35px height
+    Tab.Font = Enum.Font.GothamMedium
+    Tab.Text = (indentLevel and string.rep("  ", indentLevel) or "") .. tabName
+    Tab.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Tab.TextSize = isGameTab and 10 or 12
+    Tab.TextXAlignment = Enum.TextXAlignment.Left
     
-    local ButtonCorner = Instance.new("UICorner")
-    ButtonCorner.CornerRadius = UDim.new(0, 6)
-    ButtonCorner.Parent = CategoryButton
+    local TabCorner = Instance.new("UICorner")
+    TabCorner.CornerRadius = UDim.new(0, 6)
+    TabCorner.Parent = Tab
     
-    CategoryButton.MouseButton1Click:Connect(function()
-        -- Update category selection
-        for _, button in pairs(CategoryContainer:GetChildren()) do
-            if button:IsA("TextButton") then
-                button.BackgroundColor3 = Color3.fromRGB(50, 50, 65)
-            end
-        end
-        CategoryButton.BackgroundColor3 = Color3.fromRGB(75, 125, 255)
-        currentCategory = categoryName
-        updateScriptList()
-    end)
-    
-    return CategoryButton
+    return Tab
 end
 
--- Function to refresh category buttons when size changes
-local function refreshCategoryButtons()
-    -- Clear existing category buttons
-    for _, child in pairs(CategoryContainer:GetChildren()) do
+local function createHomeContent()
+    -- Clear script container and show home info
+    for _, child in pairs(ScriptContainer:GetChildren()) do
+        if not child:IsA("UIListLayout") and not child:IsA("UICorner") then
+            child:Destroy()
+        end
+    end
+    
+    -- Create Home content
+    local HomeFrame = Instance.new("Frame")
+    HomeFrame.Name = "HomeFrame"
+    HomeFrame.Parent = ScriptContainer
+    HomeFrame.BackgroundTransparency = 1
+    HomeFrame.Size = UDim2.new(1, 0, 0, 200)
+    HomeFrame.LayoutOrder = 1
+    
+    -- Avatar Name
+    local AvatarLabel = Instance.new("TextLabel")
+    AvatarLabel.Name = "AvatarLabel"
+    AvatarLabel.Parent = HomeFrame
+    AvatarLabel.BackgroundTransparency = 1
+    AvatarLabel.Position = UDim2.new(0, 20, 0, 20)
+    AvatarLabel.Size = UDim2.new(1, -40, 0, 30)
+    AvatarLabel.Font = Enum.Font.GothamBold
+    AvatarLabel.Text = "👤 Player: " .. Players.LocalPlayer.Name
+    AvatarLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    AvatarLabel.TextSize = 16
+    AvatarLabel.TextXAlignment = Enum.TextXAlignment.Left
+    
+    -- Current Game
+    local GameLabel = Instance.new("TextLabel")
+    GameLabel.Name = "GameLabel"
+    GameLabel.Parent = HomeFrame
+    GameLabel.BackgroundTransparency = 1
+    GameLabel.Position = UDim2.new(0, 20, 0, 60)
+    GameLabel.Size = UDim2.new(1, -40, 0, 30)
+    GameLabel.Font = Enum.Font.GothamMedium
+    GameLabel.Text = "🎮 Game: " .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+    GameLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+    GameLabel.TextSize = 14
+    GameLabel.TextXAlignment = Enum.TextXAlignment.Left
+end
+
+local function refreshTabs()
+    -- Clear existing tabs
+    for _, child in pairs(TabContainer:GetChildren()) do
         if child:IsA("TextButton") then
             child:Destroy()
         end
     end
     
-    -- Recreate category buttons
-    local totalCategories = 0
-    for categoryName, _ in pairs(ScriptDatabase) do
-        createCategoryButton(categoryName)
-        totalCategories = totalCategories + 1
+    local tabHeight = 35
+    local tabSpacing = 5
+    local totalTabs = 0
+    
+    -- Create Home Tab
+    local homeTab = createTab("🏠 Home", false)
+    homeTab.LayoutOrder = 1
+    homeTab.MouseButton1Click:Connect(function()
+        currentTab = "Home"
+        refreshTabs()
+        createHomeContent()
+    end)
+    totalTabs = totalTabs + 1
+    
+    -- Create Universal Tab
+    local universalTab = createTab("⚡ Universal", false)
+    universalTab.LayoutOrder = 2
+    universalTab.MouseButton1Click:Connect(function()
+        currentTab = "Universal"
+        refreshTabs()
+        updateScriptList()
+    end)
+    totalTabs = totalTabs + 1
+    
+    -- Create Games expandable tab
+    local gamesTab = createTab("🎮 Games " .. (isGamesExpanded and "▼" or "▶"), false)
+    gamesTab.LayoutOrder = 3
+    gamesTab.MouseButton1Click:Connect(function()
+        isGamesExpanded = not isGamesExpanded
+        refreshTabs()
+        if currentTab == "Games" then
+            -- Show games overview or first game
+            currentTab = "Grow A Garden"
+            updateScriptList()
+        end
+    end)
+    totalTabs = totalTabs + 1
+    
+    -- Add game tabs if expanded
+    if isGamesExpanded then
+        local gameOrder = 4
+        for gameName, _ in pairs(GameScripts) do
+            local gameTab = createTab(gameName, true, 1) -- Indented
+            gameTab.LayoutOrder = gameOrder
+            gameTab.MouseButton1Click:Connect(function()
+                currentTab = gameName
+                refreshTabs()
+                updateScriptList()
+            end)
+            totalTabs = totalTabs + 1
+            gameOrder = gameOrder + 1
+        end
     end
     
-    -- Calculate canvas size for horizontal scrolling
-    local buttonWidth = 100
-    local padding = 10
-    local totalWidth = (totalCategories * buttonWidth) + ((totalCategories - 1) * padding) + 20 -- 20 for left/right margins
-    CategoryContainer.CanvasSize = UDim2.new(0, totalWidth, 0, 40)
+    -- Calculate canvas size
+    local totalHeight = (totalTabs * tabHeight) + ((totalTabs - 1) * tabSpacing) + 20
+    TabContainer.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
+end
+
+-- Function to refresh tabs when size changes (replaced old category system)
+local function refreshTabsOnResize()
+    -- Simply call refreshTabs as tab system handles its own sizing
+    refreshTabs()
 end
 
 local function createScriptItem(scriptData, index)
@@ -573,14 +679,29 @@ local function createScriptItem(scriptData, index)
 end
 
 function updateScriptList()
-    -- Clear existing scripts
+    -- Don't show scripts on Home tab
+    if currentTab == "Home" then
+        return
+    end
+    
+    -- Clear existing scripts (but keep Home content if present)
     for _, child in pairs(ScriptContainer:GetChildren()) do
-        if child:IsA("Frame") and child.Name:find("ScriptItem") then
+        if child:IsA("Frame") and (child.Name:find("ScriptItem") or child.Name == "HomeFrame") and currentTab ~= "Home" then
             child:Destroy()
         end
     end
     
-    local scriptsToShow = filteredScripts and #filteredScripts > 0 and filteredScripts or ScriptDatabase[currentCategory] or {}
+    local scriptsToShow = {}
+    
+    -- Handle filtered search results
+    if filteredScripts and #filteredScripts > 0 then
+        scriptsToShow = filteredScripts
+    -- Handle different tab types
+    elseif currentTab == "Universal" then
+        scriptsToShow = UniversalScripts
+    elseif GameScripts[currentTab] then
+        scriptsToShow = GameScripts[currentTab]
+    end
     
     -- Create script items
     for i, scriptData in pairs(scriptsToShow) do
@@ -601,7 +722,15 @@ local function searchScripts(query)
     filteredScripts = {}
     query = query:lower()
     
-    for category, scripts in pairs(ScriptDatabase) do
+    -- Search Universal Scripts
+    for _, script in pairs(UniversalScripts) do
+        if script.name:lower():find(query) or script.description:lower():find(query) then
+            table.insert(filteredScripts, script)
+        end
+    end
+    
+    -- Search Game Scripts
+    for category, scripts in pairs(GameScripts) do
         for _, script in pairs(scripts) do
             if script.name:lower():find(query) or script.description:lower():find(query) then
                 table.insert(filteredScripts, script)
@@ -612,20 +741,9 @@ local function searchScripts(query)
     updateScriptList()
 end
 
--- Create category buttons
-for categoryName, _ in pairs(ScriptDatabase) do
-    createCategoryButton(categoryName)
-end
-
--- Search functionality
-SearchBox.FocusLost:Connect(function()
-    searchScripts(SearchBox.Text)
-end)
-
+-- Connect search functionality
 SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
-    if SearchBox.Text == "" then
-        searchScripts("")
-    end
+    searchScripts(SearchBox.Text)
 end)
 
 -- Settings functionality
@@ -652,8 +770,8 @@ local function changeHubSize(sizeName, width, height)
     
     currentSize = sizeName
     
-    -- Refresh category buttons with new responsive sizes
-    refreshCategoryButtons()
+    -- Refresh tabs for new size
+    refreshTabsOnResize()
     
     -- Update button colors
     VerySmallButton.BackgroundColor3 = sizeName == "Very Small" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
@@ -742,9 +860,8 @@ MinimizeButton.MouseButton1Click:Connect(function()
         MinimizeButton.Text = "+"
         
         -- Hide other elements when minimized
-        SearchContainer.Visible = false
-        CategoryContainer.Visible = false
-        ScriptContainer.Visible = false
+        Sidebar.Visible = false
+        ContentArea.Visible = false
         SettingsButton.Visible = false
         CloseButton.Visible = false
         
@@ -768,9 +885,8 @@ MinimizeButton.MouseButton1Click:Connect(function()
         MinimizeButton.Text = "-"
         
         -- Show other elements when restored
-        SearchContainer.Visible = true
-        CategoryContainer.Visible = true
-        ScriptContainer.Visible = true
+        Sidebar.Visible = true
+        ContentArea.Visible = true
         SettingsButton.Visible = true
         CloseButton.Visible = true
         
@@ -781,9 +897,9 @@ MinimizeButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- Initialize the GUI
-refreshCategoryButtons() -- Initialize category buttons and canvas size for scrolling
-updateScriptList()
+-- Initialize the GUI with new tab system
+refreshTabs() -- Initialize tab system
+createHomeContent() -- Start with Home tab content
 
 -- Notification
 StarterGui:SetCore("SendNotification", {
