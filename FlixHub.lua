@@ -439,9 +439,24 @@ local GameScripts = {
     },
     ["99 Nights Forest"] = {
         {
-            name = "eF Hub (Currently Not Working)",
+            name = "eF Hub (Only PC)",
             description = "Overpowered farming script for 99 Nights",
             script = [[loadstring(game:HttpGet('https://api.exploitingis.fun/loader', true))()]]
+        },
+        {
+            name = "GoaHub",
+            description = "GOA Hub script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Nevcit/GOA_HUB/refs/heads/main/99%20Nights%20In%20The%20Forest"))()]]
+        },
+        {
+            name = "SolunaHub (Solo)",
+            description = "Soluna Hub solo farming script for 99 Nights",
+            script = [[loadstring(game:HttpGet("https://soluna-script.vercel.app/99-Nights-in-the-Forest.lua",true))()]]
+        },
+        {
+            name = "FastHub (Only PC)",
+            description = "Fast farming hub for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/adibhub1/99-nighit-in-forest/refs/heads/main/99%20night%20in%20forest"))()]]
         }
     },
     ["Ink Game"] = {
