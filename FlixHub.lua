@@ -232,8 +232,8 @@ SettingsPanel.Parent = FlixHub
 SettingsPanel.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
 SettingsPanel.BackgroundTransparency = 0.1
 SettingsPanel.BorderSizePixel = 0
-SettingsPanel.Position = UDim2.new(0.5, -150, 0.5, -100)
-SettingsPanel.Size = UDim2.new(0, 300, 0, 220)
+SettingsPanel.Position = UDim2.new(0.5, -200, 0.5, -150)
+SettingsPanel.Size = UDim2.new(0, 400, 0, 300)
 SettingsPanel.Visible = false
 SettingsPanel.ZIndex = 10
 
@@ -351,13 +351,94 @@ local LargeCorner = Instance.new("UICorner")
 LargeCorner.CornerRadius = UDim.new(0, 6)
 LargeCorner.Parent = LargeButton
 
+-- Theme Selection Label
+local ThemeLabel = Instance.new("TextLabel")
+ThemeLabel.Name = "ThemeLabel"
+ThemeLabel.Parent = SettingsPanel
+ThemeLabel.BackgroundTransparency = 1
+ThemeLabel.Position = UDim2.new(0, 20, 0, 130)
+ThemeLabel.Size = UDim2.new(0, 100, 0, 20)
+ThemeLabel.Font = Enum.Font.GothamMedium
+ThemeLabel.Text = "Theme:"
+ThemeLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+ThemeLabel.TextSize = 14
+ThemeLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+-- Dark Theme Button
+local DarkThemeButton = Instance.new("TextButton")
+DarkThemeButton.Name = "DarkThemeButton"
+DarkThemeButton.Parent = SettingsPanel
+DarkThemeButton.BackgroundColor3 = Color3.fromRGB(75, 125, 255) -- Default selected
+DarkThemeButton.BorderSizePixel = 0
+DarkThemeButton.Position = UDim2.new(0, 20, 0, 155)
+DarkThemeButton.Size = UDim2.new(0, 80, 0, 30)
+DarkThemeButton.Font = Enum.Font.GothamMedium
+DarkThemeButton.Text = "Dark"
+DarkThemeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+DarkThemeButton.TextSize = 11
+
+local DarkThemeCorner = Instance.new("UICorner")
+DarkThemeCorner.CornerRadius = UDim.new(0, 6)
+DarkThemeCorner.Parent = DarkThemeButton
+
+-- Ocean Theme Button
+local OceanThemeButton = Instance.new("TextButton")
+OceanThemeButton.Name = "OceanThemeButton"
+OceanThemeButton.Parent = SettingsPanel
+OceanThemeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+OceanThemeButton.BorderSizePixel = 0
+OceanThemeButton.Position = UDim2.new(0, 110, 0, 155)
+OceanThemeButton.Size = UDim2.new(0, 80, 0, 30)
+OceanThemeButton.Font = Enum.Font.GothamMedium
+OceanThemeButton.Text = "Ocean"
+OceanThemeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+OceanThemeButton.TextSize = 11
+
+local OceanThemeCorner = Instance.new("UICorner")
+OceanThemeCorner.CornerRadius = UDim.new(0, 6)
+OceanThemeCorner.Parent = OceanThemeButton
+
+-- Purple Theme Button
+local PurpleThemeButton = Instance.new("TextButton")
+PurpleThemeButton.Name = "PurpleThemeButton"
+PurpleThemeButton.Parent = SettingsPanel
+PurpleThemeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+PurpleThemeButton.BorderSizePixel = 0
+PurpleThemeButton.Position = UDim2.new(0, 200, 0, 155)
+PurpleThemeButton.Size = UDim2.new(0, 80, 0, 30)
+PurpleThemeButton.Font = Enum.Font.GothamMedium
+PurpleThemeButton.Text = "Purple"
+PurpleThemeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+PurpleThemeButton.TextSize = 11
+
+local PurpleThemeCorner = Instance.new("UICorner")
+PurpleThemeCorner.CornerRadius = UDim.new(0, 6)
+PurpleThemeCorner.Parent = PurpleThemeButton
+
+-- Green Theme Button
+local GreenThemeButton = Instance.new("TextButton")
+GreenThemeButton.Name = "GreenThemeButton"
+GreenThemeButton.Parent = SettingsPanel
+GreenThemeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+GreenThemeButton.BorderSizePixel = 0
+GreenThemeButton.Position = UDim2.new(0, 290, 0, 155)
+GreenThemeButton.Size = UDim2.new(0, 80, 0, 30)
+GreenThemeButton.Font = Enum.Font.GothamMedium
+GreenThemeButton.Text = "Green"
+GreenThemeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+GreenThemeButton.TextSize = 11
+
+local GreenThemeCorner = Instance.new("UICorner")
+GreenThemeCorner.CornerRadius = UDim.new(0, 6)
+GreenThemeCorner.Parent = GreenThemeButton
+
 -- Close Settings Button
 local CloseSettingsButton = Instance.new("TextButton")
 CloseSettingsButton.Name = "CloseSettingsButton"
 CloseSettingsButton.Parent = SettingsPanel
 CloseSettingsButton.BackgroundColor3 = Color3.fromRGB(200, 75, 75)
 CloseSettingsButton.BorderSizePixel = 0
-CloseSettingsButton.Position = UDim2.new(0.5, -40, 0, 170)
+CloseSettingsButton.Position = UDim2.new(0.5, -40, 0, 230)
 CloseSettingsButton.Size = UDim2.new(0, 80, 0, 30)
 CloseSettingsButton.Font = Enum.Font.GothamMedium
 CloseSettingsButton.Text = "Close"
@@ -372,6 +453,109 @@ CloseSettingsCorner.Parent = CloseSettingsButton
 local currentTab = "Home"
 local isGamesExpanded = false
 local filteredScripts = {}
+
+-- Theme System Variables
+local currentTheme = "Dark" -- Default theme
+local themes = {
+    ["Dark"] = {
+        primary = Color3.fromRGB(25, 25, 35),
+        secondary = Color3.fromRGB(35, 35, 50),
+        tertiary = Color3.fromRGB(40, 40, 55),
+        sidebar = Color3.fromRGB(20, 20, 30),
+        accent = Color3.fromRGB(75, 125, 255),
+        success = Color3.fromRGB(75, 200, 75),
+        error = Color3.fromRGB(200, 75, 75),
+        warning = Color3.fromRGB(255, 150, 50),
+        text = Color3.fromRGB(255, 255, 255),
+        textSecondary = Color3.fromRGB(200, 200, 200),
+        textTertiary = Color3.fromRGB(180, 180, 180)
+    },
+    ["Ocean"] = {
+        primary = Color3.fromRGB(15, 30, 45),
+        secondary = Color3.fromRGB(25, 45, 65),
+        tertiary = Color3.fromRGB(35, 55, 75),
+        sidebar = Color3.fromRGB(10, 25, 40),
+        accent = Color3.fromRGB(100, 180, 255),
+        success = Color3.fromRGB(100, 220, 150),
+        error = Color3.fromRGB(255, 100, 120),
+        warning = Color3.fromRGB(255, 180, 100),
+        text = Color3.fromRGB(255, 255, 255),
+        textSecondary = Color3.fromRGB(200, 220, 240),
+        textTertiary = Color3.fromRGB(160, 180, 200)
+    },
+    ["Purple"] = {
+        primary = Color3.fromRGB(35, 20, 45),
+        secondary = Color3.fromRGB(50, 35, 65),
+        tertiary = Color3.fromRGB(60, 45, 75),
+        sidebar = Color3.fromRGB(25, 15, 35),
+        accent = Color3.fromRGB(150, 100, 255),
+        success = Color3.fromRGB(120, 200, 120),
+        error = Color3.fromRGB(255, 100, 150),
+        warning = Color3.fromRGB(255, 150, 100),
+        text = Color3.fromRGB(255, 255, 255),
+        textSecondary = Color3.fromRGB(220, 200, 240),
+        textTertiary = Color3.fromRGB(180, 160, 200)
+    },
+    ["Green"] = {
+        primary = Color3.fromRGB(20, 35, 25),
+        secondary = Color3.fromRGB(30, 50, 35),
+        tertiary = Color3.fromRGB(40, 60, 45),
+        sidebar = Color3.fromRGB(15, 25, 20),
+        accent = Color3.fromRGB(100, 255, 150),
+        success = Color3.fromRGB(80, 220, 120),
+        error = Color3.fromRGB(255, 120, 120),
+        warning = Color3.fromRGB(255, 200, 100),
+        text = Color3.fromRGB(255, 255, 255),
+        textSecondary = Color3.fromRGB(200, 240, 220),
+        textTertiary = Color3.fromRGB(160, 200, 180)
+    }
+}
+
+-- Theme Application Function
+local function applyTheme(themeName)
+    local theme = themes[themeName]
+    if not theme then return end
+    
+    currentTheme = themeName
+    
+    -- Main UI Elements with smooth transitions
+    local transitionInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+    
+    -- Main Frame
+    TweenService:Create(MainFrame, transitionInfo, {BackgroundColor3 = theme.primary}):Play()
+    TweenService:Create(TitleBar, transitionInfo, {BackgroundColor3 = theme.secondary}):Play()
+    TweenService:Create(Sidebar, transitionInfo, {BackgroundColor3 = theme.sidebar}):Play()
+    TweenService:Create(SearchContainer, transitionInfo, {BackgroundColor3 = theme.secondary}):Play()
+    TweenService:Create(ScriptContainer, transitionInfo, {BackgroundColor3 = theme.tertiary}):Play()
+    
+    -- Settings Panel
+    TweenService:Create(SettingsPanel, transitionInfo, {BackgroundColor3 = theme.sidebar}):Play()
+    TweenService:Create(SettingsShadow, transitionInfo, {BackgroundColor3 = theme.sidebar}):Play()
+    
+    -- Update text colors
+    TitleText.TextColor3 = theme.text
+    SearchBox.TextColor3 = theme.text
+    SearchBox.PlaceholderColor3 = theme.textTertiary
+    SearchIcon.TextColor3 = theme.textTertiary
+    SizeLabel.TextColor3 = theme.textSecondary
+    ThemeLabel.TextColor3 = theme.textSecondary
+    
+    -- Update theme button colors
+    DarkThemeButton.BackgroundColor3 = themeName == "Dark" and theme.accent or Color3.fromRGB(60, 60, 80)
+    OceanThemeButton.BackgroundColor3 = themeName == "Ocean" and theme.accent or Color3.fromRGB(60, 60, 80)
+    PurpleThemeButton.BackgroundColor3 = themeName == "Purple" and theme.accent or Color3.fromRGB(60, 60, 80)
+    GreenThemeButton.BackgroundColor3 = themeName == "Green" and theme.accent or Color3.fromRGB(60, 60, 80)
+    
+    -- Refresh tabs with new theme
+    refreshTabs()
+    
+    -- Show notification
+    StarterGui:SetCore("SendNotification", {
+        Title = "FlixHub Theme";
+        Text = "Theme changed to " .. themeName;
+        Duration = 2;
+    })
+end
 
 -- Universal Scripts (Not in Games category)
 local UniversalScripts = {
@@ -493,9 +677,9 @@ local GameScripts = {
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Iliankytb/Iliankytb/main/Best99NightsInTheForest"))()]]
         },
         {
-            name = "OP Script v2",
-            description = "Second version of OP script for 99 Nights in the Forest",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/adibhub1/99-nighit-in-forest/refs/heads/main/99%20night%20in%20forest"))()]]
+            name = "LinuxHub",
+            description = "LinuxHub script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/LinuxDevBr/99-Nights-In-the-Forest/refs/heads/main/Script.txt"))()]]
         },
         {
             name = "HutaoHub",
@@ -517,35 +701,63 @@ local GameScripts = {
     },
     ["Steal A Brainrot"] = {
         {
-            name = "Instant Steal (Not Tested)",
+            name = "Instant Steal (Not Working)",
             description = "Instant steal script for Steal A Brainrot game",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/StealaBrainrotMOD"))()]]
         },
         {
-            name = "Instant Steal v2 (Not Tested)",
+            name = "Instant Steal v2 (Not Working)",
             description = "Second version of instant steal script (unverified)",
             script = [[loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ffdfeadf0af798741806ea404682a938.lua"))()]]
+        }
+    },
+    ["Life Sentence"] = {
+        {
+            name = "BeanzHub",
+            description = "BeanzHub script for Life Sentence game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/pid4k/scripts/main/BeanzHub.lua", true))()]]
         }
     }
 }
 
--- New Tab System Functions
+-- New Tab System Functions with Theme Support
 local function createTab(tabName, isGameTab, indentLevel)
     local Tab = Instance.new("TextButton")
     Tab.Name = tabName
     Tab.Parent = TabContainer
-    Tab.BackgroundColor3 = tabName == currentTab and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(40, 40, 55)
+    
+    local theme = themes[currentTheme]
+    local isSelected = tabName == currentTab or tabName:gsub("[🏠⚡👁️🎮▼▶]", ""):gsub(" ", "") == currentTab
+    
+    Tab.BackgroundColor3 = isSelected and theme.accent or theme.tertiary
     Tab.BorderSizePixel = 0
     Tab.Size = UDim2.new(1, -10, 0, 35) -- Full width minus margins, 35px height
     Tab.Font = Enum.Font.GothamMedium
     Tab.Text = (indentLevel and string.rep("  ", indentLevel) or "") .. tabName
-    Tab.TextColor3 = Color3.fromRGB(255, 255, 255)
+    Tab.TextColor3 = theme.text
     Tab.TextSize = isGameTab and 10 or 12
     Tab.TextXAlignment = Enum.TextXAlignment.Left
     
     local TabCorner = Instance.new("UICorner")
     TabCorner.CornerRadius = UDim.new(0, 6)
     TabCorner.Parent = Tab
+    
+    -- Add modern hover animations
+    Tab.MouseEnter:Connect(function()
+        if not isSelected then
+            TweenService:Create(Tab, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+                BackgroundColor3 = theme.secondary
+            }):Play()
+        end
+    end)
+    
+    Tab.MouseLeave:Connect(function()
+        if not isSelected then
+            TweenService:Create(Tab, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+                BackgroundColor3 = theme.tertiary
+            }):Play()
+        end
+    end)
     
     return Tab
 end
@@ -677,16 +889,34 @@ local function refreshTabsOnResize()
 end
 
 local function createScriptItem(scriptData, index)
+    local theme = themes[currentTheme]
+    
     local ScriptItem = Instance.new("Frame")
     ScriptItem.Name = "ScriptItem" .. index
     ScriptItem.Parent = ScriptContainer
-    ScriptItem.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
+    ScriptItem.BackgroundColor3 = theme.secondary
     ScriptItem.BorderSizePixel = 0
     ScriptItem.Size = UDim2.new(1, -12, 0, 70)
     
     local ItemCorner = Instance.new("UICorner")
     ItemCorner.CornerRadius = UDim.new(0, 8)
     ItemCorner.Parent = ScriptItem
+    
+    -- Add modern hover effect for script items
+    local hoverConnection
+    local leaveConnection
+    
+    hoverConnection = ScriptItem.MouseEnter:Connect(function()
+        TweenService:Create(ScriptItem, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = theme.tertiary
+        }):Play()
+    end)
+    
+    leaveConnection = ScriptItem.MouseLeave:Connect(function()
+        TweenService:Create(ScriptItem, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = theme.secondary
+        }):Play()
+    end)
     
     -- Script Name
     local ScriptName = Instance.new("TextLabel")
@@ -903,6 +1133,23 @@ end)
 
 LargeButton.MouseButton1Click:Connect(function()
     changeHubSize("Large", 800, 600)
+end)
+
+-- Theme button clicks with smooth animations
+DarkThemeButton.MouseButton1Click:Connect(function()
+    applyTheme("Dark")
+end)
+
+OceanThemeButton.MouseButton1Click:Connect(function()
+    applyTheme("Ocean")
+end)
+
+PurpleThemeButton.MouseButton1Click:Connect(function()
+    applyTheme("Purple")
+end)
+
+GreenThemeButton.MouseButton1Click:Connect(function()
+    applyTheme("Green")
 end)
 
 -- Close settings button
