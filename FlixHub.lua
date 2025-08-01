@@ -232,8 +232,8 @@ SettingsPanel.Parent = FlixHub
 SettingsPanel.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
 SettingsPanel.BackgroundTransparency = 0.1
 SettingsPanel.BorderSizePixel = 0
-SettingsPanel.Position = UDim2.new(0.5, -200, 0.5, -150)
-SettingsPanel.Size = UDim2.new(0, 400, 0, 300)
+SettingsPanel.Position = UDim2.new(0.5, -200, 0.5, -175)
+SettingsPanel.Size = UDim2.new(0, 400, 0, 350)
 SettingsPanel.Visible = false
 SettingsPanel.ZIndex = 10
 
@@ -356,7 +356,7 @@ local ThemeLabel = Instance.new("TextLabel")
 ThemeLabel.Name = "ThemeLabel"
 ThemeLabel.Parent = SettingsPanel
 ThemeLabel.BackgroundTransparency = 1
-ThemeLabel.Position = UDim2.new(0, 20, 0, 130)
+ThemeLabel.Position = UDim2.new(0, 20, 0, 200)
 ThemeLabel.Size = UDim2.new(0, 100, 0, 20)
 ThemeLabel.Font = Enum.Font.GothamMedium
 ThemeLabel.Text = "Theme:"
@@ -370,7 +370,7 @@ DarkThemeButton.Name = "DarkThemeButton"
 DarkThemeButton.Parent = SettingsPanel
 DarkThemeButton.BackgroundColor3 = Color3.fromRGB(75, 125, 255) -- Default selected
 DarkThemeButton.BorderSizePixel = 0
-DarkThemeButton.Position = UDim2.new(0, 20, 0, 155)
+DarkThemeButton.Position = UDim2.new(0, 20, 0, 225)
 DarkThemeButton.Size = UDim2.new(0, 80, 0, 30)
 DarkThemeButton.Font = Enum.Font.GothamMedium
 DarkThemeButton.Text = "Dark"
@@ -387,7 +387,7 @@ OceanThemeButton.Name = "OceanThemeButton"
 OceanThemeButton.Parent = SettingsPanel
 OceanThemeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
 OceanThemeButton.BorderSizePixel = 0
-OceanThemeButton.Position = UDim2.new(0, 110, 0, 155)
+OceanThemeButton.Position = UDim2.new(0, 110, 0, 225)
 OceanThemeButton.Size = UDim2.new(0, 80, 0, 30)
 OceanThemeButton.Font = Enum.Font.GothamMedium
 OceanThemeButton.Text = "Ocean"
@@ -404,7 +404,7 @@ PurpleThemeButton.Name = "PurpleThemeButton"
 PurpleThemeButton.Parent = SettingsPanel
 PurpleThemeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
 PurpleThemeButton.BorderSizePixel = 0
-PurpleThemeButton.Position = UDim2.new(0, 200, 0, 155)
+PurpleThemeButton.Position = UDim2.new(0, 200, 0, 225)
 PurpleThemeButton.Size = UDim2.new(0, 80, 0, 30)
 PurpleThemeButton.Font = Enum.Font.GothamMedium
 PurpleThemeButton.Text = "Purple"
@@ -421,7 +421,7 @@ GreenThemeButton.Name = "GreenThemeButton"
 GreenThemeButton.Parent = SettingsPanel
 GreenThemeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
 GreenThemeButton.BorderSizePixel = 0
-GreenThemeButton.Position = UDim2.new(0, 290, 0, 155)
+GreenThemeButton.Position = UDim2.new(0, 290, 0, 225)
 GreenThemeButton.Size = UDim2.new(0, 80, 0, 30)
 GreenThemeButton.Font = Enum.Font.GothamMedium
 GreenThemeButton.Text = "Green"
@@ -438,7 +438,7 @@ CloseSettingsButton.Name = "CloseSettingsButton"
 CloseSettingsButton.Parent = SettingsPanel
 CloseSettingsButton.BackgroundColor3 = Color3.fromRGB(200, 75, 75)
 CloseSettingsButton.BorderSizePixel = 0
-CloseSettingsButton.Position = UDim2.new(0.5, -40, 0, 230)
+CloseSettingsButton.Position = UDim2.new(0.5, -40, 0, 280)
 CloseSettingsButton.Size = UDim2.new(0, 80, 0, 30)
 CloseSettingsButton.Font = Enum.Font.GothamMedium
 CloseSettingsButton.Text = "Close"
@@ -746,7 +746,8 @@ local function createTab(tabName, isGameTab, indentLevel)
     Tab.MouseEnter:Connect(function()
         if not isSelected then
             TweenService:Create(Tab, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
-                BackgroundColor3 = theme.secondary
+                BackgroundColor3 = theme.secondary,
+                Size = UDim2.new(1, -5, 0, 35) -- Slight scale effect
             }):Play()
         end
     end)
@@ -754,10 +755,23 @@ local function createTab(tabName, isGameTab, indentLevel)
     Tab.MouseLeave:Connect(function()
         if not isSelected then
             TweenService:Create(Tab, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
-                BackgroundColor3 = theme.tertiary
+                BackgroundColor3 = theme.tertiary,
+                Size = UDim2.new(1, -10, 0, 35) -- Return to normal
             }):Play()
         end
     end)
+    
+    -- Animate tab sliding in from the right
+    Tab.Position = UDim2.new(1, 0, 0, 0) -- Start off-screen
+    Tab.BackgroundTransparency = 1
+    Tab.TextTransparency = 1
+    
+    local slideInTween = TweenService:Create(Tab, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+        Position = UDim2.new(0, 5, 0, 0),
+        BackgroundTransparency = 0,
+        TextTransparency = 0
+    })
+    slideInTween:Play()
     
     return Tab
 end
@@ -806,12 +820,29 @@ local function createHomeContent()
 end
 
 local function refreshTabs()
-    -- Clear existing tabs
+    -- Animate out existing tabs first
+    local existingTabs = {}
     for _, child in pairs(TabContainer:GetChildren()) do
         if child:IsA("TextButton") then
-            child:Destroy()
+            table.insert(existingTabs, child)
         end
     end
+    
+    -- Animate existing tabs sliding out
+    for i, tab in pairs(existingTabs) do
+        local slideOutTween = TweenService:Create(tab, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+            Position = UDim2.new(-1, 0, tab.Position.Y.Scale, tab.Position.Y.Offset),
+            BackgroundTransparency = 1,
+            TextTransparency = 1
+        })
+        slideOutTween:Play()
+        slideOutTween.Completed:Connect(function()
+            tab:Destroy()
+        end)
+    end
+    
+    -- Wait a moment then create new tabs
+    wait(0.25)
     
     local tabHeight = 35
     local tabSpacing = 5
@@ -902,21 +933,38 @@ local function createScriptItem(scriptData, index)
     ItemCorner.CornerRadius = UDim.new(0, 8)
     ItemCorner.Parent = ScriptItem
     
-    -- Add modern hover effect for script items
+    -- Add modern hover effect for script items with scale and glow
     local hoverConnection
     local leaveConnection
     
     hoverConnection = ScriptItem.MouseEnter:Connect(function()
         TweenService:Create(ScriptItem, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
-            BackgroundColor3 = theme.tertiary
+            BackgroundColor3 = theme.tertiary,
+            Size = UDim2.new(1, -10, 0, 70), -- Slight scale up
+            Position = UDim2.new(0, 5, 0, ScriptItem.Position.Y.Offset)
         }):Play()
     end)
     
     leaveConnection = ScriptItem.MouseLeave:Connect(function()
         TweenService:Create(ScriptItem, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
-            BackgroundColor3 = theme.secondary
+            BackgroundColor3 = theme.secondary,
+            Size = UDim2.new(1, -12, 0, 70), -- Return to normal
+            Position = UDim2.new(0, 6, 0, ScriptItem.Position.Y.Offset)
         }):Play()
     end)
+    
+    -- Animate script item sliding in from the right
+    ScriptItem.Position = UDim2.new(1, 0, 0, ScriptItem.Position.Y.Offset)
+    ScriptItem.BackgroundTransparency = 1
+    
+    local slideDelay = (index - 1) * 0.05 -- Staggered animation
+    wait(slideDelay)
+    
+    local slideInTween = TweenService:Create(ScriptItem, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+        Position = UDim2.new(0, 6, 0, ScriptItem.Position.Y.Offset),
+        BackgroundTransparency = 0
+    })
+    slideInTween:Play()
     
     -- Script Name
     local ScriptName = Instance.new("TextLabel")
@@ -1000,12 +1048,27 @@ function updateScriptList()
         return
     end
     
-    -- Clear existing scripts (but keep Home content if present)
+    -- Animate out existing content
+    local existingItems = {}
     for _, child in pairs(ScriptContainer:GetChildren()) do
         if child:IsA("Frame") and (child.Name:find("ScriptItem") or child.Name == "HomeFrame") and currentTab ~= "Home" then
-            child:Destroy()
+            table.insert(existingItems, child)
         end
     end
+    
+    -- Fade out existing items
+    for _, item in pairs(existingItems) do
+        local fadeOutTween = TweenService:Create(item, TweenInfo.new(0.15, Enum.EasingStyle.Quad), {
+            Position = UDim2.new(item.Position.X.Scale, item.Position.X.Offset - 50, item.Position.Y.Scale, item.Position.Y.Offset),
+            BackgroundTransparency = 1
+        })
+        fadeOutTween:Play()
+        fadeOutTween.Completed:Connect(function()
+            item:Destroy()
+        end)
+    end
+    
+    wait(0.2) -- Small delay for smooth transition
     
     local scriptsToShow = {}
     
