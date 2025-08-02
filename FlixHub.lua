@@ -18,107 +18,124 @@ FlixHub.Parent = playerGui
 FlixHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 FlixHub.ResetOnSpawn = false
 
--- ✨ ANIMATED LOADING SCREEN ✨
-local LoadingScreen = Instance.new("Frame")
-LoadingScreen.Name = "LoadingScreen"
-LoadingScreen.Parent = FlixHub
-LoadingScreen.BackgroundColor3 = Color3.fromRGB(15, 15, 25)
-LoadingScreen.BackgroundTransparency = 0
-LoadingScreen.BorderSizePixel = 0
-LoadingScreen.Size = UDim2.new(1, 0, 1, 0)
-LoadingScreen.Position = UDim2.new(0, 0, 0, 0)
-LoadingScreen.ZIndex = 100
-
--- Loading Screen Gradient
-local LoadingGradient = Instance.new("UIGradient")
-LoadingGradient.Parent = LoadingScreen
-LoadingGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 40)),
-    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(15, 15, 25)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 10, 20))
-}
-LoadingGradient.Rotation = 45
-
--- Loading Circle Container
-local CircleContainer = Instance.new("Frame")
-CircleContainer.Name = "CircleContainer"
-CircleContainer.Parent = LoadingScreen
-CircleContainer.BackgroundTransparency = 1
-CircleContainer.Size = UDim2.new(0, 100, 0, 100)
-CircleContainer.Position = UDim2.new(0.5, -50, 0.5, -80)
-CircleContainer.ZIndex = 101
-
--- Animated Loading Circle
-local LoadingCircle = Instance.new("Frame")
-LoadingCircle.Name = "LoadingCircle"
-LoadingCircle.Parent = CircleContainer
-LoadingCircle.BackgroundTransparency = 1
-LoadingCircle.Size = UDim2.new(1, 0, 1, 0)
-LoadingCircle.Position = UDim2.new(0, 0, 0, 0)
-LoadingCircle.ZIndex = 101
-
--- Circle Stroke for Animation
-local CircleStroke = Instance.new("UIStroke")
-CircleStroke.Parent = LoadingCircle
-CircleStroke.Color = Color3.fromRGB(100, 150, 255)
-CircleStroke.Thickness = 8
-CircleStroke.Transparency = 0
-
-local CircleCorner = Instance.new("UICorner")
-CircleCorner.CornerRadius = UDim.new(0.5, 0)
-CircleCorner.Parent = LoadingCircle
-
--- Inner Circle Glow
-local InnerCircle = Instance.new("Frame")
-InnerCircle.Name = "InnerCircle"
-InnerCircle.Parent = LoadingCircle
-InnerCircle.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
-InnerCircle.BackgroundTransparency = 0.7
-InnerCircle.Size = UDim2.new(0.3, 0, 0.3, 0)
-InnerCircle.Position = UDim2.new(0.35, 0, 0.35, 0)
-InnerCircle.ZIndex = 102
-
-local InnerCorner = Instance.new("UICorner")
-InnerCorner.CornerRadius = UDim.new(0.5, 0)
-InnerCorner.Parent = InnerCircle
-
--- Loading Text
-local LoadingText = Instance.new("TextLabel")
-LoadingText.Name = "LoadingText"
-LoadingText.Parent = LoadingScreen
-LoadingText.BackgroundTransparency = 1
-LoadingText.Size = UDim2.new(0, 300, 0, 50)
-LoadingText.Position = UDim2.new(0.5, -150, 0.5, 40)
-LoadingText.Font = Enum.Font.GothamBold
-LoadingText.Text = "FlixHub✨ Loading"
-LoadingText.TextColor3 = Color3.fromRGB(255, 255, 255)
-LoadingText.TextSize = 24
-LoadingText.TextXAlignment = Enum.TextXAlignment.Center
-LoadingText.ZIndex = 101
-
--- Loading Text Glow
-local TextStroke = Instance.new("UIStroke")
-TextStroke.Parent = LoadingText
-TextStroke.Color = Color3.fromRGB(100, 150, 255)
-TextStroke.Transparency = 0.5
-TextStroke.Thickness = 2
-
--- Loading Dots Animation Text
-local DotsText = Instance.new("TextLabel")
-DotsText.Name = "DotsText"
-DotsText.Parent = LoadingScreen
-DotsText.BackgroundTransparency = 1
-DotsText.Size = UDim2.new(0, 100, 0, 30)
-DotsText.Position = UDim2.new(0.5, -50, 0.5, 80)
-DotsText.Font = Enum.Font.GothamBold
-DotsText.Text = "..."
-DotsText.TextColor3 = Color3.fromRGB(200, 200, 200)
-DotsText.TextSize = 18
-DotsText.TextXAlignment = Enum.TextXAlignment.Center
-DotsText.ZIndex = 101
+-- ✨ ANIMATED LOADING SCREEN ✨ (Variables for loading screen elements)
+local LoadingScreen = nil
+local LoadingGradient = nil
+local CircleContainer = nil
+local LoadingCircle = nil
+local CircleStroke = nil
+local InnerCircle = nil
+local LoadingText = nil
+local DotsText = nil
+local TextStroke = nil
+-- Function to create loading screen when needed
+local function createLoadingScreen()
+    LoadingScreen = Instance.new("Frame")
+    LoadingScreen.Name = "LoadingScreen"
+    LoadingScreen.Parent = FlixHub
+    LoadingScreen.BackgroundColor3 = Color3.fromRGB(15, 15, 25)
+    LoadingScreen.BackgroundTransparency = 0
+    LoadingScreen.BorderSizePixel = 0
+    LoadingScreen.Size = UDim2.new(1, 0, 1, 0)
+    LoadingScreen.Position = UDim2.new(0, 0, 0, 0)
+    LoadingScreen.ZIndex = 100
+    
+    -- Loading Screen Gradient
+    LoadingGradient = Instance.new("UIGradient")
+    LoadingGradient.Parent = LoadingScreen
+    LoadingGradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 40)),
+        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(15, 15, 25)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 10, 20))
+    }
+    LoadingGradient.Rotation = 45
+    
+    -- Loading Circle Container
+    CircleContainer = Instance.new("Frame")
+    CircleContainer.Name = "CircleContainer"
+    CircleContainer.Parent = LoadingScreen
+    CircleContainer.BackgroundTransparency = 1
+    CircleContainer.Size = UDim2.new(0, 100, 0, 100)
+    CircleContainer.Position = UDim2.new(0.5, -50, 0.5, -80)
+    CircleContainer.ZIndex = 101
+    
+    -- Animated Loading Circle
+    LoadingCircle = Instance.new("Frame")
+    LoadingCircle.Name = "LoadingCircle"
+    LoadingCircle.Parent = CircleContainer
+    LoadingCircle.BackgroundTransparency = 1
+    LoadingCircle.Size = UDim2.new(1, 0, 1, 0)
+    LoadingCircle.Position = UDim2.new(0, 0, 0, 0)
+    LoadingCircle.ZIndex = 101
+    
+    -- Circle Stroke for Animation
+    CircleStroke = Instance.new("UIStroke")
+    CircleStroke.Parent = LoadingCircle
+    CircleStroke.Color = Color3.fromRGB(100, 150, 255)
+    CircleStroke.Thickness = 8
+    CircleStroke.Transparency = 0
+    
+    local CircleCorner = Instance.new("UICorner")
+    CircleCorner.CornerRadius = UDim.new(0.5, 0)
+    CircleCorner.Parent = LoadingCircle
+    
+    -- Inner Circle Glow
+    InnerCircle = Instance.new("Frame")
+    InnerCircle.Name = "InnerCircle"
+    InnerCircle.Parent = LoadingCircle
+    InnerCircle.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+    InnerCircle.BackgroundTransparency = 0.7
+    InnerCircle.Size = UDim2.new(0.3, 0, 0.3, 0)
+    InnerCircle.Position = UDim2.new(0.35, 0, 0.35, 0)
+    InnerCircle.ZIndex = 102
+    
+    local InnerCorner = Instance.new("UICorner")
+    InnerCorner.CornerRadius = UDim.new(0.5, 0)
+    InnerCorner.Parent = InnerCircle
+    
+    -- Loading Text
+    LoadingText = Instance.new("TextLabel")
+    LoadingText.Name = "LoadingText"
+    LoadingText.Parent = LoadingScreen
+    LoadingText.BackgroundTransparency = 1
+    LoadingText.Size = UDim2.new(0, 300, 0, 50)
+    LoadingText.Position = UDim2.new(0.5, -150, 0.5, 40)
+    LoadingText.Font = Enum.Font.GothamBold
+    LoadingText.Text = "FlixHub✨ Loading"
+    LoadingText.TextColor3 = Color3.fromRGB(255, 255, 255)
+    LoadingText.TextSize = 24
+    LoadingText.TextXAlignment = Enum.TextXAlignment.Center
+    LoadingText.ZIndex = 101
+    
+    -- Loading Text Glow
+    TextStroke = Instance.new("UIStroke")
+    TextStroke.Parent = LoadingText
+    TextStroke.Color = Color3.fromRGB(100, 150, 255)
+    TextStroke.Transparency = 0.5
+    TextStroke.Thickness = 2
+    
+    -- Loading Dots Animation Text
+    DotsText = Instance.new("TextLabel")
+    DotsText.Name = "DotsText"
+    DotsText.Parent = LoadingScreen
+    DotsText.BackgroundTransparency = 1
+    DotsText.Size = UDim2.new(0, 100, 0, 30)
+    DotsText.Position = UDim2.new(0.5, -50, 0.5, 80)
+    DotsText.Font = Enum.Font.GothamBold
+    DotsText.Text = "..."
+    DotsText.TextColor3 = Color3.fromRGB(200, 200, 200)
+    DotsText.TextSize = 18
+    DotsText.TextXAlignment = Enum.TextXAlignment.Center
+    DotsText.ZIndex = 101
+end
 
 -- Loading Screen Animation Functions
 local function startLoadingAnimations()
+    -- Create loading screen first if it doesn't exist
+    if not LoadingScreen then
+        createLoadingScreen()
+    end
+    
     -- Spinning circle animation
     local spinTween = TweenService:Create(CircleContainer, TweenInfo.new(2, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1), {
         Rotation = 360
@@ -156,6 +173,11 @@ end
 
 -- Function to hide loading screen with animation
 local function hideLoadingScreen()
+    -- Only proceed if loading screen exists
+    if not LoadingScreen then
+        return
+    end
+    
     local fadeOutTween = TweenService:Create(LoadingScreen, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
         BackgroundTransparency = 1
     })
@@ -183,7 +205,10 @@ local function hideLoadingScreen()
     innerFadeTween:Play()
     
     fadeOutTween.Completed:Connect(function()
-        LoadingScreen:Destroy()
+        if LoadingScreen then
+            LoadingScreen:Destroy()
+            LoadingScreen = nil
+        end
     end)
 end
 
