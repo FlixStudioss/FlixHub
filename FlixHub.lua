@@ -697,229 +697,187 @@ ScriptLayout.Parent = ScriptContainer
 ScriptLayout.SortOrder = Enum.SortOrder.LayoutOrder
 ScriptLayout.Padding = UDim.new(0, 5)
 
--- Settings Panel
-local SettingsPanel = Instance.new("Frame")
-SettingsPanel.Name = "SettingsPanel"
-SettingsPanel.Parent = FlixHub
-SettingsPanel.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
-SettingsPanel.BackgroundTransparency = 0.1
-SettingsPanel.BorderSizePixel = 0
-SettingsPanel.Position = UDim2.new(0.5, -200, 0.5, -175)
-SettingsPanel.Size = UDim2.new(0, 400, 0, 350)
-SettingsPanel.Visible = false
-SettingsPanel.ZIndex = 10
+-- ===== BRAND NEW SETTINGS PANEL =====
+-- Modern Settings Panel with Clean Implementation
+local NewSettingsPanel = Instance.new("Frame")
+NewSettingsPanel.Name = "NewSettingsPanel"
+NewSettingsPanel.Parent = FlixHub
+NewSettingsPanel.BackgroundColor3 = Color3.fromRGB(25, 30, 40)
+NewSettingsPanel.BackgroundTransparency = 0.05
+NewSettingsPanel.BorderSizePixel = 0
+NewSettingsPanel.Position = UDim2.new(0.5, -200, 0.5, -150)
+NewSettingsPanel.Size = UDim2.new(0, 400, 0, 300)
+NewSettingsPanel.Visible = false
+NewSettingsPanel.ZIndex = 20
 
-local SettingsPanelCorner = Instance.new("UICorner")
-SettingsPanelCorner.CornerRadius = UDim.new(0, 12)
-SettingsPanelCorner.Parent = SettingsPanel
+-- Settings Panel Corner
+local NewSettingsCorner = Instance.new("UICorner")
+NewSettingsCorner.CornerRadius = UDim.new(0, 15)
+NewSettingsCorner.Parent = NewSettingsPanel
+
+-- Settings Panel Gradient
+local NewSettingsGradient = Instance.new("UIGradient")
+NewSettingsGradient.Parent = NewSettingsPanel
+NewSettingsGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 35, 45)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(25, 30, 40)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 25, 35))
+}
+NewSettingsGradient.Rotation = 45
 
 -- Settings Panel Shadow
-local SettingsShadow = Instance.new("Frame")
-SettingsShadow.Name = "SettingsShadow"
-SettingsShadow.Parent = FlixHub
-SettingsShadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-SettingsShadow.BackgroundTransparency = 0.8
-SettingsShadow.BorderSizePixel = 0
-SettingsShadow.Position = UDim2.new(0.5, -195, 0.5, -170)
-SettingsShadow.Size = UDim2.new(0, 400, 0, 350)
-SettingsShadow.Visible = false
-SettingsShadow.ZIndex = 9
+local NewSettingsShadow = Instance.new("Frame")
+NewSettingsShadow.Name = "NewSettingsShadow"
+NewSettingsShadow.Parent = FlixHub
+NewSettingsShadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+NewSettingsShadow.BackgroundTransparency = 0.7
+NewSettingsShadow.BorderSizePixel = 0
+NewSettingsShadow.Position = UDim2.new(0.5, -195, 0.5, -145)
+NewSettingsShadow.Size = UDim2.new(0, 400, 0, 300)
+NewSettingsShadow.Visible = false
+NewSettingsShadow.ZIndex = 19
 
-local SettingsShadowCorner = Instance.new("UICorner")
-SettingsShadowCorner.CornerRadius = UDim.new(0, 12)
-SettingsShadowCorner.Parent = SettingsShadow
+local NewShadowCorner = Instance.new("UICorner")
+NewShadowCorner.CornerRadius = UDim.new(0, 15)
+NewShadowCorner.Parent = NewSettingsShadow
 
 -- Settings Title
-local SettingsTitle = Instance.new("TextLabel")
-SettingsTitle.Name = "SettingsTitle"
-SettingsTitle.Parent = SettingsPanel
-SettingsTitle.BackgroundTransparency = 1
-SettingsTitle.Position = UDim2.new(0, 0, 0, 10)
-SettingsTitle.Size = UDim2.new(1, 0, 0, 30)
-SettingsTitle.Font = Enum.Font.GothamBold
-SettingsTitle.Text = "FlixHub Settings"
-SettingsTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
-SettingsTitle.TextSize = 16
-SettingsTitle.TextXAlignment = Enum.TextXAlignment.Center
+local NewSettingsTitle = Instance.new("TextLabel")
+NewSettingsTitle.Name = "NewSettingsTitle"
+NewSettingsTitle.Parent = NewSettingsPanel
+NewSettingsTitle.BackgroundTransparency = 1
+NewSettingsTitle.Position = UDim2.new(0, 0, 0, 15)
+NewSettingsTitle.Size = UDim2.new(1, 0, 0, 35)
+NewSettingsTitle.Font = Enum.Font.GothamBold
+NewSettingsTitle.Text = "⚙️ FlixHub Settings"
+NewSettingsTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+NewSettingsTitle.TextSize = 18
+NewSettingsTitle.TextXAlignment = Enum.TextXAlignment.Center
+NewSettingsTitle.ZIndex = 21
 
--- Size Label
-local SizeLabel = Instance.new("TextLabel")
-SizeLabel.Name = "SizeLabel"
-SizeLabel.Parent = SettingsPanel
-SizeLabel.BackgroundTransparency = 1
-SizeLabel.Position = UDim2.new(0, 20, 0, 50)
-SizeLabel.Size = UDim2.new(0, 100, 0, 25)
-SizeLabel.Font = Enum.Font.GothamMedium
-SizeLabel.Text = "Hub Size:"
-SizeLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-SizeLabel.TextSize = 14
-SizeLabel.TextXAlignment = Enum.TextXAlignment.Left
+-- Hub Size Section
+local SizeSection = Instance.new("TextLabel")
+SizeSection.Name = "SizeSection"
+SizeSection.Parent = NewSettingsPanel
+SizeSection.BackgroundTransparency = 1
+SizeSection.Position = UDim2.new(0, 25, 0, 60)
+SizeSection.Size = UDim2.new(1, -50, 0, 25)
+SizeSection.Font = Enum.Font.GothamMedium
+SizeSection.Text = "🔧 Hub Size"
+SizeSection.TextColor3 = Color3.fromRGB(200, 220, 255)
+SizeSection.TextSize = 14
+SizeSection.TextXAlignment = Enum.TextXAlignment.Left
+SizeSection.ZIndex = 21
 
--- Very Small Size Button (Mobile)
-local VerySmallButton = Instance.new("TextButton")
-VerySmallButton.Name = "VerySmallButton"
-VerySmallButton.Parent = SettingsPanel
-VerySmallButton.BackgroundColor3 = Color3.fromRGB(75, 125, 255)  -- Highlighted as default
-VerySmallButton.BorderSizePixel = 0
-VerySmallButton.Position = UDim2.new(0, 20, 0, 80)
-VerySmallButton.Size = UDim2.new(0, 120, 0, 30)
-VerySmallButton.Font = Enum.Font.GothamMedium
-VerySmallButton.Text = "Very Small (Mobile)"
-VerySmallButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-VerySmallButton.TextSize = 10
+-- Size Buttons Container
+local SizeContainer = Instance.new("Frame")
+SizeContainer.Name = "SizeContainer"
+SizeContainer.Parent = NewSettingsPanel
+SizeContainer.BackgroundTransparency = 1
+SizeContainer.Position = UDim2.new(0, 25, 0, 90)
+SizeContainer.Size = UDim2.new(1, -50, 0, 70)
+SizeContainer.ZIndex = 21
 
-local VerySmallCorner = Instance.new("UICorner")
-VerySmallCorner.CornerRadius = UDim.new(0, 6)
-VerySmallCorner.Parent = VerySmallButton
+-- Size Buttons (2x2 Grid)
+local sizeButtons = {
+    {name = "Very Small", pos = UDim2.new(0, 0, 0, 0), size = {500, 350}, default = true},
+    {name = "Small", pos = UDim2.new(0.5, 5, 0, 0), size = {600, 400}},
+    {name = "Medium", pos = UDim2.new(0, 0, 0, 35), size = {700, 500}},
+    {name = "Large", pos = UDim2.new(0.5, 5, 0, 35), size = {800, 600}}
+}
 
--- Small Size Button
-local SmallButton = Instance.new("TextButton")
-SmallButton.Name = "SmallButton"
-SmallButton.Parent = SettingsPanel
-SmallButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
-SmallButton.BorderSizePixel = 0
-SmallButton.Position = UDim2.new(0, 160, 0, 80)
-SmallButton.Size = UDim2.new(0, 120, 0, 30)
-SmallButton.Font = Enum.Font.GothamMedium
-SmallButton.Text = "Small"
-SmallButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-SmallButton.TextSize = 12
+local sizeButtonRefs = {}
+for i, buttonData in ipairs(sizeButtons) do
+    local btn = Instance.new("TextButton")
+    btn.Name = buttonData.name .. "Button"
+    btn.Parent = SizeContainer
+    btn.BackgroundColor3 = buttonData.default and Color3.fromRGB(85, 135, 255) or Color3.fromRGB(50, 60, 80)
+    btn.BorderSizePixel = 0
+    btn.Position = buttonData.pos
+    btn.Size = UDim2.new(0.5, -2.5, 0, 30)
+    btn.Font = Enum.Font.GothamMedium
+    btn.Text = buttonData.name
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.TextSize = 11
+    btn.ZIndex = 22
+    
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 8)
+    corner.Parent = btn
+    
+    sizeButtonRefs[buttonData.name] = {button = btn, width = buttonData.size[1], height = buttonData.size[2]}
+end
 
-local SmallCorner = Instance.new("UICorner")
-SmallCorner.CornerRadius = UDim.new(0, 6)
-SmallCorner.Parent = SmallButton
+-- Theme Section
+local ThemeSection = Instance.new("TextLabel")
+ThemeSection.Name = "ThemeSection"
+ThemeSection.Parent = NewSettingsPanel
+ThemeSection.BackgroundTransparency = 1
+ThemeSection.Position = UDim2.new(0, 25, 0, 170)
+ThemeSection.Size = UDim2.new(1, -50, 0, 25)
+ThemeSection.Font = Enum.Font.GothamMedium
+ThemeSection.Text = "🎨 Theme"
+ThemeSection.TextColor3 = Color3.fromRGB(200, 220, 255)
+ThemeSection.TextSize = 14
+ThemeSection.TextXAlignment = Enum.TextXAlignment.Left
+ThemeSection.ZIndex = 21
 
--- Medium Size Button
-local MediumButton = Instance.new("TextButton")
-MediumButton.Name = "MediumButton"
-MediumButton.Parent = SettingsPanel
-MediumButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
-MediumButton.BorderSizePixel = 0
-MediumButton.Position = UDim2.new(0, 20, 0, 120)
-MediumButton.Size = UDim2.new(0, 120, 0, 30)
-MediumButton.Font = Enum.Font.GothamMedium
-MediumButton.Text = "Medium"
-MediumButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-MediumButton.TextSize = 12
+-- Theme Buttons Container
+local ThemeContainer = Instance.new("Frame")
+ThemeContainer.Name = "ThemeContainer"
+ThemeContainer.Parent = NewSettingsPanel
+ThemeContainer.BackgroundTransparency = 1
+ThemeContainer.Position = UDim2.new(0, 25, 0, 200)
+ThemeContainer.Size = UDim2.new(1, -50, 0, 35)
+ThemeContainer.ZIndex = 21
 
-local MediumCorner = Instance.new("UICorner")
-MediumCorner.CornerRadius = UDim.new(0, 6)
-MediumCorner.Parent = MediumButton
+-- Theme Buttons
+local themeButtons = {
+    {name = "Dark", pos = UDim2.new(0, 0, 0, 0), color = Color3.fromRGB(25, 25, 35), default = true},
+    {name = "Ocean", pos = UDim2.new(0.25, 2, 0, 0), color = Color3.fromRGB(20, 50, 80)},
+    {name = "Purple", pos = UDim2.new(0.5, 4, 0, 0), color = Color3.fromRGB(50, 20, 80)},
+    {name = "Green", pos = UDim2.new(0.75, 6, 0, 0), color = Color3.fromRGB(20, 60, 40)}
+}
 
--- Large Size Button
-local LargeButton = Instance.new("TextButton")
-LargeButton.Name = "LargeButton"
-LargeButton.Parent = SettingsPanel
-LargeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
-LargeButton.BorderSizePixel = 0
-LargeButton.Position = UDim2.new(0, 160, 0, 120)
-LargeButton.Size = UDim2.new(0, 120, 0, 30)
-LargeButton.Font = Enum.Font.GothamMedium
-LargeButton.Text = "Large"
-LargeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-LargeButton.TextSize = 12
+local themeButtonRefs = {}
+for i, themeData in ipairs(themeButtons) do
+    local btn = Instance.new("TextButton")
+    btn.Name = themeData.name .. "ThemeButton"
+    btn.Parent = ThemeContainer
+    btn.BackgroundColor3 = themeData.default and Color3.fromRGB(85, 135, 255) or themeData.color
+    btn.BorderSizePixel = 0
+    btn.Position = themeData.pos
+    btn.Size = UDim2.new(0.25, -2, 0, 30)
+    btn.Font = Enum.Font.GothamMedium
+    btn.Text = themeData.name
+    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    btn.TextSize = 10
+    btn.ZIndex = 22
+    
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 8)
+    corner.Parent = btn
+    
+    themeButtonRefs[themeData.name] = {button = btn, originalColor = themeData.color}
+end
 
-local LargeCorner = Instance.new("UICorner")
-LargeCorner.CornerRadius = UDim.new(0, 6)
-LargeCorner.Parent = LargeButton
+-- Close Button
+local NewCloseButton = Instance.new("TextButton")
+NewCloseButton.Name = "NewCloseButton"
+NewCloseButton.Parent = NewSettingsPanel
+NewCloseButton.BackgroundColor3 = Color3.fromRGB(220, 85, 85)
+NewCloseButton.BorderSizePixel = 0
+NewCloseButton.Position = UDim2.new(0.5, -50, 0, 250)
+NewCloseButton.Size = UDim2.new(0, 100, 0, 35)
+NewCloseButton.Font = Enum.Font.GothamBold
+NewCloseButton.Text = "✖️ Close"
+NewCloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+NewCloseButton.TextSize = 12
+NewCloseButton.ZIndex = 22
 
--- Theme Selection Label
-local ThemeLabel = Instance.new("TextLabel")
-ThemeLabel.Name = "ThemeLabel"
-ThemeLabel.Parent = SettingsPanel
-ThemeLabel.BackgroundTransparency = 1
-ThemeLabel.Position = UDim2.new(0, 20, 0, 200)
-ThemeLabel.Size = UDim2.new(0, 100, 0, 20)
-ThemeLabel.Font = Enum.Font.GothamMedium
-ThemeLabel.Text = "Theme:"
-ThemeLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-ThemeLabel.TextSize = 14
-ThemeLabel.TextXAlignment = Enum.TextXAlignment.Left
-
--- Dark Theme Button
-local DarkThemeButton = Instance.new("TextButton")
-DarkThemeButton.Name = "DarkThemeButton"
-DarkThemeButton.Parent = SettingsPanel
-DarkThemeButton.BackgroundColor3 = Color3.fromRGB(75, 125, 255) -- Default selected
-DarkThemeButton.BorderSizePixel = 0
-DarkThemeButton.Position = UDim2.new(0, 20, 0, 225)
-DarkThemeButton.Size = UDim2.new(0, 80, 0, 30)
-DarkThemeButton.Font = Enum.Font.GothamMedium
-DarkThemeButton.Text = "Dark"
-DarkThemeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-DarkThemeButton.TextSize = 11
-
-local DarkThemeCorner = Instance.new("UICorner")
-DarkThemeCorner.CornerRadius = UDim.new(0, 6)
-DarkThemeCorner.Parent = DarkThemeButton
-
--- Ocean Theme Button
-local OceanThemeButton = Instance.new("TextButton")
-OceanThemeButton.Name = "OceanThemeButton"
-OceanThemeButton.Parent = SettingsPanel
-OceanThemeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
-OceanThemeButton.BorderSizePixel = 0
-OceanThemeButton.Position = UDim2.new(0, 110, 0, 225)
-OceanThemeButton.Size = UDim2.new(0, 80, 0, 30)
-OceanThemeButton.Font = Enum.Font.GothamMedium
-OceanThemeButton.Text = "Ocean"
-OceanThemeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-OceanThemeButton.TextSize = 11
-
-local OceanThemeCorner = Instance.new("UICorner")
-OceanThemeCorner.CornerRadius = UDim.new(0, 6)
-OceanThemeCorner.Parent = OceanThemeButton
-
--- Purple Theme Button
-local PurpleThemeButton = Instance.new("TextButton")
-PurpleThemeButton.Name = "PurpleThemeButton"
-PurpleThemeButton.Parent = SettingsPanel
-PurpleThemeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
-PurpleThemeButton.BorderSizePixel = 0
-PurpleThemeButton.Position = UDim2.new(0, 200, 0, 225)
-PurpleThemeButton.Size = UDim2.new(0, 80, 0, 30)
-PurpleThemeButton.Font = Enum.Font.GothamMedium
-PurpleThemeButton.Text = "Purple"
-PurpleThemeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-PurpleThemeButton.TextSize = 11
-
-local PurpleThemeCorner = Instance.new("UICorner")
-PurpleThemeCorner.CornerRadius = UDim.new(0, 6)
-PurpleThemeCorner.Parent = PurpleThemeButton
-
--- Green Theme Button
-local GreenThemeButton = Instance.new("TextButton")
-GreenThemeButton.Name = "GreenThemeButton"
-GreenThemeButton.Parent = SettingsPanel
-GreenThemeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
-GreenThemeButton.BorderSizePixel = 0
-GreenThemeButton.Position = UDim2.new(0, 290, 0, 225)
-GreenThemeButton.Size = UDim2.new(0, 80, 0, 30)
-GreenThemeButton.Font = Enum.Font.GothamMedium
-GreenThemeButton.Text = "Green"
-GreenThemeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-GreenThemeButton.TextSize = 11
-
-local GreenThemeCorner = Instance.new("UICorner")
-GreenThemeCorner.CornerRadius = UDim.new(0, 6)
-GreenThemeCorner.Parent = GreenThemeButton
-
--- Close Settings Button
-local CloseSettingsButton = Instance.new("TextButton")
-CloseSettingsButton.Name = "CloseSettingsButton"
-CloseSettingsButton.Parent = SettingsPanel
-CloseSettingsButton.BackgroundColor3 = Color3.fromRGB(200, 75, 75)
-CloseSettingsButton.BorderSizePixel = 0
-CloseSettingsButton.Position = UDim2.new(0.5, -40, 0, 280)
-CloseSettingsButton.Size = UDim2.new(0, 80, 0, 30)
-CloseSettingsButton.Font = Enum.Font.GothamMedium
-CloseSettingsButton.Text = "Close"
-CloseSettingsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseSettingsButton.TextSize = 12
-
-local CloseSettingsCorner = Instance.new("UICorner")
-CloseSettingsCorner.CornerRadius = UDim.new(0, 6)
-CloseSettingsCorner.Parent = CloseSettingsButton
+local CloseButtonCorner = Instance.new("UICorner")
+CloseButtonCorner.CornerRadius = UDim.new(0, 10)
+CloseButtonCorner.Parent = NewCloseButton
 
 -- Modern Changelog Panel
 local ChangelogPanel = Instance.new("ScrollingFrame")
@@ -2150,11 +2108,119 @@ local function applyTheme(themeName)
     })
 end
 
--- Settings button click handler
+-- ===== NEW SETTINGS PANEL FUNCTIONALITY =====
+
+-- Settings button click handler (updated for new panel)
 SettingsButton.MouseButton1Click:Connect(function()
-    SettingsPanel.Visible = not SettingsPanel.Visible
-    SettingsShadow.Visible = SettingsPanel.Visible
+    NewSettingsPanel.Visible = not NewSettingsPanel.Visible
+    NewSettingsShadow.Visible = NewSettingsPanel.Visible
 end)
+
+-- New Close Settings Button Handler
+NewCloseButton.MouseButton1Click:Connect(function()
+    NewSettingsPanel.Visible = false
+    NewSettingsShadow.Visible = false
+end)
+
+-- Size Button Click Handlers (New Implementation)
+for sizeName, sizeData in pairs(sizeButtonRefs) do
+    sizeData.button.MouseButton1Click:Connect(function()
+        -- Reset all size buttons to default color
+        for name, data in pairs(sizeButtonRefs) do
+            data.button.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+        end
+        
+        -- Highlight selected button
+        sizeData.button.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
+        
+        -- Change hub size with animations
+        local width, height = sizeData.width, sizeData.height
+        currentHubSize.width = width
+        currentHubSize.height = height
+        
+        -- Animate MainFrame
+        local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            Size = UDim2.new(0, width, 0, height),
+            Position = UDim2.new(0.5, -width/2, 0.5, -height/2)
+        })
+        
+        -- Animate all shadows
+        local shadowTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            Size = UDim2.new(0, width, 0, height),
+            Position = UDim2.new(0.5, -width/2 + 8, 0.5, -height/2 + 8)
+        })
+        
+        local shadow2Tween = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            Size = UDim2.new(0, width, 0, height),
+            Position = UDim2.new(0.5, -width/2 + 2, 0.5, -height/2 + 2)
+        })
+        
+        local ambientTween = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            Size = UDim2.new(0, width + 20, 0, height + 20),
+            Position = UDim2.new(0.5, -width/2 - 10, 0.5, -height/2 - 10)
+        })
+        
+        mainTween:Play()
+        shadowTween:Play()
+        shadow2Tween:Play()
+        ambientTween:Play()
+        
+        -- Show notification
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub Settings";
+            Text = "Hub size changed to " .. sizeName;
+            Duration = 2;
+        })
+    end)
+end
+
+-- Theme Button Click Handlers (New Implementation)
+for themeName, themeData in pairs(themeButtonRefs) do
+    themeData.button.MouseButton1Click:Connect(function()
+        -- Reset all theme buttons to original colors
+        for name, data in pairs(themeButtonRefs) do
+            data.button.BackgroundColor3 = data.originalColor
+        end
+        
+        -- Highlight selected theme button
+        themeData.button.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
+        
+        -- Apply theme if it exists
+        local selectedTheme = themes[themeName]
+        if selectedTheme then
+            currentTheme = themeName
+            
+            -- Apply theme with smooth transitions
+            local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+                BackgroundColor3 = selectedTheme.MainFrame
+            })
+            
+            local sidebarTween = TweenService:Create(Sidebar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+                BackgroundColor3 = selectedTheme.Sidebar
+            })
+            
+            local contentTween = TweenService:Create(ContentArea, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+                BackgroundColor3 = selectedTheme.ContentArea
+            })
+            
+            local titleTween = TweenService:Create(TitleBar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+                BackgroundColor3 = selectedTheme.TitleBar
+            })
+            
+            mainTween:Play()
+            sidebarTween:Play()
+            contentTween:Play()
+            titleTween:Play()
+            
+            -- Show notification
+            StarterGui:SetCore("SendNotification", {
+                Title = "FlixHub Settings";
+                Text = "Theme changed to " .. themeName;
+                Duration = 2;
+            })
+        end
+    end)
+end
 
 -- Changelog button click handler
 ChangelogButton.MouseButton1Click:Connect(function()
