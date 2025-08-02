@@ -348,6 +348,16 @@ local function createKeyPrompt()
                     refreshTabs() -- Initialize tab system
                     createHomeContent() -- Start with Home tab content
                     
+                    -- Ensure all main UI elements are visible
+                    MainFrame.Visible = true
+                    Sidebar.Visible = true
+                    ContentArea.Visible = true
+                    TitleBar.Visible = true
+                    SettingsButton.Visible = true
+                    CloseButton.Visible = true
+                    MinimizeButton.Visible = true
+                    ChangelogButton.Visible = true
+                    
                     wait(1) -- Wait for loading screen to fade out
                     
                     -- Show success notification
@@ -2202,24 +2212,5 @@ MinimizeButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- Initialize the GUI with new tab system
-refreshTabs() -- Initialize tab system
-createHomeContent() -- Start with Home tab content
-
--- Wait a moment to show loading screen, then hide it
-wait(3) -- Show loading screen for 2 seconds
-hideLoadingScreen()
-
--- Wait for loading screen to fade out before showing notification
-wait(1)
-
--- Notification
-StarterGui:SetCore("SendNotification", {
-    Title = "FlixHub";
-    Text = "Script hub loaded successfully!";
-    Duration = 5;
-})
-
-print("FlixHub v2.0 loaded successfully!")
-print("Created by FlixHub Team")
-print("Features: Search, Categories, Keyless Scripts, Loading Screen, Themes")
+-- Note: GUI initialization is now handled in the key verification success handler
+-- This prevents duplicate initialization and ensures proper loading sequence
