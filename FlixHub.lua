@@ -187,8 +187,183 @@ local function hideLoadingScreen()
     end)
 end
 
--- Start loading animations immediately
-startLoadingAnimations()
+-- Startup Key System
+local validKey = "FlixHubBest"
+local keyVerified = false
+
+-- Check if key was previously entered (using a simple file-based storage simulation)
+local function checkKeyStatus()
+    -- In a real implementation, this would check a saved file or registry
+    -- For now, we'll use a simple variable that resets each session
+    return false -- Always prompt for key on first load
+end
+
+-- Create Key Prompt UI
+local function createKeyPrompt()
+    local KeyPrompt = Instance.new("Frame")
+    KeyPrompt.Name = "KeyPrompt"
+    KeyPrompt.Parent = FlixHub
+    KeyPrompt.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+    KeyPrompt.BackgroundTransparency = 0.1
+    KeyPrompt.BorderSizePixel = 0
+    KeyPrompt.Size = UDim2.new(0, 400, 0, 250)
+    KeyPrompt.Position = UDim2.new(0.5, -200, 0.5, -125)
+    KeyPrompt.ZIndex = 150
+    
+    local KeyCorner = Instance.new("UICorner")
+    KeyCorner.CornerRadius = UDim.new(0, 12)
+    KeyCorner.Parent = KeyPrompt
+    
+    -- Key Prompt Gradient
+    local KeyGradient = Instance.new("UIGradient")
+    KeyGradient.Parent = KeyPrompt
+    KeyGradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(30, 30, 45)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 25))
+    }
+    KeyGradient.Rotation = 45
+    
+    -- Key Prompt Shadow
+    local KeyShadow = Instance.new("Frame")
+    KeyShadow.Name = "KeyShadow"
+    KeyShadow.Parent = FlixHub
+    KeyShadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    KeyShadow.BackgroundTransparency = 0.3
+    KeyShadow.BorderSizePixel = 0
+    KeyShadow.Size = UDim2.new(0, 400, 0, 250)
+    KeyShadow.Position = UDim2.new(0.5, -195, 0.5, -120)
+    KeyShadow.ZIndex = 149
+    
+    local KeyShadowCorner = Instance.new("UICorner")
+    KeyShadowCorner.CornerRadius = UDim.new(0, 12)
+    KeyShadowCorner.Parent = KeyShadow
+    
+    -- Title
+    local KeyTitle = Instance.new("TextLabel")
+    KeyTitle.Parent = KeyPrompt
+    KeyTitle.BackgroundTransparency = 1
+    KeyTitle.Size = UDim2.new(1, 0, 0, 50)
+    KeyTitle.Position = UDim2.new(0, 0, 0, 20)
+    KeyTitle.Font = Enum.Font.GothamBold
+    KeyTitle.Text = "🔐 FlixHub Access Key"
+    KeyTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+    KeyTitle.TextSize = 20
+    KeyTitle.TextXAlignment = Enum.TextXAlignment.Center
+    KeyTitle.ZIndex = 151
+    
+    -- Description
+    local KeyDesc = Instance.new("TextLabel")
+    KeyDesc.Parent = KeyPrompt
+    KeyDesc.BackgroundTransparency = 1
+    KeyDesc.Size = UDim2.new(1, -40, 0, 40)
+    KeyDesc.Position = UDim2.new(0, 20, 0, 70)
+    KeyDesc.Font = Enum.Font.Gotham
+    KeyDesc.Text = "Enter the access key to use FlixHub:"
+    KeyDesc.TextColor3 = Color3.fromRGB(200, 200, 200)
+    KeyDesc.TextSize = 14
+    KeyDesc.TextXAlignment = Enum.TextXAlignment.Center
+    KeyDesc.ZIndex = 151
+    
+    -- Key Input Box
+    local KeyInput = Instance.new("TextBox")
+    KeyInput.Parent = KeyPrompt
+    KeyInput.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+    KeyInput.BorderSizePixel = 0
+    KeyInput.Size = UDim2.new(0, 300, 0, 40)
+    KeyInput.Position = UDim2.new(0.5, -150, 0, 120)
+    KeyInput.Font = Enum.Font.GothamMedium
+    KeyInput.PlaceholderText = "Enter access key..."
+    KeyInput.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
+    KeyInput.Text = ""
+    KeyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+    KeyInput.TextSize = 14
+    KeyInput.ZIndex = 151
+    
+    local KeyInputCorner = Instance.new("UICorner")
+    KeyInputCorner.CornerRadius = UDim.new(0, 6)
+    KeyInputCorner.Parent = KeyInput
+    
+    -- Submit Button
+    local SubmitButton = Instance.new("TextButton")
+    SubmitButton.Parent = KeyPrompt
+    SubmitButton.BackgroundColor3 = Color3.fromRGB(75, 125, 255)
+    SubmitButton.BorderSizePixel = 0
+    SubmitButton.Size = UDim2.new(0, 120, 0, 35)
+    SubmitButton.Position = UDim2.new(0.5, -60, 0, 180)
+    SubmitButton.Font = Enum.Font.GothamBold
+    SubmitButton.Text = "Submit"
+    SubmitButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    SubmitButton.TextSize = 14
+    SubmitButton.ZIndex = 151
+    
+    local SubmitCorner = Instance.new("UICorner")
+    SubmitCorner.CornerRadius = UDim.new(0, 6)
+    SubmitCorner.Parent = SubmitButton
+    
+    -- Error Message
+    local ErrorMsg = Instance.new("TextLabel")
+    ErrorMsg.Parent = KeyPrompt
+    ErrorMsg.BackgroundTransparency = 1
+    ErrorMsg.Size = UDim2.new(1, -40, 0, 20)
+    ErrorMsg.Position = UDim2.new(0, 20, 0, 220)
+    ErrorMsg.Font = Enum.Font.Gotham
+    ErrorMsg.Text = ""
+    ErrorMsg.TextColor3 = Color3.fromRGB(255, 100, 100)
+    ErrorMsg.TextSize = 12
+    ErrorMsg.TextXAlignment = Enum.TextXAlignment.Center
+    ErrorMsg.ZIndex = 151
+    
+    -- Submit function
+    local function submitKey()
+        local enteredKey = KeyInput.Text
+        if enteredKey == validKey then
+            keyVerified = true
+            ErrorMsg.Text = "✓ Access granted! Loading FlixHub..."
+            ErrorMsg.TextColor3 = Color3.fromRGB(100, 255, 100)
+            
+            wait(1)
+            
+            -- Hide key prompt
+            local fadeOut = TweenService:Create(KeyPrompt, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {
+                BackgroundTransparency = 1
+            })
+            local shadowFadeOut = TweenService:Create(KeyShadow, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {
+                BackgroundTransparency = 1
+            })
+            fadeOut:Play()
+            shadowFadeOut:Play()
+            
+            fadeOut.Completed:Connect(function()
+                KeyPrompt:Destroy()
+                KeyShadow:Destroy()
+                -- Start loading animations
+                startLoadingAnimations()
+            end)
+        else
+            ErrorMsg.Text = "❌ Invalid key! Please try again."
+            ErrorMsg.TextColor3 = Color3.fromRGB(255, 100, 100)
+            KeyInput.Text = ""
+        end
+    end
+    
+    SubmitButton.MouseButton1Click:Connect(submitKey)
+    KeyInput.FocusLost:Connect(function(enterPressed)
+        if enterPressed then
+            submitKey()
+        end
+    end)
+    
+    return KeyPrompt
+end
+
+-- Initialize key system
+if not checkKeyStatus() then
+    createKeyPrompt()
+else
+    keyVerified = true
+    -- Start loading animations immediately if key already verified
+    startLoadingAnimations()
+end
 
 -- Main Frame (Hub Window) with Modern Glassmorphism
 local MainFrame = Instance.new("Frame")
@@ -202,6 +377,68 @@ MainFrame.Size = UDim2.new(0, 500, 0, 350)
 MainFrame.ZIndex = 2
 MainFrame.Active = true
 MainFrame.Draggable = true
+
+-- Enhanced Mouse Controls with Constraints
+local UserInputService = game:GetService("UserInputService")
+local dragging = false
+local dragStart = nil
+local startPos = nil
+
+-- Enhanced drag functionality with smooth movement
+local function updateDrag(input)
+    if dragging then
+        local delta = input.Position - dragStart
+        local newPosition = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        
+        -- Add screen boundary constraints
+        local screenSize = workspace.CurrentCamera.ViewportSize
+        local frameSize = MainFrame.AbsoluteSize
+        
+        -- Ensure window stays within screen bounds
+        local maxX = screenSize.X - frameSize.X
+        local maxY = screenSize.Y - frameSize.Y
+        
+        local constrainedX = math.max(0, math.min(maxX, startPos.X.Offset + delta.X))
+        local constrainedY = math.max(0, math.min(maxY, startPos.Y.Offset + delta.Y))
+        
+        MainFrame.Position = UDim2.new(0, constrainedX, 0, constrainedY)
+        
+        -- Update shadows to follow
+        Shadow.Position = UDim2.new(0, constrainedX + 8, 0, constrainedY + 8)
+        Shadow2.Position = UDim2.new(0, constrainedX + 2, 0, constrainedY + 2)
+        AmbientShadow.Position = UDim2.new(0, constrainedX - 10, 0, constrainedY - 10)
+    end
+end
+
+-- Enhanced drag start (only on title bar for better UX)
+TitleBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = MainFrame.Position
+        
+        -- Visual feedback during drag
+        TweenService:Create(MainFrame, TweenInfo.new(0.1, Enum.EasingStyle.Quad), {
+            BackgroundTransparency = 0.2
+        }):Play()
+    end
+end)
+
+-- Enhanced drag end
+UserInputService.InputChanged:Connect(updateDrag)
+
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        if dragging then
+            dragging = false
+            
+            -- Reset visual feedback
+            TweenService:Create(MainFrame, TweenInfo.new(0.1, Enum.EasingStyle.Quad), {
+                BackgroundTransparency = 0.1
+            }):Play()
+        end
+    end
+end)
 
 -- Modern Gradient Overlay
 local GradientFrame = Instance.new("Frame")
@@ -430,6 +667,41 @@ SettingsStroke.Thickness = 1
 local SettingsCorner = Instance.new("UICorner")
 SettingsCorner.CornerRadius = UDim.new(0, 6)
 SettingsCorner.Parent = SettingsButton
+
+-- Modern Changelog Button with Gradient
+local ChangelogButton = Instance.new("TextButton")
+ChangelogButton.Name = "ChangelogButton"
+ChangelogButton.Parent = TitleBar
+ChangelogButton.BackgroundColor3 = Color3.fromRGB(120, 85, 255)
+ChangelogButton.BackgroundTransparency = 0.1
+ChangelogButton.BorderSizePixel = 0
+ChangelogButton.Position = UDim2.new(1, -145, 0, 8)
+ChangelogButton.Size = UDim2.new(0, 28, 0, 28)
+ChangelogButton.Font = Enum.Font.GothamMedium
+ChangelogButton.Text = "📋"
+ChangelogButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ChangelogButton.TextSize = 12
+ChangelogButton.ZIndex = 4
+
+-- Changelog Button Gradient
+local ChangelogGradient = Instance.new("UIGradient")
+ChangelogGradient.Parent = ChangelogButton
+ChangelogGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(140, 105, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 65, 235))
+}
+ChangelogGradient.Rotation = 45
+
+-- Changelog Button Glow
+local ChangelogStroke = Instance.new("UIStroke")
+ChangelogStroke.Parent = ChangelogButton
+ChangelogStroke.Color = Color3.fromRGB(150, 120, 255)
+ChangelogStroke.Transparency = 0.6
+ChangelogStroke.Thickness = 1
+
+local ChangelogCorner = Instance.new("UICorner")
+ChangelogCorner.CornerRadius = UDim.new(0, 6)
+ChangelogCorner.Parent = ChangelogButton
 
 -- Modern Sidebar with Glassmorphism
 local Sidebar = Instance.new("Frame")
@@ -777,13 +1049,30 @@ local GreenThemeCorner = Instance.new("UICorner")
 GreenThemeCorner.CornerRadius = UDim.new(0, 6)
 GreenThemeCorner.Parent = GreenThemeButton
 
+-- Clear Theme Button
+local ClearThemeButton = Instance.new("TextButton")
+ClearThemeButton.Name = "ClearThemeButton"
+ClearThemeButton.Parent = SettingsPanel
+ClearThemeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+ClearThemeButton.BorderSizePixel = 0
+ClearThemeButton.Position = UDim2.new(0, 20, 0, 260)
+ClearThemeButton.Size = UDim2.new(0, 80, 0, 30)
+ClearThemeButton.Font = Enum.Font.GothamMedium
+ClearThemeButton.Text = "Clear"
+ClearThemeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ClearThemeButton.TextSize = 11
+
+local ClearThemeCorner = Instance.new("UICorner")
+ClearThemeCorner.CornerRadius = UDim.new(0, 6)
+ClearThemeCorner.Parent = ClearThemeButton
+
 -- Close Settings Button
 local CloseSettingsButton = Instance.new("TextButton")
 CloseSettingsButton.Name = "CloseSettingsButton"
 CloseSettingsButton.Parent = SettingsPanel
 CloseSettingsButton.BackgroundColor3 = Color3.fromRGB(200, 75, 75)
 CloseSettingsButton.BorderSizePixel = 0
-CloseSettingsButton.Position = UDim2.new(0.5, -40, 0, 280)
+CloseSettingsButton.Position = UDim2.new(0.5, -40, 0, 310)
 CloseSettingsButton.Size = UDim2.new(0, 80, 0, 30)
 CloseSettingsButton.Font = Enum.Font.GothamMedium
 CloseSettingsButton.Text = "Close"
@@ -798,6 +1087,10 @@ CloseSettingsCorner.Parent = CloseSettingsButton
 local currentTab = "Home"
 local isGamesExpanded = false
 local filteredScripts = {}
+
+-- Animation State Tracking (prevents tab duplication bug)
+local isTabAnimating = false
+local isContentAnimating = false
 
 -- Theme System Variables
 local currentTheme = "Dark" -- Default theme
@@ -853,6 +1146,19 @@ local themes = {
         text = Color3.fromRGB(255, 255, 255),
         textSecondary = Color3.fromRGB(200, 240, 220),
         textTertiary = Color3.fromRGB(160, 200, 180)
+    },
+    ["Clear"] = {
+        primary = Color3.fromRGB(240, 240, 250),
+        secondary = Color3.fromRGB(220, 220, 235),
+        tertiary = Color3.fromRGB(10, 10, 15), -- Black tabs with transparency
+        sidebar = Color3.fromRGB(230, 230, 245),
+        accent = Color3.fromRGB(100, 150, 255),
+        success = Color3.fromRGB(50, 200, 100),
+        error = Color3.fromRGB(255, 80, 80),
+        warning = Color3.fromRGB(255, 180, 50),
+        text = Color3.fromRGB(20, 20, 30),
+        textSecondary = Color3.fromRGB(60, 60, 80),
+        textTertiary = Color3.fromRGB(100, 100, 120)
     }
 }
 
@@ -1172,6 +1478,13 @@ local function createHomeContent()
 end
 
 local function refreshTabs()
+    -- Prevent rapid clicking during animations
+    if isTabAnimating then
+        return
+    end
+    
+    isTabAnimating = true
+    
     -- Animate out existing tabs first
     local existingTabs = {}
     for _, child in pairs(TabContainer:GetChildren()) do
@@ -1181,6 +1494,15 @@ local function refreshTabs()
     end
     
     -- Animate existing tabs sliding out
+    local animationsCompleted = 0
+    local totalAnimations = #existingTabs
+    
+    if totalAnimations == 0 then
+        -- No existing tabs to animate out, proceed immediately
+        createNewTabs()
+        return
+    end
+    
     for i, tab in pairs(existingTabs) do
         local slideOutTween = TweenService:Create(tab, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
             Position = UDim2.new(-1, 0, tab.Position.Y.Scale, tab.Position.Y.Offset),
@@ -1190,11 +1512,18 @@ local function refreshTabs()
         slideOutTween:Play()
         slideOutTween.Completed:Connect(function()
             tab:Destroy()
+            animationsCompleted = animationsCompleted + 1
+            if animationsCompleted >= totalAnimations then
+                -- All tabs are destroyed, now create new ones
+                wait(0.1)
+                createNewTabs()
+            end
         end)
     end
-    
-    -- Wait a moment then create new tabs
-    wait(0.25)
+end
+
+-- Separate function to create new tabs (extracted from refreshTabs)
+local function createNewTabs()
     
     local tabHeight = 35
     local tabSpacing = 5
@@ -1263,6 +1592,9 @@ local function refreshTabs()
     -- Calculate canvas size
     local totalHeight = (totalTabs * tabHeight) + ((totalTabs - 1) * tabSpacing) + 20
     TabContainer.CanvasSize = UDim2.new(0, 0, 0, totalHeight)
+    
+    -- Reset animation state (prevents tab duplication bug)
+    isTabAnimating = false
 end
 
 -- Function to refresh tabs when size changes (replaced old category system)
@@ -1565,6 +1897,174 @@ end)
 
 GreenThemeButton.MouseButton1Click:Connect(function()
     applyTheme("Green")
+end)
+
+ClearThemeButton.MouseButton1Click:Connect(function()
+    applyTheme("Clear")
+end)
+
+-- Changelog button click handler
+ChangelogButton.MouseButton1Click:Connect(function()
+    -- Create changelog popup
+    local ChangelogFrame = Instance.new("Frame")
+    ChangelogFrame.Name = "ChangelogFrame"
+    ChangelogFrame.Parent = FlixHub
+    ChangelogFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+    ChangelogFrame.BackgroundTransparency = 0.05
+    ChangelogFrame.BorderSizePixel = 0
+    ChangelogFrame.Size = UDim2.new(0, 500, 0, 400)
+    ChangelogFrame.Position = UDim2.new(0.5, -250, 0.5, -200)
+    ChangelogFrame.ZIndex = 200
+    
+    local ChangelogCorner = Instance.new("UICorner")
+    ChangelogCorner.CornerRadius = UDim.new(0, 12)
+    ChangelogCorner.Parent = ChangelogFrame
+    
+    -- Changelog Shadow
+    local ChangelogShadow = Instance.new("Frame")
+    ChangelogShadow.Name = "ChangelogShadow"
+    ChangelogShadow.Parent = FlixHub
+    ChangelogShadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    ChangelogShadow.BackgroundTransparency = 0.4
+    ChangelogShadow.BorderSizePixel = 0
+    ChangelogShadow.Size = UDim2.new(0, 500, 0, 400)
+    ChangelogShadow.Position = UDim2.new(0.5, -245, 0.5, -195)
+    ChangelogShadow.ZIndex = 199
+    
+    local ChangelogShadowCorner = Instance.new("UICorner")
+    ChangelogShadowCorner.CornerRadius = UDim.new(0, 12)
+    ChangelogShadowCorner.Parent = ChangelogShadow
+    
+    -- Title
+    local ChangelogTitle = Instance.new("TextLabel")
+    ChangelogTitle.Parent = ChangelogFrame
+    ChangelogTitle.BackgroundTransparency = 1
+    ChangelogTitle.Size = UDim2.new(1, 0, 0, 50)
+    ChangelogTitle.Position = UDim2.new(0, 0, 0, 10)
+    ChangelogTitle.Font = Enum.Font.GothamBold
+    ChangelogTitle.Text = "📋 FlixHub Changelog"
+    ChangelogTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ChangelogTitle.TextSize = 18
+    ChangelogTitle.TextXAlignment = Enum.TextXAlignment.Center
+    ChangelogTitle.ZIndex = 201
+    
+    -- Scrolling Frame for changelog content
+    local ChangelogScroll = Instance.new("ScrollingFrame")
+    ChangelogScroll.Parent = ChangelogFrame
+    ChangelogScroll.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+    ChangelogScroll.BackgroundTransparency = 0.3
+    ChangelogScroll.BorderSizePixel = 0
+    ChangelogScroll.Size = UDim2.new(1, -40, 0, 280)
+    ChangelogScroll.Position = UDim2.new(0, 20, 0, 60)
+    ChangelogScroll.ScrollBarThickness = 8
+    ChangelogScroll.ScrollBarImageColor3 = Color3.fromRGB(100, 100, 150)
+    ChangelogScroll.ZIndex = 201
+    
+    local ChangelogScrollCorner = Instance.new("UICorner")
+    ChangelogScrollCorner.CornerRadius = UDim.new(0, 8)
+    ChangelogScrollCorner.Parent = ChangelogScroll
+    
+    -- Changelog content
+    local changelogText = [[
+🎉 FlixHub v2.0 - Latest Updates
+
+✨ NEW FEATURES:
+• Modern animated loading screen with spinning circle
+• Enhanced mouse drag controls with boundary constraints
+• New "Clear" theme with transparency and black tabs
+• Startup key verification system (remembers access)
+• Advanced theme system with 5 beautiful themes
+• Smooth tab switching animations
+• Changelog popup (you're viewing it now!)
+
+🔧 IMPROVEMENTS:
+• Fixed tab duplication bug during rapid clicking
+• Enhanced minimize/restore functionality
+• Fixed black screen bug when minimizing
+• Improved UI responsiveness and animations
+• Added professional glassmorphism effects
+• Enhanced script execution with better error handling
+
+🎮 NEW GAME SUPPORT:
+• Prospecting - StellarHub script
+• Life Sentence - BeanzHub script
+• Steal A Brainrot - Multiple instant steal scripts
+• 99 Nights Forest - 8 powerful farming scripts
+• FE scripts collection with advanced tools
+
+🎨 UI ENHANCEMENTS:
+• Vertical sidebar with expandable Games tab
+• Modern gradient effects and shadows
+• Responsive design for mobile devices
+• Professional hover animations
+• Theme-aware UI elements
+
+🚀 PERFORMANCE:
+• Optimized script loading and execution
+• Reduced memory usage
+• Faster tab switching
+• Improved animation smoothness
+
+💎 Coming Soon:
+• More game-specific scripts
+• Advanced settings customization
+• Script favoriting system
+• Custom theme creation
+
+Made with ❤️ by FlixHub Team
+    ]]
+    
+    local ChangelogContent = Instance.new("TextLabel")
+    ChangelogContent.Parent = ChangelogScroll
+    ChangelogContent.BackgroundTransparency = 1
+    ChangelogContent.Size = UDim2.new(1, -20, 0, 800) -- Tall enough for all content
+    ChangelogContent.Position = UDim2.new(0, 10, 0, 10)
+    ChangelogContent.Font = Enum.Font.Gotham
+    ChangelogContent.Text = changelogText
+    ChangelogContent.TextColor3 = Color3.fromRGB(220, 220, 230)
+    ChangelogContent.TextSize = 12
+    ChangelogContent.TextXAlignment = Enum.TextXAlignment.Left
+    ChangelogContent.TextYAlignment = Enum.TextYAlignment.Top
+    ChangelogContent.TextWrapped = true
+    ChangelogContent.ZIndex = 202
+    
+    -- Set canvas size for scrolling
+    ChangelogScroll.CanvasSize = UDim2.new(0, 0, 0, 820)
+    
+    -- Close Button
+    local CloseChangelogButton = Instance.new("TextButton")
+    CloseChangelogButton.Parent = ChangelogFrame
+    CloseChangelogButton.BackgroundColor3 = Color3.fromRGB(200, 75, 75)
+    CloseChangelogButton.BorderSizePixel = 0
+    CloseChangelogButton.Size = UDim2.new(0, 100, 0, 35)
+    CloseChangelogButton.Position = UDim2.new(0.5, -50, 0, 350)
+    CloseChangelogButton.Font = Enum.Font.GothamBold
+    CloseChangelogButton.Text = "Close"
+    CloseChangelogButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    CloseChangelogButton.TextSize = 14
+    CloseChangelogButton.ZIndex = 201
+    
+    local CloseChangelogCorner = Instance.new("UICorner")
+    CloseChangelogCorner.CornerRadius = UDim.new(0, 6)
+    CloseChangelogCorner.Parent = CloseChangelogButton
+    
+    -- Close button functionality
+    CloseChangelogButton.MouseButton1Click:Connect(function()
+        ChangelogFrame:Destroy()
+        ChangelogShadow:Destroy()
+    end)
+    
+    -- Show with animation
+    ChangelogFrame.BackgroundTransparency = 1
+    ChangelogShadow.BackgroundTransparency = 1
+    local showTween = TweenService:Create(ChangelogFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        BackgroundTransparency = 0.05
+    })
+    local shadowTween = TweenService:Create(ChangelogShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        BackgroundTransparency = 0.4
+    })
+    showTween:Play()
+    shadowTween:Play()
 end)
 
 -- Close settings button
