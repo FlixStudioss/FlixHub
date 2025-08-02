@@ -243,7 +243,7 @@ MainFrame.Position = UDim2.new(0.5, -250, 0.5, -175)
 MainFrame.Size = UDim2.new(0, 500, 0, 350)
 MainFrame.ZIndex = 2
 MainFrame.Active = true
-MainFrame.Draggable = true
+MainFrame.Draggable = false -- Disabled to prevent shadow artifacts
 
 -- Modern Gradient Overlay
 local GradientFrame = Instance.new("Frame")
@@ -346,6 +346,56 @@ TitleGlow.ZIndex = 4
 local TitleCorner = Instance.new("UICorner")
 TitleCorner.CornerRadius = UDim.new(0, 12)
 TitleCorner.Parent = TitleBar
+
+-- Custom Drag Controls with Shadow Synchronization
+local isDragging = false
+local dragStart = nil
+local startPos = nil
+
+TitleBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        isDragging = true
+        dragStart = input.Position
+        startPos = MainFrame.Position
+        
+        local connection
+        connection = input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                isDragging = false
+                connection:Disconnect()
+            end
+        end)
+    end
+end)
+
+TitleBar.InputChanged:Connect(function(input)
+    if isDragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        local delta = input.Position - dragStart
+        local newPosition = UDim2.new(
+            startPos.X.Scale, startPos.X.Offset + delta.X,
+            startPos.Y.Scale, startPos.Y.Offset + delta.Y
+        )
+        
+        -- Move main frame
+        MainFrame.Position = newPosition
+        
+        -- Move all shadows with main frame
+        Shadow.Position = UDim2.new(
+            newPosition.X.Scale, newPosition.X.Offset + 8,
+            newPosition.Y.Scale, newPosition.Y.Offset + 8
+        )
+        
+        Shadow2.Position = UDim2.new(
+            newPosition.X.Scale, newPosition.X.Offset + 2,
+            newPosition.Y.Scale, newPosition.Y.Offset + 2
+        )
+        
+        AmbientShadow.Position = UDim2.new(
+            newPosition.X.Scale, newPosition.X.Offset - 10,
+            newPosition.Y.Scale, newPosition.Y.Offset - 10
+        )
+    end
+end)
 
 -- Modern Title Text with Enhanced Typography
 local TitleText = Instance.new("TextLabel")
@@ -2019,6 +2069,86 @@ MinimizeButton.MouseButton1Click:Connect(function()
         TitleText.Position = UDim2.new(0, 15, 0, 0)
     end
 end)
+
+-- Function to change hub size with smooth animations
+local function changeHubSize(sizeName, width, height)
+    currentHubSize.width = width
+    currentHubSize.height = height
+    
+    -- Animate MainFrame
+    local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2, 0.5, -height/2)
+    })
+    
+    -- Animate all shadows
+    local shadowTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2 + 8, 0.5, -height/2 + 8)
+    })
+    
+    local shadow2Tween = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2 + 2, 0.5, -height/2 + 2)
+    })
+    
+    local ambientTween = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width + 20, 0, height + 20),
+        Position = UDim2.new(0.5, -width/2 - 10, 0.5, -height/2 - 10)
+    })
+    
+    mainTween:Play()
+    shadowTween:Play()
+    shadow2Tween:Play()
+    ambientTween:Play()
+    
+    -- Notification
+    StarterGui:SetCore("SendNotification", {
+        Title = "FlixHub";
+        Text = "Hub size changed to " .. sizeName;
+        Duration = 2;
+    })
+end
+
+-- Function to apply theme with smooth transitions
+local function applyTheme(themeName)
+    local themeData = themes[themeName]
+    if not themeData then
+        print("Theme not found: " .. themeName)
+        return
+    end
+    
+    currentTheme = themeName
+    
+    -- Apply theme to main components with tweens
+    local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        BackgroundColor3 = themeData.MainFrame
+    })
+    
+    local sidebarTween = TweenService:Create(Sidebar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        BackgroundColor3 = themeData.Sidebar
+    })
+    
+    local contentTween = TweenService:Create(ContentArea, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        BackgroundColor3 = themeData.ContentArea
+    })
+    
+    local titleTween = TweenService:Create(TitleBar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        BackgroundColor3 = themeData.TitleBar
+    })
+    
+    mainTween:Play()
+    sidebarTween:Play()
+    contentTween:Play()
+    titleTween:Play()
+    
+    -- Notification
+    StarterGui:SetCore("SendNotification", {
+        Title = "FlixHub";
+        Text = "Theme changed to " .. themeName;
+        Duration = 2;
+    })
+end
 
 -- Settings button click handler
 SettingsButton.MouseButton1Click:Connect(function()
