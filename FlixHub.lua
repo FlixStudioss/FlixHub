@@ -248,20 +248,7 @@ local function createKeyPrompt()
     }
     KeyGradient.Rotation = 45
     
-    -- Key Prompt Shadow
-    local KeyShadow = Instance.new("Frame")
-    KeyShadow.Name = "KeyShadow"
-    KeyShadow.Parent = FlixHub
-    KeyShadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    KeyShadow.BackgroundTransparency = 0.3
-    KeyShadow.BorderSizePixel = 0
-    KeyShadow.Size = UDim2.new(0, 400, 0, 250)
-    KeyShadow.Position = UDim2.new(0.5, -195, 0.5, -120)
-    KeyShadow.ZIndex = 149
-    
-    local KeyShadowCorner = Instance.new("UICorner")
-    KeyShadowCorner.CornerRadius = UDim.new(0, 12)
-    KeyShadowCorner.Parent = KeyShadow
+    -- Key Prompt Shadow (Removed to eliminate black background)
     
     -- Title
     local KeyTitle = Instance.new("TextLabel")
@@ -352,15 +339,10 @@ local function createKeyPrompt()
             local fadeOut = TweenService:Create(KeyPrompt, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {
                 BackgroundTransparency = 1
             })
-            local shadowFadeOut = TweenService:Create(KeyShadow, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {
-                BackgroundTransparency = 1
-            })
             fadeOut:Play()
-            shadowFadeOut:Play()
             
             fadeOut.Completed:Connect(function()
                 KeyPrompt:Destroy()
-                KeyShadow:Destroy()
                 -- Start loading animations
                 startLoadingAnimations()
                 
@@ -373,8 +355,11 @@ local function createKeyPrompt()
                     refreshTabs() -- Initialize tab system
                     createHomeContent() -- Start with Home tab content
                     
-                    -- Ensure all main UI elements are visible
+                    -- Ensure all main UI elements and shadows are visible
                     MainFrame.Visible = true
+                    Shadow.Visible = true
+                    Shadow2.Visible = true
+                    AmbientShadow.Visible = true
                     Sidebar.Visible = true
                     ContentArea.Visible = true
                     TitleBar.Visible = true
@@ -434,6 +419,7 @@ MainFrame.Size = UDim2.new(0, 500, 0, 350)
 MainFrame.ZIndex = 2
 MainFrame.Active = true
 MainFrame.Draggable = true
+MainFrame.Visible = false -- Hide initially until key verification and loading complete
 
 -- Enhanced Mouse Controls with Constraints
 local UserInputService = game:GetService("UserInputService")
@@ -530,6 +516,7 @@ Shadow.BorderSizePixel = 0
 Shadow.Position = UDim2.new(0.5, -242, 0.5, -167)
 Shadow.Size = UDim2.new(0, 500, 0, 350)
 Shadow.ZIndex = 0
+Shadow.Visible = false -- Hide initially
 
 local ShadowCorner = Instance.new("UICorner")
 ShadowCorner.CornerRadius = UDim.new(0, 12)
@@ -545,6 +532,7 @@ Shadow2.BorderSizePixel = 0
 Shadow2.Position = UDim2.new(0.5, -248, 0.5, -173)
 Shadow2.Size = UDim2.new(0, 500, 0, 350)
 Shadow2.ZIndex = -1
+Shadow2.Visible = false -- Hide initially
 
 local Shadow2Corner = Instance.new("UICorner")
 Shadow2Corner.CornerRadius = UDim.new(0, 12)
@@ -560,6 +548,7 @@ AmbientShadow.BorderSizePixel = 0
 AmbientShadow.Position = UDim2.new(0.5, -260, 0.5, -185)
 AmbientShadow.Size = UDim2.new(0, 520, 0, 370)
 AmbientShadow.ZIndex = -2
+AmbientShadow.Visible = false -- Hide initially
 
 local AmbientCorner = Instance.new("UICorner")
 AmbientCorner.CornerRadius = UDim.new(0, 20)
