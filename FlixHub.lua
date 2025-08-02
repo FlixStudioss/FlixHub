@@ -1065,6 +1065,11 @@ local GameScripts = {
             name = "Vape Script (Not The Best)",
             description = "Vape script for 99 Nights in the Forest (basic version)",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/VapeVoidware/VWExtra/main/NightsInTheForest.lua", true))()]]
+        },
+        {
+            name = "RingstaUI",
+            description = "RingstaUI script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/wefwef127382/99daysloader.github.io/refs/heads/main/ringta.lua"))()]]
         }
     },
     ["Ink Game"] = {
@@ -1601,6 +1606,90 @@ CloseButton.MouseButton1Click:Connect(function()
     FlixHub:Destroy()
 end)
 
+-- Current size tracking
+local currentSize = "Very Small" -- Default size
+
+-- Hub size change function
+local function changeHubSize(sizeName, width, height)
+    currentSize = sizeName
+    
+    -- Update main frame size
+    local sizeTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2, 0.5, -height/2)
+    })
+    
+    -- Update all shadow sizes
+    local shadowTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2 + 8, 0.5, -height/2 + 8)
+    })
+    
+    local shadow2Tween = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2 + 2, 0.5, -height/2 + 2)
+    })
+    
+    local ambientTween = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width + 20, 0, height + 20),
+        Position = UDim2.new(0.5, -width/2 - 10, 0.5, -height/2 - 10)
+    })
+    
+    sizeTween:Play()
+    shadowTween:Play()
+    shadow2Tween:Play()
+    ambientTween:Play()
+    
+    -- Update button colors
+    VerySmallButton.BackgroundColor3 = sizeName == "Very Small" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
+    SmallButton.BackgroundColor3 = sizeName == "Small" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
+    MediumButton.BackgroundColor3 = sizeName == "Medium" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
+    LargeButton.BackgroundColor3 = sizeName == "Large" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
+    
+    -- Show notification
+    StarterGui:SetCore("SendNotification", {
+        Title = "FlixHub Settings";
+        Text = "Hub size changed to " .. sizeName;
+        Duration = 2;
+    })
+end
+
+-- Theme application function
+local function applyTheme(themeName)
+    currentTheme = themeName
+    local theme = themes[themeName]
+    
+    -- Apply theme to main elements with smooth transitions
+    local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        BackgroundColor3 = theme.primary
+    })
+    
+    local sidebarTween = TweenService:Create(Sidebar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        BackgroundColor3 = theme.sidebar
+    })
+    
+    local contentTween = TweenService:Create(ContentArea, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        BackgroundColor3 = theme.secondary
+    })
+    
+    mainTween:Play()
+    sidebarTween:Play()
+    contentTween:Play()
+    
+    -- Update theme button colors
+    DarkThemeButton.BackgroundColor3 = themeName == "Dark" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
+    OceanThemeButton.BackgroundColor3 = themeName == "Ocean" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
+    PurpleThemeButton.BackgroundColor3 = themeName == "Purple" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
+    GreenThemeButton.BackgroundColor3 = themeName == "Green" and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(60, 60, 80)
+    
+    -- Show notification
+    StarterGui:SetCore("SendNotification", {
+        Title = "FlixHub Theme";
+        Text = "Theme changed to " .. themeName;
+        Duration = 2;
+    })
+end
+
 -- Minimize functionality
 local isMinimized = false
 local currentHubSize = {width = 500, height = 350} -- Store current size
@@ -1656,6 +1745,7 @@ MinimizeButton.MouseButton1Click:Connect(function()
         Sidebar.Visible = false
         ContentArea.Visible = false
         SettingsButton.Visible = false
+        ChangelogButton.Visible = false
         CloseButton.Visible = false
         
         -- Change title to just "Flix"
@@ -1694,6 +1784,7 @@ MinimizeButton.MouseButton1Click:Connect(function()
         Sidebar.Visible = true
         ContentArea.Visible = true
         SettingsButton.Visible = true
+        ChangelogButton.Visible = true
         CloseButton.Visible = true
         
         -- Restore title
