@@ -1266,6 +1266,21 @@ local GameScripts = {
             name = "eF Hub",
             description = "Multi-purpose exploit hub",
             script = [[loadstring(game:HttpGet('https://api.exploitingis.fun/loader', true))()]]
+        },
+        {
+            name = "IdiotHub",
+            description = "IdiotHub script loader for Grow A Garden",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/IdiotHub/Scripts/main/Loader"))()]]
+        },
+        {
+            name = "BlackHub",
+            description = "BlackHub script for Grow A Garden",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Skibidiking123/Fisch1/refs/heads/main/FischMain"))()]]
+        },
+        {
+            name = "ShovelHub (Not Good)",
+            description = "ShovelHub script - quality may vary",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/shvl00/shvled/refs/heads/main/l04d3r.bf"))()]]
         }
     },
     ["Poop Simulator"] = {
@@ -2070,45 +2085,7 @@ MinimizeButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- Function to change hub size with smooth animations
-local function changeHubSize(sizeName, width, height)
-    currentHubSize.width = width
-    currentHubSize.height = height
-    
-    -- Animate MainFrame
-    local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-        Size = UDim2.new(0, width, 0, height),
-        Position = UDim2.new(0.5, -width/2, 0.5, -height/2)
-    })
-    
-    -- Animate all shadows
-    local shadowTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-        Size = UDim2.new(0, width, 0, height),
-        Position = UDim2.new(0.5, -width/2 + 8, 0.5, -height/2 + 8)
-    })
-    
-    local shadow2Tween = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-        Size = UDim2.new(0, width, 0, height),
-        Position = UDim2.new(0.5, -width/2 + 2, 0.5, -height/2 + 2)
-    })
-    
-    local ambientTween = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-        Size = UDim2.new(0, width + 20, 0, height + 20),
-        Position = UDim2.new(0.5, -width/2 - 10, 0.5, -height/2 - 10)
-    })
-    
-    mainTween:Play()
-    shadowTween:Play()
-    shadow2Tween:Play()
-    ambientTween:Play()
-    
-    -- Notification
-    StarterGui:SetCore("SendNotification", {
-        Title = "FlixHub";
-        Text = "Hub size changed to " .. sizeName;
-        Duration = 2;
-    })
-end
+-- Duplicate function removed - using the original changeHubSize function
 
 -- Function to apply theme with smooth transitions
 local function applyTheme(themeName)
