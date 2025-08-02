@@ -18,6 +18,178 @@ FlixHub.Parent = playerGui
 FlixHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 FlixHub.ResetOnSpawn = false
 
+-- ✨ ANIMATED LOADING SCREEN ✨
+local LoadingScreen = Instance.new("Frame")
+LoadingScreen.Name = "LoadingScreen"
+LoadingScreen.Parent = FlixHub
+LoadingScreen.BackgroundColor3 = Color3.fromRGB(15, 15, 25)
+LoadingScreen.BackgroundTransparency = 0
+LoadingScreen.BorderSizePixel = 0
+LoadingScreen.Size = UDim2.new(1, 0, 1, 0)
+LoadingScreen.Position = UDim2.new(0, 0, 0, 0)
+LoadingScreen.ZIndex = 100
+
+-- Loading Screen Gradient
+local LoadingGradient = Instance.new("UIGradient")
+LoadingGradient.Parent = LoadingScreen
+LoadingGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 40)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(15, 15, 25)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(10, 10, 20))
+}
+LoadingGradient.Rotation = 45
+
+-- Loading Circle Container
+local CircleContainer = Instance.new("Frame")
+CircleContainer.Name = "CircleContainer"
+CircleContainer.Parent = LoadingScreen
+CircleContainer.BackgroundTransparency = 1
+CircleContainer.Size = UDim2.new(0, 100, 0, 100)
+CircleContainer.Position = UDim2.new(0.5, -50, 0.5, -80)
+CircleContainer.ZIndex = 101
+
+-- Animated Loading Circle
+local LoadingCircle = Instance.new("Frame")
+LoadingCircle.Name = "LoadingCircle"
+LoadingCircle.Parent = CircleContainer
+LoadingCircle.BackgroundTransparency = 1
+LoadingCircle.Size = UDim2.new(1, 0, 1, 0)
+LoadingCircle.Position = UDim2.new(0, 0, 0, 0)
+LoadingCircle.ZIndex = 101
+
+-- Circle Stroke for Animation
+local CircleStroke = Instance.new("UIStroke")
+CircleStroke.Parent = LoadingCircle
+CircleStroke.Color = Color3.fromRGB(100, 150, 255)
+CircleStroke.Thickness = 8
+CircleStroke.Transparency = 0
+
+local CircleCorner = Instance.new("UICorner")
+CircleCorner.CornerRadius = UDim.new(0.5, 0)
+CircleCorner.Parent = LoadingCircle
+
+-- Inner Circle Glow
+local InnerCircle = Instance.new("Frame")
+InnerCircle.Name = "InnerCircle"
+InnerCircle.Parent = LoadingCircle
+InnerCircle.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+InnerCircle.BackgroundTransparency = 0.7
+InnerCircle.Size = UDim2.new(0.3, 0, 0.3, 0)
+InnerCircle.Position = UDim2.new(0.35, 0, 0.35, 0)
+InnerCircle.ZIndex = 102
+
+local InnerCorner = Instance.new("UICorner")
+InnerCorner.CornerRadius = UDim.new(0.5, 0)
+InnerCorner.Parent = InnerCircle
+
+-- Loading Text
+local LoadingText = Instance.new("TextLabel")
+LoadingText.Name = "LoadingText"
+LoadingText.Parent = LoadingScreen
+LoadingText.BackgroundTransparency = 1
+LoadingText.Size = UDim2.new(0, 300, 0, 50)
+LoadingText.Position = UDim2.new(0.5, -150, 0.5, 40)
+LoadingText.Font = Enum.Font.GothamBold
+LoadingText.Text = "FlixHub✨ Loading"
+LoadingText.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoadingText.TextSize = 24
+LoadingText.TextXAlignment = Enum.TextXAlignment.Center
+LoadingText.ZIndex = 101
+
+-- Loading Text Glow
+local TextStroke = Instance.new("UIStroke")
+TextStroke.Parent = LoadingText
+TextStroke.Color = Color3.fromRGB(100, 150, 255)
+TextStroke.Transparency = 0.5
+TextStroke.Thickness = 2
+
+-- Loading Dots Animation Text
+local DotsText = Instance.new("TextLabel")
+DotsText.Name = "DotsText"
+DotsText.Parent = LoadingScreen
+DotsText.BackgroundTransparency = 1
+DotsText.Size = UDim2.new(0, 100, 0, 30)
+DotsText.Position = UDim2.new(0.5, -50, 0.5, 80)
+DotsText.Font = Enum.Font.GothamBold
+DotsText.Text = "..."
+DotsText.TextColor3 = Color3.fromRGB(200, 200, 200)
+DotsText.TextSize = 18
+DotsText.TextXAlignment = Enum.TextXAlignment.Center
+DotsText.ZIndex = 101
+
+-- Loading Screen Animation Functions
+local function startLoadingAnimations()
+    -- Spinning circle animation
+    local spinTween = TweenService:Create(CircleContainer, TweenInfo.new(2, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, -1), {
+        Rotation = 360
+    })
+    spinTween:Play()
+    
+    -- Pulsing inner circle animation
+    local pulseTween = TweenService:Create(InnerCircle, TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut, -1, true), {
+        Size = UDim2.new(0.6, 0, 0.6, 0),
+        Position = UDim2.new(0.2, 0, 0.2, 0)
+    })
+    pulseTween:Play()
+    
+    -- Animated dots text
+    local dotsStates = {".  ", ".. ", "..."}
+    local dotsIndex = 1
+    
+    spawn(function()
+        while LoadingScreen.Visible do
+            DotsText.Text = dotsStates[dotsIndex]
+            dotsIndex = dotsIndex + 1
+            if dotsIndex > #dotsStates then
+                dotsIndex = 1
+            end
+            wait(0.5)
+        end
+    end)
+    
+    -- Text glow pulse animation
+    local textGlowTween = TweenService:Create(TextStroke, TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+        Transparency = 0.2
+    })
+    textGlowTween:Play()
+end
+
+-- Function to hide loading screen with animation
+local function hideLoadingScreen()
+    local fadeOutTween = TweenService:Create(LoadingScreen, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+        BackgroundTransparency = 1
+    })
+    
+    local textFadeTween = TweenService:Create(LoadingText, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+        TextTransparency = 1
+    })
+    
+    local dotsFadeTween = TweenService:Create(DotsText, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+        TextTransparency = 1
+    })
+    
+    local circleFadeTween = TweenService:Create(CircleStroke, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+        Transparency = 1
+    })
+    
+    local innerFadeTween = TweenService:Create(InnerCircle, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+        BackgroundTransparency = 1
+    })
+    
+    fadeOutTween:Play()
+    textFadeTween:Play()
+    dotsFadeTween:Play()
+    circleFadeTween:Play()
+    innerFadeTween:Play()
+    
+    fadeOutTween.Completed:Connect(function()
+        LoadingScreen:Destroy()
+    end)
+end
+
+-- Start loading animations immediately
+startLoadingAnimations()
+
 -- Main Frame (Hub Window) with Modern Glassmorphism
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "FlixHub"
@@ -890,6 +1062,13 @@ local GameScripts = {
             description = "BeanzHub script for Life Sentence game",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/pid4k/scripts/main/BeanzHub.lua", true))()]]
         }
+    },
+    ["Prospecting"] = {
+        {
+            name = "StellarHub",
+            description = "Advanced prospecting hub with automation features",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/x2zu/loader/main/games/Prospecting.lua"))()]]
+        }
     }
 }
 
@@ -1428,12 +1607,25 @@ MinimizeButton.MouseButton1Click:Connect(function()
             Size = UDim2.new(0, 80, 0, 50),
             Position = UDim2.new(0.5, -40, 0.5, -25)
         })
+        
+        -- Fix all shadows for minimize
         local shadowMinimizeTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(1, 0, 1, 0),
-            Position = UDim2.new(0, 5, 0, 5)
+            Size = UDim2.new(0, 80, 0, 50),
+            Position = UDim2.new(0.5, -38, 0.5, -23)
         })
+        local shadow2MinimizeTween = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            Size = UDim2.new(0, 80, 0, 50),
+            Position = UDim2.new(0.5, -42, 0.5, -27)
+        })
+        local ambientMinimizeTween = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            Size = UDim2.new(0, 90, 0, 60),
+            Position = UDim2.new(0.5, -45, 0.5, -30)
+        })
+        
         minimizeTween:Play()
         shadowMinimizeTween:Play()
+        shadow2MinimizeTween:Play()
+        ambientMinimizeTween:Play()
         isMinimized = true
         MinimizeButton.Text = "+"
         
@@ -1453,12 +1645,25 @@ MinimizeButton.MouseButton1Click:Connect(function()
             Size = UDim2.new(0, currentHubSize.width, 0, currentHubSize.height),
             Position = UDim2.new(0.5, -currentHubSize.width/2, 0.5, -currentHubSize.height/2)
         })
+        
+        -- Restore all shadows to original positions
         local shadowRestoreTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(1, 0, 1, 0),
-            Position = UDim2.new(0, 5, 0, 5)
+            Size = UDim2.new(0, currentHubSize.width, 0, currentHubSize.height),
+            Position = UDim2.new(0.5, -currentHubSize.width/2 + 8, 0.5, -currentHubSize.height/2 + 8)
         })
+        local shadow2RestoreTween = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            Size = UDim2.new(0, currentHubSize.width, 0, currentHubSize.height),
+            Position = UDim2.new(0.5, -currentHubSize.width/2 + 2, 0.5, -currentHubSize.height/2 + 2)
+        })
+        local ambientRestoreTween = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            Size = UDim2.new(0, currentHubSize.width + 20, 0, currentHubSize.height + 20),
+            Position = UDim2.new(0.5, -currentHubSize.width/2 - 10, 0.5, -currentHubSize.height/2 - 10)
+        })
+        
         restoreTween:Play()
         shadowRestoreTween:Play()
+        shadow2RestoreTween:Play()
+        ambientRestoreTween:Play()
         isMinimized = false
         MinimizeButton.Text = "-"
         
@@ -1479,6 +1684,13 @@ end)
 refreshTabs() -- Initialize tab system
 createHomeContent() -- Start with Home tab content
 
+-- Wait a moment to show loading screen, then hide it
+wait(3) -- Show loading screen for 2 seconds
+hideLoadingScreen()
+
+-- Wait for loading screen to fade out before showing notification
+wait(1)
+
 -- Notification
 StarterGui:SetCore("SendNotification", {
     Title = "FlixHub";
@@ -1488,4 +1700,4 @@ StarterGui:SetCore("SendNotification", {
 
 print("FlixHub v2.0 loaded successfully!")
 print("Created by FlixHub Team")
-print("Features: Search, Categories, Keyless Scripts")
+print("Features: Search, Categories, Keyless Scripts, Loading Screen, Themes")
