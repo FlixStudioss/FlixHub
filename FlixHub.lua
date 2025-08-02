@@ -259,6 +259,41 @@ local SettingsCorner = Instance.new("UICorner")
 SettingsCorner.CornerRadius = UDim.new(0, 6)
 SettingsCorner.Parent = SettingsButton
 
+-- Modern Changelog Button with Gradient
+local ChangelogButton = Instance.new("TextButton")
+ChangelogButton.Name = "ChangelogButton"
+ChangelogButton.Parent = TitleBar
+ChangelogButton.BackgroundColor3 = Color3.fromRGB(85, 200, 85)
+ChangelogButton.BackgroundTransparency = 0.1
+ChangelogButton.BorderSizePixel = 0
+ChangelogButton.Position = UDim2.new(1, -145, 0, 8)
+ChangelogButton.Size = UDim2.new(0, 28, 0, 28)
+ChangelogButton.Font = Enum.Font.GothamMedium
+ChangelogButton.Text = "📋"
+ChangelogButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ChangelogButton.TextSize = 14
+ChangelogButton.ZIndex = 4
+
+-- Changelog Button Gradient
+local ChangelogGradient = Instance.new("UIGradient")
+ChangelogGradient.Parent = ChangelogButton
+ChangelogGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(100, 220, 100)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(65, 180, 65))
+}
+ChangelogGradient.Rotation = 45
+
+-- Changelog Button Glow
+local ChangelogStroke = Instance.new("UIStroke")
+ChangelogStroke.Parent = ChangelogButton
+ChangelogStroke.Color = Color3.fromRGB(120, 240, 120)
+ChangelogStroke.Transparency = 0.6
+ChangelogStroke.Thickness = 1
+
+local ChangelogCorner = Instance.new("UICorner")
+ChangelogCorner.CornerRadius = UDim.new(0, 6)
+ChangelogCorner.Parent = ChangelogButton
+
 -- Modern Sidebar with Glassmorphism
 local Sidebar = Instance.new("Frame")
 Sidebar.Name = "Sidebar"
@@ -621,6 +656,173 @@ CloseSettingsButton.TextSize = 12
 local CloseSettingsCorner = Instance.new("UICorner")
 CloseSettingsCorner.CornerRadius = UDim.new(0, 6)
 CloseSettingsCorner.Parent = CloseSettingsButton
+
+-- Modern Changelog Panel
+local ChangelogPanel = Instance.new("ScrollingFrame")
+ChangelogPanel.Name = "ChangelogPanel"
+ChangelogPanel.Parent = FlixHub
+ChangelogPanel.BackgroundColor3 = Color3.fromRGB(20, 25, 35)
+ChangelogPanel.BackgroundTransparency = 0.1
+ChangelogPanel.BorderSizePixel = 0
+ChangelogPanel.Position = UDim2.new(0.5, -250, 0.5, -200)
+ChangelogPanel.Size = UDim2.new(0, 500, 0, 400)
+ChangelogPanel.Visible = false
+ChangelogPanel.ZIndex = 15
+ChangelogPanel.ScrollBarThickness = 8
+ChangelogPanel.ScrollBarImageColor3 = Color3.fromRGB(100, 150, 255)
+
+-- Changelog Panel Gradient
+local ChangelogGradientBG = Instance.new("UIGradient")
+ChangelogGradientBG.Parent = ChangelogPanel
+ChangelogGradientBG.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 30, 40)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(20, 25, 35)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 20, 30))
+}
+ChangelogGradientBG.Rotation = 45
+
+local ChangelogPanelCorner = Instance.new("UICorner")
+ChangelogPanelCorner.CornerRadius = UDim.new(0, 12)
+ChangelogPanelCorner.Parent = ChangelogPanel
+
+-- Changelog Panel Glow
+local ChangelogPanelStroke = Instance.new("UIStroke")
+ChangelogPanelStroke.Parent = ChangelogPanel
+ChangelogPanelStroke.Color = Color3.fromRGB(120, 240, 120)
+ChangelogPanelStroke.Transparency = 0.7
+ChangelogPanelStroke.Thickness = 2
+
+-- Changelog Shadow
+local ChangelogShadow = Instance.new("Frame")
+ChangelogShadow.Name = "ChangelogShadow"
+ChangelogShadow.Parent = FlixHub
+ChangelogShadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+ChangelogShadow.BackgroundTransparency = 0.3
+ChangelogShadow.BorderSizePixel = 0
+ChangelogShadow.Position = UDim2.new(0.5, -245, 0.5, -195)
+ChangelogShadow.Size = UDim2.new(0, 500, 0, 400)
+ChangelogShadow.Visible = false
+ChangelogShadow.ZIndex = 14
+
+local ChangelogShadowCorner = Instance.new("UICorner")
+ChangelogShadowCorner.CornerRadius = UDim.new(0, 12)
+ChangelogShadowCorner.Parent = ChangelogShadow
+
+-- Changelog Title
+local ChangelogTitle = Instance.new("TextLabel")
+ChangelogTitle.Name = "ChangelogTitle"
+ChangelogTitle.Parent = ChangelogPanel
+ChangelogTitle.BackgroundTransparency = 1
+ChangelogTitle.Position = UDim2.new(0, 20, 0, 20)
+ChangelogTitle.Size = UDim2.new(1, -100, 0, 40)
+ChangelogTitle.Font = Enum.Font.GothamBold
+ChangelogTitle.Text = "📋 FlixHub v2.0 - Changelog"
+ChangelogTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+ChangelogTitle.TextSize = 20
+ChangelogTitle.TextXAlignment = Enum.TextXAlignment.Left
+ChangelogTitle.ZIndex = 16
+
+-- Changelog Title Glow
+local ChangelogTitleStroke = Instance.new("UIStroke")
+ChangelogTitleStroke.Parent = ChangelogTitle
+ChangelogTitleStroke.Color = Color3.fromRGB(120, 240, 120)
+ChangelogTitleStroke.Transparency = 0.5
+ChangelogTitleStroke.Thickness = 2
+
+-- Changelog Content
+local ChangelogContent = Instance.new("TextLabel")
+ChangelogContent.Name = "ChangelogContent"
+ChangelogContent.Parent = ChangelogPanel
+ChangelogContent.BackgroundTransparency = 1
+ChangelogContent.Position = UDim2.new(0, 20, 0, 80)
+ChangelogContent.Size = UDim2.new(1, -40, 0, 1200) -- Large height for scrolling
+ChangelogContent.Font = Enum.Font.Gotham
+ChangelogContent.TextColor3 = Color3.fromRGB(220, 220, 220)
+ChangelogContent.TextSize = 14
+ChangelogContent.TextXAlignment = Enum.TextXAlignment.Left
+ChangelogContent.TextYAlignment = Enum.TextYAlignment.Top
+ChangelogContent.TextWrapped = true
+ChangelogContent.ZIndex = 16
+ChangelogContent.Text = [[
+🚀 VERSION 2.0 - MAJOR UPDATE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ NEW FEATURES:
+• Modern UI Redesign - Complete visual overhaul with glassmorphism effects
+• 4 Theme System - Dark, Ocean, Purple, and Green themes with smooth transitions
+• Animated Loading Screen - Beautiful spinning circle with "FlixHub✨ Loading"
+• Enhanced Tab System - Vertical sidebar with expandable Games category
+• Advanced Mouse Controls - Smooth dragging with screen boundary constraints
+• Multi-Layer Shadows - Professional depth with primary, secondary, and ambient shadows
+
+🎮 NEW GAME SUPPORT:
+• Prospecting - Added StellarHub script for advanced automation
+• 99 Nights Forest - 8 powerful scripts including eF Hub, GoaHub, SolunaHub
+• FE Scripts Tab - 5 frontend exploit scripts for universal use
+• Steal A Brainrot - Instant steal scripts (v1 and v2)
+• Life Sentence - BeanzHub script integration
+
+🔧 IMPROVEMENTS:
+• Fixed minimize black screen bug - All shadow layers now properly position
+• Tab duplication fix - Animation state tracking prevents rapid clicking issues
+• Enhanced search - Now covers Universal, FE, and all game scripts
+• Smooth animations - 60+ modern transitions and hover effects
+• Better performance - Optimized script execution and UI rendering
+
+🎨 UI ENHANCEMENTS:
+• Gradient backgrounds on all major elements
+• Glow effects on buttons and text
+• Modern typography with enhanced spacing
+• Professional button designs with hover scaling
+• Smooth content transitions between tabs
+
+⚙️ SETTINGS:
+• Hub size options - Very Small (mobile), Small, Medium, Large
+• Theme selection - 4 beautiful themes with instant preview
+• Organized settings panel - Clean separation of size and theme options
+
+🐛 BUG FIXES:
+• Script execution errors resolved
+• Minimize/restore functionality improved
+• Theme switching stability enhanced
+• Tab animation conflicts eliminated
+• Search functionality refined
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 FlixHub v2.0 - The most advanced Roblox script hub
+🌟 Created by FlixHub Team with ❤️
+]]
+
+-- Update canvas size for scrolling
+ChangelogPanel.CanvasSize = UDim2.new(0, 0, 0, 1300)
+
+-- Close Changelog Button
+local CloseChangelogButton = Instance.new("TextButton")
+CloseChangelogButton.Name = "CloseChangelogButton"
+CloseChangelogButton.Parent = ChangelogPanel
+CloseChangelogButton.BackgroundColor3 = Color3.fromRGB(200, 75, 75)
+CloseChangelogButton.BackgroundTransparency = 0.1
+CloseChangelogButton.BorderSizePixel = 0
+CloseChangelogButton.Position = UDim2.new(1, -60, 0, 20)
+CloseChangelogButton.Size = UDim2.new(0, 35, 0, 35)
+CloseChangelogButton.Font = Enum.Font.GothamBold
+CloseChangelogButton.Text = "×"
+CloseChangelogButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseChangelogButton.TextSize = 18
+CloseChangelogButton.ZIndex = 16
+
+local CloseChangelogCorner = Instance.new("UICorner")
+CloseChangelogCorner.CornerRadius = UDim.new(0, 6)
+CloseChangelogCorner.Parent = CloseChangelogButton
+
+-- Close Changelog Gradient
+local CloseChangelogGradient = Instance.new("UIGradient")
+CloseChangelogGradient.Parent = CloseChangelogButton
+CloseChangelogGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 95, 95)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(200, 65, 65))
+}
+CloseChangelogGradient.Rotation = 45
 
 -- New Tab System Variables
 local currentTab = "Home"
@@ -1499,6 +1701,64 @@ MinimizeButton.MouseButton1Click:Connect(function()
         TitleText.TextSize = 16
         TitleText.Position = UDim2.new(0, 15, 0, 0)
     end
+end)
+
+-- Settings button click handler
+SettingsButton.MouseButton1Click:Connect(function()
+    SettingsPanel.Visible = not SettingsPanel.Visible
+    SettingsShadow.Visible = SettingsPanel.Visible
+end)
+
+-- Changelog button click handler
+ChangelogButton.MouseButton1Click:Connect(function()
+    ChangelogPanel.Visible = not ChangelogPanel.Visible
+    ChangelogShadow.Visible = ChangelogPanel.Visible
+end)
+
+-- Close changelog button handler
+CloseChangelogButton.MouseButton1Click:Connect(function()
+    ChangelogPanel.Visible = false
+    ChangelogShadow.Visible = false
+end)
+
+-- Size button clicks
+VerySmallButton.MouseButton1Click:Connect(function()
+    changeHubSize("Very Small", 500, 350)
+end)
+
+SmallButton.MouseButton1Click:Connect(function()
+    changeHubSize("Small", 600, 400)
+end)
+
+MediumButton.MouseButton1Click:Connect(function()
+    changeHubSize("Medium", 700, 500)
+end)
+
+LargeButton.MouseButton1Click:Connect(function()
+    changeHubSize("Large", 800, 600)
+end)
+
+-- Theme button clicks
+DarkThemeButton.MouseButton1Click:Connect(function()
+    applyTheme("Dark")
+end)
+
+OceanThemeButton.MouseButton1Click:Connect(function()
+    applyTheme("Ocean")
+end)
+
+PurpleThemeButton.MouseButton1Click:Connect(function()
+    applyTheme("Purple")
+end)
+
+GreenThemeButton.MouseButton1Click:Connect(function()
+    applyTheme("Green")
+end)
+
+-- Close settings button
+CloseSettingsButton.MouseButton1Click:Connect(function()
+    SettingsPanel.Visible = false
+    SettingsShadow.Visible = false
 end)
 
 -- Initialize the GUI with new tab system
