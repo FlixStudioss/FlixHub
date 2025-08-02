@@ -351,11 +351,7 @@ local function createKeyPrompt()
                     wait(3) -- Show loading screen for 3 seconds
                     hideLoadingScreen()
                     
-                    -- Initialize the GUI with new tab system
-                    refreshTabs() -- Initialize tab system
-                    createHomeContent() -- Start with Home tab content
-                    
-                    -- Ensure all main UI elements and shadows are visible
+                    -- Show all main UI elements and shadows
                     MainFrame.Visible = true
                     Shadow.Visible = true
                     Shadow2.Visible = true
@@ -367,6 +363,8 @@ local function createKeyPrompt()
                     CloseButton.Visible = true
                     MinimizeButton.Visible = true
                     ChangelogButton.Visible = true
+                    
+                    print("FlixHub main UI elements are now visible!")
                     
                     wait(1) -- Wait for loading screen to fade out
                     
