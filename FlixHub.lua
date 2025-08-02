@@ -179,25 +179,16 @@ local function createKeyScreen()
             saveAuthentication()
             
             -- Show success animation
-            ErrorMessage.Text = "✅ Authentication successful!"
+            ErrorMessage.Text = "✅ Authentication successful! Loading FlixHub..."
             ErrorMessage.TextColor3 = Color3.fromRGB(100, 255, 100)
             ErrorMessage.Visible = true
             
-            -- Fade out key screen and create main FlixHub
-            local fadeOut = TweenService:Create(KeyScreen, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {
-                BackgroundTransparency = 1
-            })
-            local panelFade = TweenService:Create(KeyPanel, TweenInfo.new(0.5, Enum.EasingStyle.Quad), {
-                BackgroundTransparency = 1
-            })
+            -- Wait briefly to show success message, then load FlixHub
+            wait(1)
             
-            fadeOut:Play()
-            panelFade:Play()
-            
-            fadeOut.Completed:Connect(function()
-                KeyScreen:Destroy()
-                createMainFlixHub() -- Create the main FlixHub interface
-            end)
+            -- Destroy key screen and create main FlixHub
+            KeyScreen:Destroy()
+            createMainFlixHub() -- Create the main FlixHub interface
         else
             -- Show error
             ErrorMessage.Text = "❌ Invalid key. Please try again."
