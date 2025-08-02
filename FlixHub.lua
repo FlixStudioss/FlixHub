@@ -18,121 +18,274 @@ FlixHub.Parent = playerGui
 FlixHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 FlixHub.ResetOnSpawn = false
 
--- Main Frame
+-- Main Frame (Hub Window) with Modern Glassmorphism
 local MainFrame = Instance.new("Frame")
-MainFrame.Name = "MainFrame"
+MainFrame.Name = "FlixHub"
 MainFrame.Parent = FlixHub
 MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+MainFrame.BackgroundTransparency = 0.1 -- More transparency for glass effect
 MainFrame.BorderSizePixel = 0
 MainFrame.Position = UDim2.new(0.5, -250, 0.5, -175)
 MainFrame.Size = UDim2.new(0, 500, 0, 350)
+MainFrame.ZIndex = 2
 MainFrame.Active = true
 MainFrame.Draggable = true
+
+-- Modern Gradient Overlay
+local GradientFrame = Instance.new("Frame")
+GradientFrame.Name = "GradientOverlay"
+GradientFrame.Parent = MainFrame
+GradientFrame.BackgroundTransparency = 1
+GradientFrame.BorderSizePixel = 0
+GradientFrame.Size = UDim2.new(1, 0, 1, 0)
+GradientFrame.ZIndex = 1
+
+local GradientBG = Instance.new("UIGradient")
+GradientBG.Parent = MainFrame
+GradientBG.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(35, 35, 50)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(25, 25, 35)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 30))
+}
+GradientBG.Rotation = 45
 
 -- Corner rounding for main frame
 local MainCorner = Instance.new("UICorner")
 MainCorner.CornerRadius = UDim.new(0, 12)
 MainCorner.Parent = MainFrame
 
--- Drop shadow effect
+-- Enhanced Multi-Layered Shadow System
 local Shadow = Instance.new("Frame")
 Shadow.Name = "Shadow"
-Shadow.Parent = MainFrame
+Shadow.Parent = FlixHub
 Shadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Shadow.BackgroundTransparency = 0.7
+Shadow.BackgroundTransparency = 0.3 -- Darker for more depth
 Shadow.BorderSizePixel = 0
-Shadow.Position = UDim2.new(0, 5, 0, 5)
-Shadow.Size = UDim2.new(1, 0, 1, 0)
-Shadow.ZIndex = -1
+Shadow.Position = UDim2.new(0.5, -242, 0.5, -167)
+Shadow.Size = UDim2.new(0, 500, 0, 350)
+Shadow.ZIndex = 0
 
 local ShadowCorner = Instance.new("UICorner")
 ShadowCorner.CornerRadius = UDim.new(0, 12)
 ShadowCorner.Parent = Shadow
 
--- Title Bar
+-- Secondary Shadow for Extra Depth
+local Shadow2 = Instance.new("Frame")
+Shadow2.Name = "Shadow2"
+Shadow2.Parent = FlixHub
+Shadow2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Shadow2.BackgroundTransparency = 0.6
+Shadow2.BorderSizePixel = 0
+Shadow2.Position = UDim2.new(0.5, -248, 0.5, -173)
+Shadow2.Size = UDim2.new(0, 500, 0, 350)
+Shadow2.ZIndex = -1
+
+local Shadow2Corner = Instance.new("UICorner")
+Shadow2Corner.CornerRadius = UDim.new(0, 12)
+Shadow2Corner.Parent = Shadow2
+
+-- Ambient Shadow (Soft Glow)
+local AmbientShadow = Instance.new("Frame")
+AmbientShadow.Name = "AmbientShadow"
+AmbientShadow.Parent = FlixHub
+AmbientShadow.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+AmbientShadow.BackgroundTransparency = 0.9
+AmbientShadow.BorderSizePixel = 0
+AmbientShadow.Position = UDim2.new(0.5, -260, 0.5, -185)
+AmbientShadow.Size = UDim2.new(0, 520, 0, 370)
+AmbientShadow.ZIndex = -2
+
+local AmbientCorner = Instance.new("UICorner")
+AmbientCorner.CornerRadius = UDim.new(0, 20)
+AmbientCorner.Parent = AmbientShadow
+
+-- Modern Title Bar with Gradient
 local TitleBar = Instance.new("Frame")
 TitleBar.Name = "TitleBar"
 TitleBar.Parent = MainFrame
-TitleBar.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+TitleBar.BackgroundColor3 = Color3.fromRGB(45, 45, 60)
+TitleBar.BackgroundTransparency = 0.1
 TitleBar.BorderSizePixel = 0
-TitleBar.Size = UDim2.new(1, 0, 0, 40)
+TitleBar.Size = UDim2.new(1, 0, 0, 40) -- Slightly taller for modern look
+TitleBar.ZIndex = 3
+
+-- Title Bar Gradient
+local TitleGradient = Instance.new("UIGradient")
+TitleGradient.Parent = TitleBar
+TitleGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(50, 50, 70)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(35, 35, 50))
+}
+TitleGradient.Rotation = 90
+
+-- Title Bar Glow Effect
+local TitleGlow = Instance.new("Frame")
+TitleGlow.Name = "TitleGlow"
+TitleGlow.Parent = TitleBar
+TitleGlow.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+TitleGlow.BackgroundTransparency = 0.8
+TitleGlow.BorderSizePixel = 0
+TitleGlow.Size = UDim2.new(1, 0, 0, 2)
+TitleGlow.Position = UDim2.new(0, 0, 1, -2)
+TitleGlow.ZIndex = 4
 
 local TitleCorner = Instance.new("UICorner")
 TitleCorner.CornerRadius = UDim.new(0, 12)
 TitleCorner.Parent = TitleBar
 
--- Title Text
+-- Modern Title Text with Enhanced Typography
 local TitleText = Instance.new("TextLabel")
 TitleText.Name = "TitleText"
 TitleText.Parent = TitleBar
 TitleText.BackgroundTransparency = 1
-TitleText.Position = UDim2.new(0, 15, 0, 0)
-TitleText.Size = UDim2.new(0, 200, 1, 0)
+TitleText.Position = UDim2.new(0, 20, 0, 0)
+TitleText.Size = UDim2.new(0, 250, 1, 0)
 TitleText.Font = Enum.Font.GothamBold
-TitleText.Text = "FlixHub v2.0"
+TitleText.Text = "✨ FlixHub v2.0"
 TitleText.TextColor3 = Color3.fromRGB(255, 255, 255)
-TitleText.TextSize = 16
+TitleText.TextSize = 18
 TitleText.TextXAlignment = Enum.TextXAlignment.Left
+TitleText.ZIndex = 4
 
--- Close Button
+-- Title Text Glow Effect
+local TitleTextStroke = Instance.new("UIStroke")
+TitleTextStroke.Parent = TitleText
+TitleTextStroke.Color = Color3.fromRGB(100, 150, 255)
+TitleTextStroke.Transparency = 0.7
+TitleTextStroke.Thickness = 1
+
+-- Modern Close Button with Gradient
 local CloseButton = Instance.new("TextButton")
 CloseButton.Name = "CloseButton"
 CloseButton.Parent = TitleBar
-CloseButton.BackgroundColor3 = Color3.fromRGB(255, 75, 75)
+CloseButton.BackgroundColor3 = Color3.fromRGB(220, 85, 85)
+CloseButton.BackgroundTransparency = 0.1
 CloseButton.BorderSizePixel = 0
-CloseButton.Position = UDim2.new(1, -35, 0, 5)
-CloseButton.Size = UDim2.new(0, 30, 0, 30)
+CloseButton.Position = UDim2.new(1, -40, 0, 8)
+CloseButton.Size = UDim2.new(0, 28, 0, 28)
 CloseButton.Font = Enum.Font.GothamBold
-CloseButton.Text = "X"
+CloseButton.Text = "×"
 CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseButton.TextSize = 14
+CloseButton.TextSize = 16
+CloseButton.ZIndex = 4
+
+-- Close Button Gradient
+local CloseGradient = Instance.new("UIGradient")
+CloseGradient.Parent = CloseButton
+CloseGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 95, 95)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(200, 65, 65))
+}
+CloseGradient.Rotation = 45
+
+-- Close Button Glow Effect
+local CloseStroke = Instance.new("UIStroke")
+CloseStroke.Parent = CloseButton
+CloseStroke.Color = Color3.fromRGB(255, 120, 120)
+CloseStroke.Transparency = 0.6
+CloseStroke.Thickness = 1
 
 local CloseCorner = Instance.new("UICorner")
 CloseCorner.CornerRadius = UDim.new(0, 6)
 CloseCorner.Parent = CloseButton
 
--- Minimize Button
+-- Modern Minimize Button with Gradient
 local MinimizeButton = Instance.new("TextButton")
 MinimizeButton.Name = "MinimizeButton"
 MinimizeButton.Parent = TitleBar
-MinimizeButton.BackgroundColor3 = Color3.fromRGB(255, 200, 75)
+MinimizeButton.BackgroundColor3 = Color3.fromRGB(120, 120, 140)
+MinimizeButton.BackgroundTransparency = 0.1
 MinimizeButton.BorderSizePixel = 0
-MinimizeButton.Position = UDim2.new(1, -70, 0, 5)
-MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+MinimizeButton.Position = UDim2.new(1, -75, 0, 8)
+MinimizeButton.Size = UDim2.new(0, 28, 0, 28)
 MinimizeButton.Font = Enum.Font.GothamBold
 MinimizeButton.Text = "-"
 MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-MinimizeButton.TextSize = 14
+MinimizeButton.TextSize = 16
+MinimizeButton.ZIndex = 4
+
+-- Minimize Button Gradient
+local MinimizeGradient = Instance.new("UIGradient")
+MinimizeGradient.Parent = MinimizeButton
+MinimizeGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(140, 140, 160)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 100, 120))
+}
+MinimizeGradient.Rotation = 45
+
+-- Minimize Button Glow
+local MinimizeStroke = Instance.new("UIStroke")
+MinimizeStroke.Parent = MinimizeButton
+MinimizeStroke.Color = Color3.fromRGB(150, 150, 180)
+MinimizeStroke.Transparency = 0.6
+MinimizeStroke.Thickness = 1
 
 local MinimizeCorner = Instance.new("UICorner")
 MinimizeCorner.CornerRadius = UDim.new(0, 6)
 MinimizeCorner.Parent = MinimizeButton
 
--- Settings Button
+-- Modern Settings Button with Gradient
 local SettingsButton = Instance.new("TextButton")
 SettingsButton.Name = "SettingsButton"
 SettingsButton.Parent = TitleBar
-SettingsButton.BackgroundColor3 = Color3.fromRGB(100, 100, 200)
+SettingsButton.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
+SettingsButton.BackgroundTransparency = 0.1
 SettingsButton.BorderSizePixel = 0
-SettingsButton.Position = UDim2.new(1, -105, 0, 5)
-SettingsButton.Size = UDim2.new(0, 30, 0, 30)
-SettingsButton.Font = Enum.Font.GothamBold
+SettingsButton.Position = UDim2.new(1, -110, 0, 8)
+SettingsButton.Size = UDim2.new(0, 28, 0, 28)
+SettingsButton.Font = Enum.Font.GothamMedium
 SettingsButton.Text = "⚙"
 SettingsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 SettingsButton.TextSize = 14
+SettingsButton.ZIndex = 4
+
+-- Settings Button Gradient
+local SettingsGradient = Instance.new("UIGradient")
+SettingsGradient.Parent = SettingsButton
+SettingsGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(100, 150, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(65, 115, 235))
+}
+SettingsGradient.Rotation = 45
+
+-- Settings Button Glow
+local SettingsStroke = Instance.new("UIStroke")
+SettingsStroke.Parent = SettingsButton
+SettingsStroke.Color = Color3.fromRGB(120, 170, 255)
+SettingsStroke.Transparency = 0.6
+SettingsStroke.Thickness = 1
 
 local SettingsCorner = Instance.new("UICorner")
 SettingsCorner.CornerRadius = UDim.new(0, 6)
 SettingsCorner.Parent = SettingsButton
 
--- Sidebar Container (Left Side)
+-- Modern Sidebar with Glassmorphism
 local Sidebar = Instance.new("Frame")
 Sidebar.Name = "Sidebar"
 Sidebar.Parent = MainFrame
-Sidebar.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+Sidebar.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+Sidebar.BackgroundTransparency = 0.2
 Sidebar.BorderSizePixel = 0
-Sidebar.Position = UDim2.new(0, 0, 0, 40) -- Below title bar
-Sidebar.Size = UDim2.new(0, 150, 1, -40) -- 150px wide, full height minus title
+Sidebar.Position = UDim2.new(0, 0, 0, 40)
+Sidebar.Size = UDim2.new(0, 160, 1, -40) -- Slightly wider
+Sidebar.ZIndex = 3
+
+-- Sidebar Gradient
+local SidebarGradient = Instance.new("UIGradient")
+SidebarGradient.Parent = Sidebar
+SidebarGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(35, 35, 55)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(25, 25, 40)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 35))
+}
+SidebarGradient.Rotation = 15
+
+-- Sidebar Glow Border
+local SidebarStroke = Instance.new("UIStroke")
+SidebarStroke.Parent = Sidebar
+SidebarStroke.Color = Color3.fromRGB(80, 120, 255)
+SidebarStroke.Transparency = 0.7
+SidebarStroke.Thickness = 1
 
 local SidebarCorner = Instance.new("UICorner")
 SidebarCorner.CornerRadius = UDim.new(0, 0) -- Sharp corners for sidebar
@@ -159,13 +312,33 @@ TabLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 TabLayout.SortOrder = Enum.SortOrder.LayoutOrder
 TabLayout.Padding = UDim.new(0, 5)
 
--- Main Content Area (Right Side)
+-- Modern Content Area with Enhanced Design
 local ContentArea = Instance.new("Frame")
 ContentArea.Name = "ContentArea"
 ContentArea.Parent = MainFrame
-ContentArea.BackgroundTransparency = 1
-ContentArea.Position = UDim2.new(0, 150, 0, 40) -- Next to sidebar, below title
-ContentArea.Size = UDim2.new(1, -150, 1, -40) -- Full width minus sidebar, full height minus title
+ContentArea.BackgroundColor3 = Color3.fromRGB(28, 28, 42)
+ContentArea.BackgroundTransparency = 0.3
+ContentArea.BorderSizePixel = 0
+ContentArea.Position = UDim2.new(0, 160, 0, 40)
+ContentArea.Size = UDim2.new(1, -160, 1, -40)
+ContentArea.ZIndex = 3
+
+-- Content Area Gradient
+local ContentGradient = Instance.new("UIGradient")
+ContentGradient.Parent = ContentArea
+ContentGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(32, 32, 48)),
+    ColorSequenceKeypoint.new(0.7, Color3.fromRGB(25, 25, 38)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(22, 22, 35))
+}
+ContentGradient.Rotation = -15
+
+-- Content Area Subtle Glow
+local ContentStroke = Instance.new("UIStroke")
+ContentStroke.Parent = ContentArea
+ContentStroke.Color = Color3.fromRGB(60, 100, 255)
+ContentStroke.Transparency = 0.8
+ContentStroke.Thickness = 1
 
 -- Search Container (Now in Content Area)
 local SearchContainer = Instance.new("Frame")
