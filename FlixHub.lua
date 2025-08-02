@@ -338,6 +338,28 @@ local function createKeyPrompt()
                 KeyShadow:Destroy()
                 -- Start loading animations
                 startLoadingAnimations()
+                
+                -- Hide loading screen after delay and initialize GUI
+                spawn(function()
+                    wait(3) -- Show loading screen for 3 seconds
+                    hideLoadingScreen()
+                    
+                    -- Initialize the GUI with new tab system
+                    refreshTabs() -- Initialize tab system
+                    createHomeContent() -- Start with Home tab content
+                    
+                    wait(1) -- Wait for loading screen to fade out
+                    
+                    -- Show success notification
+                    StarterGui:SetCore("SendNotification", {
+                        Title = "FlixHub";
+                        Text = "Script hub loaded successfully!";
+                        Duration = 5;
+                    })
+                    
+                    print("FlixHub v2.0 loaded successfully!")
+                    print("Created by FlixHub Team")
+                end)
             end)
         else
             ErrorMsg.Text = "❌ Invalid key! Please try again."
