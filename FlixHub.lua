@@ -778,35 +778,77 @@ SizeContainer.Position = UDim2.new(0, 25, 0, 90)
 SizeContainer.Size = UDim2.new(1, -50, 0, 70)
 SizeContainer.ZIndex = 21
 
--- Size Buttons (2x2 Grid)
-local sizeButtons = {
-    {name = "Very Small", pos = UDim2.new(0, 0, 0, 0), size = {500, 350}, default = true},
-    {name = "Small", pos = UDim2.new(0.5, 5, 0, 0), size = {600, 400}},
-    {name = "Medium", pos = UDim2.new(0, 0, 0, 35), size = {700, 500}},
-    {name = "Large", pos = UDim2.new(0.5, 5, 0, 35), size = {800, 600}}
-}
+-- Very Small Button (Direct Creation)
+local VerySmallBtn = Instance.new("TextButton")
+VerySmallBtn.Name = "VerySmallBtn"
+VerySmallBtn.Parent = SizeContainer
+VerySmallBtn.BackgroundColor3 = Color3.fromRGB(85, 135, 255) -- Default selected
+VerySmallBtn.BorderSizePixel = 0
+VerySmallBtn.Position = UDim2.new(0, 0, 0, 0)
+VerySmallBtn.Size = UDim2.new(0.5, -2.5, 0, 30)
+VerySmallBtn.Font = Enum.Font.GothamMedium
+VerySmallBtn.Text = "Very Small"
+VerySmallBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+VerySmallBtn.TextSize = 11
+VerySmallBtn.ZIndex = 22
 
-local sizeButtonRefs = {}
-for i, buttonData in ipairs(sizeButtons) do
-    local btn = Instance.new("TextButton")
-    btn.Name = buttonData.name .. "Button"
-    btn.Parent = SizeContainer
-    btn.BackgroundColor3 = buttonData.default and Color3.fromRGB(85, 135, 255) or Color3.fromRGB(50, 60, 80)
-    btn.BorderSizePixel = 0
-    btn.Position = buttonData.pos
-    btn.Size = UDim2.new(0.5, -2.5, 0, 30)
-    btn.Font = Enum.Font.GothamMedium
-    btn.Text = buttonData.name
-    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    btn.TextSize = 11
-    btn.ZIndex = 22
-    
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 8)
-    corner.Parent = btn
-    
-    sizeButtonRefs[buttonData.name] = {button = btn, width = buttonData.size[1], height = buttonData.size[2]}
-end
+local VerySmallCorner = Instance.new("UICorner")
+VerySmallCorner.CornerRadius = UDim.new(0, 8)
+VerySmallCorner.Parent = VerySmallBtn
+
+-- Small Button
+local SmallBtn = Instance.new("TextButton")
+SmallBtn.Name = "SmallBtn"
+SmallBtn.Parent = SizeContainer
+SmallBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+SmallBtn.BorderSizePixel = 0
+SmallBtn.Position = UDim2.new(0.5, 5, 0, 0)
+SmallBtn.Size = UDim2.new(0.5, -2.5, 0, 30)
+SmallBtn.Font = Enum.Font.GothamMedium
+SmallBtn.Text = "Small"
+SmallBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SmallBtn.TextSize = 11
+SmallBtn.ZIndex = 22
+
+local SmallCorner = Instance.new("UICorner")
+SmallCorner.CornerRadius = UDim.new(0, 8)
+SmallCorner.Parent = SmallBtn
+
+-- Medium Button
+local MediumBtn = Instance.new("TextButton")
+MediumBtn.Name = "MediumBtn"
+MediumBtn.Parent = SizeContainer
+MediumBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+MediumBtn.BorderSizePixel = 0
+MediumBtn.Position = UDim2.new(0, 0, 0, 35)
+MediumBtn.Size = UDim2.new(0.5, -2.5, 0, 30)
+MediumBtn.Font = Enum.Font.GothamMedium
+MediumBtn.Text = "Medium"
+MediumBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+MediumBtn.TextSize = 11
+MediumBtn.ZIndex = 22
+
+local MediumCorner = Instance.new("UICorner")
+MediumCorner.CornerRadius = UDim.new(0, 8)
+MediumCorner.Parent = MediumBtn
+
+-- Large Button
+local LargeBtn = Instance.new("TextButton")
+LargeBtn.Name = "LargeBtn"
+LargeBtn.Parent = SizeContainer
+LargeBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+LargeBtn.BorderSizePixel = 0
+LargeBtn.Position = UDim2.new(0.5, 5, 0, 35)
+LargeBtn.Size = UDim2.new(0.5, -2.5, 0, 30)
+LargeBtn.Font = Enum.Font.GothamMedium
+LargeBtn.Text = "Large"
+LargeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+LargeBtn.TextSize = 11
+LargeBtn.ZIndex = 22
+
+local LargeCorner = Instance.new("UICorner")
+LargeCorner.CornerRadius = UDim.new(0, 8)
+LargeCorner.Parent = LargeBtn
 
 -- Theme Section
 local ThemeSection = Instance.new("TextLabel")
@@ -831,35 +873,77 @@ ThemeContainer.Position = UDim2.new(0, 25, 0, 200)
 ThemeContainer.Size = UDim2.new(1, -50, 0, 35)
 ThemeContainer.ZIndex = 21
 
--- Theme Buttons
-local themeButtons = {
-    {name = "Dark", pos = UDim2.new(0, 0, 0, 0), color = Color3.fromRGB(25, 25, 35), default = true},
-    {name = "Ocean", pos = UDim2.new(0.25, 2, 0, 0), color = Color3.fromRGB(20, 50, 80)},
-    {name = "Purple", pos = UDim2.new(0.5, 4, 0, 0), color = Color3.fromRGB(50, 20, 80)},
-    {name = "Green", pos = UDim2.new(0.75, 6, 0, 0), color = Color3.fromRGB(20, 60, 40)}
-}
+-- Dark Theme Button (Direct Creation)
+local DarkBtn = Instance.new("TextButton")
+DarkBtn.Name = "DarkBtn"
+DarkBtn.Parent = ThemeContainer
+DarkBtn.BackgroundColor3 = Color3.fromRGB(85, 135, 255) -- Default selected
+DarkBtn.BorderSizePixel = 0
+DarkBtn.Position = UDim2.new(0, 0, 0, 0)
+DarkBtn.Size = UDim2.new(0.25, -2, 0, 30)
+DarkBtn.Font = Enum.Font.GothamMedium
+DarkBtn.Text = "Dark"
+DarkBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+DarkBtn.TextSize = 10
+DarkBtn.ZIndex = 22
 
-local themeButtonRefs = {}
-for i, themeData in ipairs(themeButtons) do
-    local btn = Instance.new("TextButton")
-    btn.Name = themeData.name .. "ThemeButton"
-    btn.Parent = ThemeContainer
-    btn.BackgroundColor3 = themeData.default and Color3.fromRGB(85, 135, 255) or themeData.color
-    btn.BorderSizePixel = 0
-    btn.Position = themeData.pos
-    btn.Size = UDim2.new(0.25, -2, 0, 30)
-    btn.Font = Enum.Font.GothamMedium
-    btn.Text = themeData.name
-    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    btn.TextSize = 10
-    btn.ZIndex = 22
-    
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 8)
-    corner.Parent = btn
-    
-    themeButtonRefs[themeData.name] = {button = btn, originalColor = themeData.color}
-end
+local DarkCorner = Instance.new("UICorner")
+DarkCorner.CornerRadius = UDim.new(0, 8)
+DarkCorner.Parent = DarkBtn
+
+-- Ocean Theme Button
+local OceanBtn = Instance.new("TextButton")
+OceanBtn.Name = "OceanBtn"
+OceanBtn.Parent = ThemeContainer
+OceanBtn.BackgroundColor3 = Color3.fromRGB(20, 50, 80)
+OceanBtn.BorderSizePixel = 0
+OceanBtn.Position = UDim2.new(0.25, 2, 0, 0)
+OceanBtn.Size = UDim2.new(0.25, -2, 0, 30)
+OceanBtn.Font = Enum.Font.GothamMedium
+OceanBtn.Text = "Ocean"
+OceanBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+OceanBtn.TextSize = 10
+OceanBtn.ZIndex = 22
+
+local OceanCorner = Instance.new("UICorner")
+OceanCorner.CornerRadius = UDim.new(0, 8)
+OceanCorner.Parent = OceanBtn
+
+-- Purple Theme Button
+local PurpleBtn = Instance.new("TextButton")
+PurpleBtn.Name = "PurpleBtn"
+PurpleBtn.Parent = ThemeContainer
+PurpleBtn.BackgroundColor3 = Color3.fromRGB(50, 20, 80)
+PurpleBtn.BorderSizePixel = 0
+PurpleBtn.Position = UDim2.new(0.5, 4, 0, 0)
+PurpleBtn.Size = UDim2.new(0.25, -2, 0, 30)
+PurpleBtn.Font = Enum.Font.GothamMedium
+PurpleBtn.Text = "Purple"
+PurpleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+PurpleBtn.TextSize = 10
+PurpleBtn.ZIndex = 22
+
+local PurpleCorner = Instance.new("UICorner")
+PurpleCorner.CornerRadius = UDim.new(0, 8)
+PurpleCorner.Parent = PurpleBtn
+
+-- Green Theme Button
+local GreenBtn = Instance.new("TextButton")
+GreenBtn.Name = "GreenBtn"
+GreenBtn.Parent = ThemeContainer
+GreenBtn.BackgroundColor3 = Color3.fromRGB(20, 60, 40)
+GreenBtn.BorderSizePixel = 0
+GreenBtn.Position = UDim2.new(0.75, 6, 0, 0)
+GreenBtn.Size = UDim2.new(0.25, -2, 0, 30)
+GreenBtn.Font = Enum.Font.GothamMedium
+GreenBtn.Text = "Green"
+GreenBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+GreenBtn.TextSize = 10
+GreenBtn.ZIndex = 22
+
+local GreenCorner = Instance.new("UICorner")
+GreenCorner.CornerRadius = UDim.new(0, 8)
+GreenCorner.Parent = GreenBtn
 
 -- Close Button
 local NewCloseButton = Instance.new("TextButton")
@@ -2122,105 +2206,327 @@ NewCloseButton.MouseButton1Click:Connect(function()
     NewSettingsShadow.Visible = false
 end)
 
--- Size Button Click Handlers (New Implementation)
-for sizeName, sizeData in pairs(sizeButtonRefs) do
-    sizeData.button.MouseButton1Click:Connect(function()
-        -- Reset all size buttons to default color
-        for name, data in pairs(sizeButtonRefs) do
-            data.button.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
-        end
-        
-        -- Highlight selected button
-        sizeData.button.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
-        
-        -- Change hub size with animations
-        local width, height = sizeData.width, sizeData.height
-        currentHubSize.width = width
-        currentHubSize.height = height
-        
-        -- Animate MainFrame
+-- ===== DIRECT BUTTON CLICK HANDLERS =====
+
+-- Very Small Button Click Handler
+VerySmallBtn.MouseButton1Click:Connect(function()
+    -- Reset all size buttons
+    VerySmallBtn.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
+    SmallBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+    MediumBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+    LargeBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+    
+    -- Resize to Very Small (500x350)
+    local width, height = 500, 350
+    currentHubSize.width = width
+    currentHubSize.height = height
+    
+    local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2, 0.5, -height/2)
+    })
+    local shadowTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2 + 8, 0.5, -height/2 + 8)
+    })
+    local shadow2Tween = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2 + 2, 0.5, -height/2 + 2)
+    })
+    local ambientTween = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width + 20, 0, height + 20),
+        Position = UDim2.new(0.5, -width/2 - 10, 0.5, -height/2 - 10)
+    })
+    
+    mainTween:Play()
+    shadowTween:Play()
+    shadow2Tween:Play()
+    ambientTween:Play()
+    
+    StarterGui:SetCore("SendNotification", {
+        Title = "FlixHub Settings";
+        Text = "Hub size changed to Very Small";
+        Duration = 2;
+    })
+end)
+
+-- Small Button Click Handler
+SmallBtn.MouseButton1Click:Connect(function()
+    -- Reset all size buttons
+    VerySmallBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+    SmallBtn.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
+    MediumBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+    LargeBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+    
+    -- Resize to Small (600x400)
+    local width, height = 600, 400
+    currentHubSize.width = width
+    currentHubSize.height = height
+    
+    local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2, 0.5, -height/2)
+    })
+    local shadowTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2 + 8, 0.5, -height/2 + 8)
+    })
+    local shadow2Tween = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2 + 2, 0.5, -height/2 + 2)
+    })
+    local ambientTween = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width + 20, 0, height + 20),
+        Position = UDim2.new(0.5, -width/2 - 10, 0.5, -height/2 - 10)
+    })
+    
+    mainTween:Play()
+    shadowTween:Play()
+    shadow2Tween:Play()
+    ambientTween:Play()
+    
+    StarterGui:SetCore("SendNotification", {
+        Title = "FlixHub Settings";
+        Text = "Hub size changed to Small";
+        Duration = 2;
+    })
+end)
+
+-- Medium Button Click Handler
+MediumBtn.MouseButton1Click:Connect(function()
+    -- Reset all size buttons
+    VerySmallBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+    SmallBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+    MediumBtn.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
+    LargeBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+    
+    -- Resize to Medium (700x500)
+    local width, height = 700, 500
+    currentHubSize.width = width
+    currentHubSize.height = height
+    
+    local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2, 0.5, -height/2)
+    })
+    local shadowTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2 + 8, 0.5, -height/2 + 8)
+    })
+    local shadow2Tween = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2 + 2, 0.5, -height/2 + 2)
+    })
+    local ambientTween = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width + 20, 0, height + 20),
+        Position = UDim2.new(0.5, -width/2 - 10, 0.5, -height/2 - 10)
+    })
+    
+    mainTween:Play()
+    shadowTween:Play()
+    shadow2Tween:Play()
+    ambientTween:Play()
+    
+    StarterGui:SetCore("SendNotification", {
+        Title = "FlixHub Settings";
+        Text = "Hub size changed to Medium";
+        Duration = 2;
+    })
+end)
+
+-- Large Button Click Handler
+LargeBtn.MouseButton1Click:Connect(function()
+    -- Reset all size buttons
+    VerySmallBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+    SmallBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+    MediumBtn.BackgroundColor3 = Color3.fromRGB(50, 60, 80)
+    LargeBtn.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
+    
+    -- Resize to Large (800x600)
+    local width, height = 800, 600
+    currentHubSize.width = width
+    currentHubSize.height = height
+    
+    local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2, 0.5, -height/2)
+    })
+    local shadowTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2 + 8, 0.5, -height/2 + 8)
+    })
+    local shadow2Tween = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width, 0, height),
+        Position = UDim2.new(0.5, -width/2 + 2, 0.5, -height/2 + 2)
+    })
+    local ambientTween = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, width + 20, 0, height + 20),
+        Position = UDim2.new(0.5, -width/2 - 10, 0.5, -height/2 - 10)
+    })
+    
+    mainTween:Play()
+    shadowTween:Play()
+    shadow2Tween:Play()
+    ambientTween:Play()
+    
+    StarterGui:SetCore("SendNotification", {
+        Title = "FlixHub Settings";
+        Text = "Hub size changed to Large";
+        Duration = 2;
+    })
+end)
+
+-- Dark Theme Button Click Handler
+DarkBtn.MouseButton1Click:Connect(function()
+    -- Reset all theme buttons
+    DarkBtn.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
+    OceanBtn.BackgroundColor3 = Color3.fromRGB(20, 50, 80)
+    PurpleBtn.BackgroundColor3 = Color3.fromRGB(50, 20, 80)
+    GreenBtn.BackgroundColor3 = Color3.fromRGB(20, 60, 40)
+    
+    -- Apply Dark theme
+    local selectedTheme = themes["Dark"]
+    if selectedTheme then
+        currentTheme = "Dark"
         local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, width, 0, height),
-            Position = UDim2.new(0.5, -width/2, 0.5, -height/2)
+            BackgroundColor3 = selectedTheme.MainFrame
         })
-        
-        -- Animate all shadows
-        local shadowTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, width, 0, height),
-            Position = UDim2.new(0.5, -width/2 + 8, 0.5, -height/2 + 8)
+        local sidebarTween = TweenService:Create(Sidebar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.Sidebar
         })
-        
-        local shadow2Tween = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, width, 0, height),
-            Position = UDim2.new(0.5, -width/2 + 2, 0.5, -height/2 + 2)
+        local contentTween = TweenService:Create(ContentArea, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.ContentArea
         })
-        
-        local ambientTween = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, width + 20, 0, height + 20),
-            Position = UDim2.new(0.5, -width/2 - 10, 0.5, -height/2 - 10)
+        local titleTween = TweenService:Create(TitleBar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.TitleBar
         })
         
         mainTween:Play()
-        shadowTween:Play()
-        shadow2Tween:Play()
-        ambientTween:Play()
+        sidebarTween:Play()
+        contentTween:Play()
+        titleTween:Play()
         
-        -- Show notification
         StarterGui:SetCore("SendNotification", {
             Title = "FlixHub Settings";
-            Text = "Hub size changed to " .. sizeName;
+            Text = "Theme changed to Dark";
             Duration = 2;
         })
-    end)
-end
+    end
+end)
 
--- Theme Button Click Handlers (New Implementation)
-for themeName, themeData in pairs(themeButtonRefs) do
-    themeData.button.MouseButton1Click:Connect(function()
-        -- Reset all theme buttons to original colors
-        for name, data in pairs(themeButtonRefs) do
-            data.button.BackgroundColor3 = data.originalColor
-        end
+-- Ocean Theme Button Click Handler
+OceanBtn.MouseButton1Click:Connect(function()
+    -- Reset all theme buttons
+    DarkBtn.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+    OceanBtn.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
+    PurpleBtn.BackgroundColor3 = Color3.fromRGB(50, 20, 80)
+    GreenBtn.BackgroundColor3 = Color3.fromRGB(20, 60, 40)
+    
+    -- Apply Ocean theme
+    local selectedTheme = themes["Ocean"]
+    if selectedTheme then
+        currentTheme = "Ocean"
+        local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.MainFrame
+        })
+        local sidebarTween = TweenService:Create(Sidebar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.Sidebar
+        })
+        local contentTween = TweenService:Create(ContentArea, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.ContentArea
+        })
+        local titleTween = TweenService:Create(TitleBar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.TitleBar
+        })
         
-        -- Highlight selected theme button
-        themeData.button.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
+        mainTween:Play()
+        sidebarTween:Play()
+        contentTween:Play()
+        titleTween:Play()
         
-        -- Apply theme if it exists
-        local selectedTheme = themes[themeName]
-        if selectedTheme then
-            currentTheme = themeName
-            
-            -- Apply theme with smooth transitions
-            local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-                BackgroundColor3 = selectedTheme.MainFrame
-            })
-            
-            local sidebarTween = TweenService:Create(Sidebar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-                BackgroundColor3 = selectedTheme.Sidebar
-            })
-            
-            local contentTween = TweenService:Create(ContentArea, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-                BackgroundColor3 = selectedTheme.ContentArea
-            })
-            
-            local titleTween = TweenService:Create(TitleBar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-                BackgroundColor3 = selectedTheme.TitleBar
-            })
-            
-            mainTween:Play()
-            sidebarTween:Play()
-            contentTween:Play()
-            titleTween:Play()
-            
-            -- Show notification
-            StarterGui:SetCore("SendNotification", {
-                Title = "FlixHub Settings";
-                Text = "Theme changed to " .. themeName;
-                Duration = 2;
-            })
-        end
-    end)
-end
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub Settings";
+            Text = "Theme changed to Ocean";
+            Duration = 2;
+        })
+    end
+end)
+
+-- Purple Theme Button Click Handler
+PurpleBtn.MouseButton1Click:Connect(function()
+    -- Reset all theme buttons
+    DarkBtn.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+    OceanBtn.BackgroundColor3 = Color3.fromRGB(20, 50, 80)
+    PurpleBtn.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
+    GreenBtn.BackgroundColor3 = Color3.fromRGB(20, 60, 40)
+    
+    -- Apply Purple theme
+    local selectedTheme = themes["Purple"]
+    if selectedTheme then
+        currentTheme = "Purple"
+        local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.MainFrame
+        })
+        local sidebarTween = TweenService:Create(Sidebar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.Sidebar
+        })
+        local contentTween = TweenService:Create(ContentArea, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.ContentArea
+        })
+        local titleTween = TweenService:Create(TitleBar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.TitleBar
+        })
+        
+        mainTween:Play()
+        sidebarTween:Play()
+        contentTween:Play()
+        titleTween:Play()
+        
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub Settings";
+            Text = "Theme changed to Purple";
+            Duration = 2;
+        })
+    end
+end)
+
+-- Green Theme Button Click Handler
+GreenBtn.MouseButton1Click:Connect(function()
+    -- Reset all theme buttons
+    DarkBtn.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+    OceanBtn.BackgroundColor3 = Color3.fromRGB(20, 50, 80)
+    PurpleBtn.BackgroundColor3 = Color3.fromRGB(50, 20, 80)
+    GreenBtn.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
+    
+    -- Apply Green theme
+    local selectedTheme = themes["Green"]
+    if selectedTheme then
+        currentTheme = "Green"
+        local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.MainFrame
+        })
+        local sidebarTween = TweenService:Create(Sidebar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.Sidebar
+        })
+        local contentTween = TweenService:Create(ContentArea, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.ContentArea
+        })
+        local titleTween = TweenService:Create(TitleBar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = selectedTheme.TitleBar
+        })
+        
+        mainTween:Play()
+        sidebarTween:Play()
+        contentTween:Play()
+        titleTween:Play()
+        
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub Settings";
+            Text = "Theme changed to Green";
+            Duration = 2;
+        })
+    end
+end)
 
 -- Changelog button click handler
 ChangelogButton.MouseButton1Click:Connect(function()
