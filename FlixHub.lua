@@ -1388,6 +1388,46 @@ local GameScripts = {
             description = "StellarHub script for Prospecting game",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/x2zu/loader/main/games/Prospecting.lua"))()]]
         }
+    },
+    ["VolleyBall Legends"] = {
+        {
+            name = "SigmaHub",
+            description = "SigmaHub script for VolleyBall Legends game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Xm2iufas09ijmF/sigma-hub/refs/heads/main/temp.lua"))()]]
+        }
+    },
+    ["Fisch"] = {
+        {
+            name = "SpeedHub X",
+            description = "SpeedHub X script for Fisch game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()]]
+        }
+    },
+    ["Build A Boat"] = {
+        {
+            name = "Inf Save Slots",
+            description = "Get unlimited save slots for your boats",
+            script = [[local slotsyouwant = 100 -- Put the amount of slots you want
+
+-- ignore
+for i = 1, slotsyouwant do
+    task.spawn(function()
+        local args = {
+            [1] = 1,
+            [2] = tostring(i) .. "\0", 
+            [3] = 0,
+            [4] = ""
+        }
+
+        workspace:WaitForChild("UpdateSlotOrderRE"):FireServer(unpack(args))
+    end)
+end]]
+        },
+        {
+            name = "Auto Farm",
+            description = "Automatic farming script for Build A Boat",
+            script = [[loadstring(game:HttpGet("https://orbitsc.net/babft"))()]]
+        }
     }
 }
 
