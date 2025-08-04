@@ -707,23 +707,40 @@ SettingsPanel.BorderSizePixel = 0
 SettingsPanel.Position = UDim2.new(0.5, -200, 0.5, -175)
 SettingsPanel.Size = UDim2.new(0, 400, 0, 350)
 SettingsPanel.Visible = false
-SettingsPanel.ZIndex = 10
+SettingsPanel.ZIndex = 20
 
 local SettingsPanelCorner = Instance.new("UICorner")
 SettingsPanelCorner.CornerRadius = UDim.new(0, 12)
 SettingsPanelCorner.Parent = SettingsPanel
+
+-- Settings Panel Gradient
+local SettingsPanelGradient = Instance.new("UIGradient")
+SettingsPanelGradient.Parent = SettingsPanel
+SettingsPanelGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(25, 25, 40)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(20, 20, 30)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(15, 15, 25))
+}
+SettingsPanelGradient.Rotation = 45
+
+-- Settings Panel Glow
+local SettingsPanelStroke = Instance.new("UIStroke")
+SettingsPanelStroke.Parent = SettingsPanel
+SettingsPanelStroke.Color = Color3.fromRGB(100, 150, 255)
+SettingsPanelStroke.Transparency = 0.7
+SettingsPanelStroke.Thickness = 2
 
 -- Settings Panel Shadow
 local SettingsShadow = Instance.new("Frame")
 SettingsShadow.Name = "SettingsShadow"
 SettingsShadow.Parent = FlixHub
 SettingsShadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-SettingsShadow.BackgroundTransparency = 0.8
+SettingsShadow.BackgroundTransparency = 0.3
 SettingsShadow.BorderSizePixel = 0
 SettingsShadow.Position = UDim2.new(0.5, -195, 0.5, -170)
 SettingsShadow.Size = UDim2.new(0, 400, 0, 350)
 SettingsShadow.Visible = false
-SettingsShadow.ZIndex = 9
+SettingsShadow.ZIndex = 19
 
 local SettingsShadowCorner = Instance.new("UICorner")
 SettingsShadowCorner.CornerRadius = UDim.new(0, 12)
