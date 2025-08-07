@@ -1385,6 +1385,11 @@ local GameScripts = {
             name = "Instant Steal v2 (Not Working)",
             description = "Second version of instant steal script (unverified)",
             script = [[loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ffdfeadf0af798741806ea404682a938.lua"))()]]
+        },
+        {
+            name = "MoonHub",
+            description = "MoonHub script for Steal A Brainrot",
+            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/KaspikScriptsRb/steal-a-brainrot/refs/heads/main/.lua'))()]]
         }
     },
     ["Life Sentence"] = {
@@ -1444,6 +1449,13 @@ end]]
             name = "Auto Farm",
             description = "Automatic farming script for Build A Boat",
             script = [[loadstring(game:HttpGet("https://orbitsc.net/babft"))()]]
+        }
+    },
+    ["Basketball Legends"] = {
+        {
+            name = "Auto Green",
+            description = "Auto Green and Ball Magnet script for Basketball Legends",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/vnausea/absence-mini/refs/heads/main/absencemini.lua"))()]]
         }
     }
 }
