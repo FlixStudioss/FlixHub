@@ -1271,6 +1271,339 @@ local function createHomeContent()
     GameLabel.TextXAlignment = Enum.TextXAlignment.Left
 end
 
+-- Game Scripts Database
+local GameScripts = {
+    ["Universal"] = {
+        {
+            name = "Infinite Yield",
+            description = "Universal admin commands for any game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()]]
+        },
+        {
+            name = "Dark Dex V3",
+            description = "Advanced game explorer and inspector",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua"))()]]
+        },
+        {
+            name = "CMD-X",
+            description = "Universal admin commands with GUI",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source"))()]]
+        },
+        {
+            name = "Fates Admin",
+            description = "Premium universal admin commands",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/fatesc/fates-admin/main/main.lua"))()]]
+        },
+        {
+            name = "Homebrew Admin",
+            description = "Lightweight universal admin",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Syntaxx64/HomebrewAdmin/master/Main"))()]]
+        }
+    },
+    
+    ["Arsenal"] = {
+        {
+            name = "Arsenal Silent Aim",
+            description = "Silent aimbot for Arsenal",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/fatesc/fates-admin/main/main.lua"))()]]
+        },
+        {
+            name = "Arsenal ESP",
+            description = "Player ESP and wallhack",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Arsenal/ESP.lua"))()]]
+        },
+        {
+            name = "Arsenal Aimbot",
+            description = "Advanced aimbot with prediction",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/fatesc/fates-admin/main/main.lua"))()]]
+        }
+    },
+    
+    ["Adopt Me"] = {
+        {
+            name = "Adopt Me Auto Farm",
+            description = "Automatic money and pet farming",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Adopt%20Me/AutoFarm.lua"))()]]
+        },
+        {
+            name = "Adopt Me Pet Sim",
+            description = "Pet simulator and auto tasks",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Adopt%20Me/PetSim.lua"))()]]
+        }
+    },
+    
+    ["Brookhaven"] = {
+        {
+            name = "Brookhaven GUI",
+            description = "Complete GUI with all features",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Brookhaven/BrookhavenGUI.lua"))()]]
+        },
+        {
+            name = "Brookhaven Admin",
+            description = "Admin commands for Brookhaven",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Brookhaven/Admin.lua"))()]]
+        }
+    },
+    
+    ["Blox Fruits"] = {
+        {
+            name = "Blox Fruits Hub",
+            description = "Complete hub with all features",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Blox%20Fruits/Hub.lua"))()]]
+        },
+        {
+            name = "Blox Fruits Auto Farm",
+            description = "Automatic fruit and level farming",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Blox%20Fruits/AutoFarm.lua"))()]]
+        },
+        {
+            name = "Blox Fruits Teleport",
+            description = "Teleport to any island instantly",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Blox%20Fruits/Teleport.lua"))()]]
+        }
+    },
+    
+    ["MM2"] = {
+        {
+            name = "MM2 ESP",
+            description = "Player and item ESP for Murder Mystery 2",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/MM2/ESP.lua"))()]]
+        },
+        {
+            name = "MM2 Coin Farm",
+            description = "Automatic coin farming",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/MM2/CoinFarm.lua"))()]]
+        }
+    },
+    
+    ["Steal A Brainrot"] = {
+        {
+            name = "Instant Steal (Not Working)",
+            description = "Instant steal script for Steal A Brainrot game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/StealaBrainrotMOD"))()]]
+        },
+        {
+            name = "Instant Steal v2 (Not Working)",
+            description = "Second version of instant steal script (unverified)",
+            script = [[loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ffdfeadf0af798741806ea404682a938.lua"))()]]
+        },
+        {
+            name = "MoonHub",
+            description = "MoonHub script for Steal A Brainrot",
+            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/KaspikScriptsRb/steal-a-brainrot/refs/heads/main/.lua'))()]]
+        }
+    },
+    
+    ["Basketball Legends"] = {
+        {
+            name = "Auto Green",
+            description = "Auto Green and Ball Magnet script for Basketball Legends",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/vnausea/absence-mini/refs/heads/main/absencemini.lua"))()]]
+        }
+    }
+}
+
+-- Universal scripts (FE compatible)
+local UniversalScripts = {
+    {
+        name = "Infinite Yield",
+        description = "Universal admin commands for any game",
+        script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()]]
+    },
+    {
+        name = "Dark Dex V3",
+        description = "Advanced game explorer and inspector",
+        script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua"))()]]
+    },
+    {
+        name = "CMD-X",
+        description = "Universal admin commands with GUI",
+        script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/CMD-X/CMD-X/master/Source"))()]]
+    }
+}
+
+-- FE scripts
+local FEScripts = {
+    {
+        name = "FE God Mode",
+        description = "FE compatible god mode",
+        script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/FE/GodMode.lua"))()]]
+    },
+    {
+        name = "FE Fly",
+        description = "FE compatible flying script",
+        script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/FE/Fly.lua"))()]]
+    },
+    {
+        name = "FE Noclip",
+        description = "FE compatible noclip",
+        script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/FE/Noclip.lua"))()]]
+    }
+}
+
+-- Function to load a script
+local function loadScript(scriptData)
+    local scriptName = scriptData.name
+    local scriptCode = scriptData.script
+    
+    -- Show executing notification
+    StarterGui:SetCore("SendNotification", {
+        Title = "FlixHub";
+        Text = "Executing " .. scriptName .. "...";
+        Duration = 2;
+    })
+    
+    -- Execute the script
+    local success, errorMsg = pcall(function()
+        loadstring(scriptCode)()
+    end)
+    
+    if success then
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub";
+            Text = "✅ " .. scriptName .. " executed successfully!";
+            Duration = 3;
+        })
+    else
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub Error";
+            Text = "❌ Failed to execute " .. scriptName .. ": " .. errorMsg;
+            Duration = 5;
+        })
+    end
+end
+
+-- Function to create a script button
+local function createScriptButton(scriptData)
+    local ScriptButton = Instance.new("TextButton")
+    ScriptButton.Name = "ScriptButton"
+    ScriptButton.BackgroundColor3 = Color3.fromRGB(40, 40, 55)
+    ScriptButton.BorderSizePixel = 0
+    ScriptButton.Size = UDim2.new(1, -10, 0, 60)
+    ScriptButton.Font = Enum.Font.GothamMedium
+    ScriptButton.Text = ""
+    ScriptButton.AutoButtonColor = false
+    ScriptButton.ClipsDescendants = true
+    
+    local ScriptCorner = Instance.new("UICorner")
+    ScriptCorner.CornerRadius = UDim.new(0, 8)
+    ScriptCorner.Parent = ScriptButton
+    
+    local ScriptStroke = Instance.new("UIStroke")
+    ScriptStroke.Parent = ScriptButton
+    ScriptStroke.Color = Color3.fromRGB(60, 60, 80)
+    ScriptStroke.Transparency = 0.7
+    ScriptStroke.Thickness = 1
+    
+    -- Script name
+    local ScriptName = Instance.new("TextLabel")
+    ScriptName.Name = "ScriptName"
+    ScriptName.Parent = ScriptButton
+    ScriptName.BackgroundTransparency = 1
+    ScriptName.Position = UDim2.new(0, 15, 0, 8)
+    ScriptName.Size = UDim2.new(1, -30, 0, 25)
+    ScriptName.Font = Enum.Font.GothamBold
+    ScriptName.Text = scriptData.name
+    ScriptName.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ScriptName.TextSize = 14
+    ScriptName.TextXAlignment = Enum.TextXAlignment.Left
+    
+    -- Script description
+    local ScriptDesc = Instance.new("TextLabel")
+    ScriptDesc.Name = "ScriptDesc"
+    ScriptDesc.Parent = ScriptButton
+    ScriptDesc.BackgroundTransparency = 1
+    ScriptDesc.Position = UDim2.new(0, 15, 0, 30)
+    ScriptDesc.Size = UDim2.new(1, -30, 0, 20)
+    ScriptDesc.Font = Enum.Font.Gotham
+    ScriptDesc.Text = scriptData.description
+    ScriptDesc.TextColor3 = Color3.fromRGB(180, 180, 180)
+    ScriptDesc.TextSize = 12
+    ScriptDesc.TextXAlignment = Enum.TextXAlignment.Left
+    
+    -- Execute button
+    local ExecuteButton = Instance.new("TextButton")
+    ExecuteButton.Name = "ExecuteButton"
+    ExecuteButton.Parent = ScriptButton
+    ExecuteButton.BackgroundColor3 = Color3.fromRGB(75, 125, 255)
+    ExecuteButton.BorderSizePixel = 0
+    ExecuteButton.Position = UDim2.new(1, -75, 0, 15)
+    ExecuteButton.Size = UDim2.new(0, 60, 0, 30)
+    ExecuteButton.Font = Enum.Font.GothamMedium
+    ExecuteButton.Text = "Execute"
+    ExecuteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ExecuteButton.TextSize = 12
+    
+    local ExecuteCorner = Instance.new("UICorner")
+    ExecuteCorner.CornerRadius = UDim.new(0, 6)
+    ExecuteCorner.Parent = ExecuteButton
+    
+    -- Hover effects
+    ScriptButton.MouseEnter:Connect(function()
+        TweenService:Create(ScriptButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = Color3.fromRGB(50, 50, 70)
+        }):Play()
+        TweenService:Create(ScriptStroke, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+            Color = Color3.fromRGB(100, 150, 255)
+        }):Play()
+    end)
+    
+    ScriptButton.MouseLeave:Connect(function()
+        TweenService:Create(ScriptButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = Color3.fromRGB(40, 40, 55)
+        }):Play()
+        TweenService:Create(ScriptStroke, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+            Color = Color3.fromRGB(60, 60, 80)
+        }):Play()
+    end)
+    
+    ExecuteButton.MouseButton1Click:Connect(function()
+        loadScript(scriptData)
+    end)
+    
+    return ScriptButton
+end
+
+-- Function to update script list based on current tab
+local function updateScriptList()
+    -- Clear existing scripts
+    for _, child in pairs(ScriptContainer:GetChildren()) do
+        if not child:IsA("UIListLayout") and not child:IsA("UICorner") then
+            child:Destroy()
+        end
+    end
+    
+    local scriptsToShow = {}
+    
+    if currentTab == "Universal" then
+        scriptsToShow = UniversalScripts
+    elseif currentTab == "FE" then
+        scriptsToShow = FEScripts
+    elseif GameScripts[currentTab] then
+        scriptsToShow = GameScripts[currentTab]
+    end
+    
+    -- Create script buttons
+    for i, scriptData in ipairs(scriptsToShow) do
+        local scriptButton = createScriptButton(scriptData)
+        scriptButton.Parent = ScriptContainer
+        scriptButton.LayoutOrder = i
+        
+        -- Animate in with delay based on index
+        scriptButton.Position = UDim2.new(1, 0, 0, 0)
+        scriptButton.BackgroundTransparency = 1
+        
+        local slideInTween = TweenService:Create(scriptButton, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+            Position = UDim2.new(0, 0, 0, 0),
+            BackgroundTransparency = 0
+        })
+        
+        delay(i * 0.05, function()
+            slideInTween:Play()
+        end)
+    end
+end
+
 local function refreshTabs()
     -- Animate out existing tabs first
     local existingTabs = {}
@@ -1346,17 +1679,19 @@ local function refreshTabs()
     
     -- Add game tabs if expanded
     if isGamesExpanded then
-        local gameOrder = 5
-        for gameName, _ in pairs(GameScripts) do
-            local gameTab = createTab(gameName, true, 1) -- Indented
-            gameTab.LayoutOrder = gameOrder
+        local gameCategories = {}
+        for category, _ in pairs(GameScripts) do
+            table.insert(gameCategories, category)
+        end
+        for _, category in ipairs(gameCategories) do
+            local gameTab = createTab("   " .. category, false)
+            gameTab.LayoutOrder = totalTabs + 1
             gameTab.MouseButton1Click:Connect(function()
-                currentTab = gameName
+                currentTab = category
                 refreshTabs()
                 updateScriptList()
             end)
             totalTabs = totalTabs + 1
-            gameOrder = gameOrder + 1
         end
     end
     
