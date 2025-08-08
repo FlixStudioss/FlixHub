@@ -1108,6 +1108,7 @@ CloseChangelogGradient.Rotation = 45
 -- New Tab System Variables
 local currentTab = "Home"
 local isGamesExpanded = false
+local isVisualExpanded = false
 local filteredScripts = {}
 
 -- Theme System Variables
@@ -1390,6 +1391,11 @@ local GameScripts = {
             name = "MoonHub",
             description = "MoonHub script for Steal A Brainrot",
             script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/KaspikScriptsRb/steal-a-brainrot/refs/heads/main/.lua'))()]]
+        },
+        {
+            name = "Chilli Hub",
+            description = "Chilli Hub script for Steal A Brainrot",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua"))()]]
         }
     },
     ["Life Sentence"] = {
@@ -1456,6 +1462,17 @@ end]]
             name = "Auto Green",
             description = "Auto Green and Ball Magnet script for Basketball Legends",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/vnausea/absence-mini/refs/heads/main/absencemini.lua"))()]]
+        }
+    }
+}
+
+-- Visual Scripts (Not in Games category)
+local VisualScripts = {
+    ["Grow A Garden Visual"] = {
+        {
+            name = "Pet,Seed Spawner",
+            description = "Visual script for Grow A Garden pet and seed spawning",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/veryimportantrr/x/refs/heads/main/gag_visual.lua", true))("discord.gg/csxu2nCkw9")]]
         }
     }
 }
@@ -1646,6 +1663,29 @@ local function refreshTabs()
             totalTabs = totalTabs + 1
             gameOrder = gameOrder + 1
         end
+        totalTabs = gameOrder - 1
+    end
+    
+    -- Create Visual Script expandable tab
+    local visualTab = createTab("📱 Visual Script " .. (isVisualExpanded and "▼" or "▶"), false)
+    visualTab.LayoutOrder = totalTabs + 1
+    visualTab.MouseButton1Click:Connect(function()
+        isVisualExpanded = not isVisualExpanded
+        refreshTabs()
+    end)
+    totalTabs = totalTabs + 1
+    
+    -- Add Visual Script tabs if expanded
+    if isVisualExpanded then
+        -- Grow A Garden tab under Visual Script
+        local growTab = createTab("   🌱 Grow A Garden", false)
+        growTab.LayoutOrder = totalTabs + 1
+        growTab.MouseButton1Click:Connect(function()
+            currentTab = "Grow A Garden Visual"
+            refreshTabs()
+            updateScriptList()
+        end)
+        totalTabs = totalTabs + 1
     end
     
     -- Calculate canvas size
