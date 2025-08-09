@@ -1635,40 +1635,9 @@ local function refreshTabs()
     end)
     totalTabs = totalTabs + 1
     
-    -- Create Games expandable tab
-    local gamesTab = createTab("🎮 Games " .. (isGamesExpanded and "▼" or "▶"), false)
-    gamesTab.LayoutOrder = 4
-    gamesTab.MouseButton1Click:Connect(function()
-        isGamesExpanded = not isGamesExpanded
-        refreshTabs()
-        if currentTab == "Games" then
-            -- Show games overview or first game
-            currentTab = "Grow A Garden"
-            updateScriptList()
-        end
-    end)
-    totalTabs = totalTabs + 1
-    
-    -- Add game tabs if expanded
-    if isGamesExpanded then
-        local gameOrder = 5
-        for gameName, _ in pairs(GameScripts) do
-            local gameTab = createTab(gameName, true, 1) -- Indented
-            gameTab.LayoutOrder = gameOrder
-            gameTab.MouseButton1Click:Connect(function()
-                currentTab = gameName
-                refreshTabs()
-                updateScriptList()
-            end)
-            totalTabs = totalTabs + 1
-            gameOrder = gameOrder + 1
-        end
-        totalTabs = gameOrder - 1
-    end
-    
-    -- Create Visual Script expandable tab
+    -- Create Visual Script expandable tab (moved above Games)
     local visualTab = createTab("📱 Visual Script " .. (isVisualExpanded and "▼" or "▶"), false)
-    visualTab.LayoutOrder = totalTabs + 1
+    visualTab.LayoutOrder = 4
     visualTab.MouseButton1Click:Connect(function()
         isVisualExpanded = not isVisualExpanded
         refreshTabs()
@@ -1686,6 +1655,36 @@ local function refreshTabs()
             updateScriptList()
         end)
         totalTabs = totalTabs + 1
+    end
+    
+    -- Create Games expandable tab (moved below Visual Script)
+    local gamesTab = createTab("🎮 Games " .. (isGamesExpanded and "▼" or "▶"), false)
+    gamesTab.LayoutOrder = totalTabs + 1
+    gamesTab.MouseButton1Click:Connect(function()
+        isGamesExpanded = not isGamesExpanded
+        refreshTabs()
+        if currentTab == "Games" then
+            -- Show games overview or first game
+            currentTab = "Grow A Garden"
+            updateScriptList()
+        end
+    end)
+    totalTabs = totalTabs + 1
+    
+    -- Add game tabs if expanded
+    if isGamesExpanded then
+        local gameOrder = totalTabs + 1
+        for gameName, _ in pairs(GameScripts) do
+            local gameTab = createTab(gameName, true, 1) -- Indented
+            gameTab.LayoutOrder = gameOrder
+            gameTab.MouseButton1Click:Connect(function()
+                currentTab = gameName
+                refreshTabs()
+                updateScriptList()
+            end)
+            totalTabs = totalTabs + 1
+            gameOrder = gameOrder + 1
+        end
     end
     
     -- Calculate canvas size
@@ -1860,6 +1859,8 @@ function updateScriptList()
         scriptsToShow = UniversalScripts
     elseif currentTab == "FE" then
         scriptsToShow = FEScripts
+    elseif VisualScripts[currentTab] then
+        scriptsToShow = VisualScripts[currentTab]
     elseif GameScripts[currentTab] then
         scriptsToShow = GameScripts[currentTab]
     end
@@ -1894,6 +1895,15 @@ local function searchScripts(query)
     for _, script in pairs(FEScripts) do
         if script.name:lower():find(query) or script.description:lower():find(query) then
             table.insert(filteredScripts, script)
+        end
+    end
+    
+    -- Search Visual Scripts
+    for category, scripts in pairs(VisualScripts) do
+        for _, script in pairs(scripts) do
+            if script.name:lower():find(query) or script.description:lower():find(query) then
+                table.insert(filteredScripts, script)
+            end
         end
     end
     
