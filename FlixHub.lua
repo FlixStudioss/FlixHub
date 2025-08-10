@@ -1673,8 +1673,13 @@ local function createHomeContent()
             
             -- Set current tab to detected game
             currentTab = detectedCategory
-            refreshTabs()
-            updateScriptList()
+            
+            -- Refresh tabs and update script list with a slight delay to ensure proper tab creation
+            spawn(function()
+                refreshTabs()
+                wait(0.3) -- Wait for tabs to be created
+                updateScriptList()
+            end)
             
             -- Show notification
             StarterGui:SetCore("SendNotification", {
