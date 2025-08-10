@@ -1283,10 +1283,10 @@ local GameScripts = {
         {
             name = "eF Hub",
             description = "Multi-purpose exploit hub",
-            script = [[loadstring(game:HttpGet('https://api.exploitingis.fun/loader', true))()]]
+            script = [[loadstring(game:HttpGet('https://cdn.exploitingis.fun/loader', true))()]]
         },
         {
-            name = "IdiotHub",
+            name = "Idiot Hub (Currently Down)",
             description = "IdiotHub script loader for Grow A Garden",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/IdiotHub/Scripts/main/Loader"))()]]
         },
@@ -1324,7 +1324,7 @@ local GameScripts = {
     },
     ["99 Nights Forest"] = {
         {
-            name = "eF Hub (Only PC)",
+            name = "eF Hub (Currently Down)",
             description = "Overpowered farming script for 99 Nights",
             script = [[loadstring(game:HttpGet('https://api.exploitingis.fun/loader', true))()]]
         },
@@ -1396,6 +1396,11 @@ local GameScripts = {
             name = "Chilli Hub",
             description = "Chilli Hub script for Steal A Brainrot",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua"))()]]
+        },
+        {
+            name = "CompHub",
+            description = "CompHub script for Steal A Brainrot",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/robloxcomphub/comphub/refs/heads/main/comphub.lua"))()]]
         }
     },
     ["Life Sentence"] = {
@@ -1462,6 +1467,11 @@ end]]
             name = "Auto Green",
             description = "Auto Green and Ball Magnet script for Basketball Legends",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/vnausea/absence-mini/refs/heads/main/absencemini.lua"))()]]
+        },
+        {
+            name = "Auto Green v2",
+            description = "Second version of Auto Green script for Basketball Legends",
+            script = [[loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/036662184673bfe9af11477616f25561.lua"))()]]
         }
     }
 }
