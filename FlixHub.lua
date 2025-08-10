@@ -1543,6 +1543,50 @@ local function createTab(tabName, isGameTab, indentLevel)
     return Tab
 end
 
+-- Function to detect current game and return matching category
+local function detectCurrentGame()
+    local success, gameInfo = pcall(function()
+        return game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
+    end)
+    
+    if not success then
+        return nil, "Unknown Game"
+    end
+    
+    local gameName = gameInfo.Name
+    
+    -- Game name mappings (case insensitive matching)
+    local gameMap = {
+        ["grow a garden"] = "Grow A Garden",
+        ["poop simulator"] = "Poop Simulator",
+        ["slippery stairs"] = "Slippery Stairs",
+        ["strongest battle"] = "Strongest Battle",
+        ["the strongest battleground"] = "Strongest Battle",
+        ["the strongest battlegrounds"] = "Strongest Battle",
+        ["99 nights forest"] = "99 Nights Forest",
+        ["99 nights in the forest"] = "99 Nights Forest",
+        ["ink game"] = "Ink Game",
+        ["steal a brainrot"] = "Steal A Brainrot",
+        ["life sentence"] = "Life Sentence",
+        ["prospecting"] = "Prospecting",
+        ["volleyball legends"] = "VolleyBall Legends",
+        ["fisch"] = "Fisch",
+        ["build a boat"] = "Build A Boat",
+        ["build a boat for treasure"] = "Build A Boat",
+        ["basketball legends"] = "Basketball Legends"
+    }
+    
+    -- Check if current game matches any of our script categories
+    local lowerGameName = gameName:lower()
+    for pattern, category in pairs(gameMap) do
+        if lowerGameName:find(pattern) then
+            return category, gameName
+        end
+    end
+    
+    return nil, gameName
+end
+
 local function createHomeContent()
     -- Clear script container and show home info
     for _, child in pairs(ScriptContainer:GetChildren()) do
@@ -1556,7 +1600,7 @@ local function createHomeContent()
     HomeFrame.Name = "HomeFrame"
     HomeFrame.Parent = ScriptContainer
     HomeFrame.BackgroundTransparency = 1
-    HomeFrame.Size = UDim2.new(1, 0, 0, 200)
+    HomeFrame.Size = UDim2.new(1, 0, 0, 280)
     HomeFrame.LayoutOrder = 1
     
     -- Avatar Name
@@ -1572,7 +1616,9 @@ local function createHomeContent()
     AvatarLabel.TextSize = 16
     AvatarLabel.TextXAlignment = Enum.TextXAlignment.Left
     
-    -- Current Game
+    -- Current Game Detection
+    local detectedCategory, actualGameName = detectCurrentGame()
+    
     local GameLabel = Instance.new("TextLabel")
     GameLabel.Name = "GameLabel"
     GameLabel.Parent = HomeFrame
@@ -1580,10 +1626,94 @@ local function createHomeContent()
     GameLabel.Position = UDim2.new(0, 20, 0, 60)
     GameLabel.Size = UDim2.new(1, -40, 0, 30)
     GameLabel.Font = Enum.Font.GothamMedium
-    GameLabel.Text = "🎮 Game: " .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
+    GameLabel.Text = "🎮 Game: " .. actualGameName
     GameLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
     GameLabel.TextSize = 14
     GameLabel.TextXAlignment = Enum.TextXAlignment.Left
+    
+    -- Quick Access Button (if game has scripts)
+    if detectedCategory and GameScripts[detectedCategory] then
+        local QuickAccessButton = Instance.new("TextButton")
+        QuickAccessButton.Name = "QuickAccessButton"
+        QuickAccessButton.Parent = HomeFrame
+        QuickAccessButton.BackgroundColor3 = Color3.fromRGB(75, 125, 255)
+        QuickAccessButton.BorderSizePixel = 0
+        QuickAccessButton.Position = UDim2.new(0, 20, 0, 110)
+        QuickAccessButton.Size = UDim2.new(0, 200, 0, 40)
+        QuickAccessButton.Font = Enum.Font.GothamBold
+        QuickAccessButton.Text = "🚀 Go to " .. detectedCategory .. " Scripts"
+        QuickAccessButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        QuickAccessButton.TextSize = 12
+        
+        local QuickAccessCorner = Instance.new("UICorner")
+        QuickAccessCorner.CornerRadius = UDim.new(0, 8)
+        QuickAccessCorner.Parent = QuickAccessButton
+        
+        -- Hover effects
+        QuickAccessButton.MouseEnter:Connect(function()
+            TweenService:Create(QuickAccessButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+                BackgroundColor3 = Color3.fromRGB(85, 145, 255),
+                Size = UDim2.new(0, 210, 0, 42)
+            }):Play()
+        end)
+        
+        QuickAccessButton.MouseLeave:Connect(function()
+            TweenService:Create(QuickAccessButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+                BackgroundColor3 = Color3.fromRGB(75, 125, 255),
+                Size = UDim2.new(0, 200, 0, 40)
+            }):Play()
+        end)
+        
+        -- Click to navigate to game category
+        QuickAccessButton.MouseButton1Click:Connect(function()
+            -- Expand Games category if needed
+            if not isGamesExpanded then
+                isGamesExpanded = true
+            end
+            
+            -- Set current tab to detected game
+            currentTab = detectedCategory
+            refreshTabs()
+            updateScriptList()
+            
+            -- Show notification
+            StarterGui:SetCore("SendNotification", {
+                Title = "FlixHub Navigation";
+                Text = "Navigated to " .. detectedCategory .. " scripts!";
+                Duration = 2;
+            })
+        end)
+        
+        -- Info message
+        local InfoLabel = Instance.new("TextLabel")
+        InfoLabel.Name = "InfoLabel"
+        InfoLabel.Parent = HomeFrame
+        InfoLabel.BackgroundTransparency = 1
+        InfoLabel.Position = UDim2.new(0, 20, 0, 170)
+        InfoLabel.Size = UDim2.new(1, -40, 0, 60)
+        InfoLabel.Font = Enum.Font.Gotham
+        InfoLabel.Text = "✨ We detected you're playing " .. detectedCategory .. "!\nClick the button above to quickly access scripts for this game."
+        InfoLabel.TextColor3 = Color3.fromRGB(150, 200, 150)
+        InfoLabel.TextSize = 11
+        InfoLabel.TextWrapped = true
+        InfoLabel.TextXAlignment = Enum.TextXAlignment.Left
+        InfoLabel.TextYAlignment = Enum.TextYAlignment.Top
+    else
+        -- No scripts available message
+        local NoScriptsLabel = Instance.new("TextLabel")
+        NoScriptsLabel.Name = "NoScriptsLabel"
+        NoScriptsLabel.Parent = HomeFrame
+        NoScriptsLabel.BackgroundTransparency = 1
+        NoScriptsLabel.Position = UDim2.new(0, 20, 0, 110)
+        NoScriptsLabel.Size = UDim2.new(1, -40, 0, 80)
+        NoScriptsLabel.Font = Enum.Font.Gotham
+        NoScriptsLabel.Text = "❌ This game isn't supported yet.\nCheck out Universal or FE scripts that work in any game!"
+        NoScriptsLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
+        NoScriptsLabel.TextSize = 11
+        NoScriptsLabel.TextWrapped = true
+        NoScriptsLabel.TextXAlignment = Enum.TextXAlignment.Left
+        NoScriptsLabel.TextYAlignment = Enum.TextYAlignment.Top
+    end
 end
 
 local function refreshTabs()
