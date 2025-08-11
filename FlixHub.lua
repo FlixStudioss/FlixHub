@@ -1623,100 +1623,193 @@ end)
 local isMinimized = false
 local currentHubSize = {width = 500, height = 350} -- Store current size
 
--- Function to get current size based on currentSize variable
+-- Create Minimize Icon (separate from main frame)
+local MinimizeIcon = Instance.new("Frame")
+MinimizeIcon.Name = "MinimizeIcon"
+MinimizeIcon.Parent = FlixHub
+MinimizeIcon.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+MinimizeIcon.BorderSizePixel = 0
+MinimizeIcon.Size = UDim2.new(0, 60, 0, 60)
+MinimizeIcon.Position = UDim2.new(1, -80, 1, -80) -- Bottom right corner
+MinimizeIcon.Visible = false
+MinimizeIcon.ZIndex = 100
+
+local MinimizeIconCorner = Instance.new("UICorner")
+MinimizeIconCorner.CornerRadius = UDim.new(0, 12)
+MinimizeIconCorner.Parent = MinimizeIcon
+
+-- Icon gradient
+local MinimizeIconGradient = Instance.new("UIGradient")
+MinimizeIconGradient.Parent = MinimizeIcon
+MinimizeIconGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(35, 35, 50)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(25, 25, 35))
+}
+MinimizeIconGradient.Rotation = 45
+
+-- Icon glow effect
+local MinimizeIconStroke = Instance.new("UIStroke")
+MinimizeIconStroke.Parent = MinimizeIcon
+MinimizeIconStroke.Color = Color3.fromRGB(75, 125, 255)
+MinimizeIconStroke.Transparency = 0.5
+MinimizeIconStroke.Thickness = 2
+
+-- Icon shadow
+local MinimizeIconShadow = Instance.new("Frame")
+MinimizeIconShadow.Name = "MinimizeIconShadow"
+MinimizeIconShadow.Parent = FlixHub
+MinimizeIconShadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+MinimizeIconShadow.BackgroundTransparency = 0.3
+MinimizeIconShadow.BorderSizePixel = 0
+MinimizeIconShadow.Size = UDim2.new(0, 60, 0, 60)
+MinimizeIconShadow.Position = UDim2.new(1, -75, 1, -75)
+MinimizeIconShadow.Visible = false
+MinimizeIconShadow.ZIndex = 99
+
+local MinimizeIconShadowCorner = Instance.new("UICorner")
+MinimizeIconShadowCorner.CornerRadius = UDim.new(0, 12)
+MinimizeIconShadowCorner.Parent = MinimizeIconShadow
+
+-- Icon text/symbol
+local MinimizeIconText = Instance.new("TextLabel")
+MinimizeIconText.Name = "MinimizeIconText"
+MinimizeIconText.Parent = MinimizeIcon
+MinimizeIconText.BackgroundTransparency = 1
+MinimizeIconText.Size = UDim2.new(1, 0, 1, 0)
+MinimizeIconText.Font = Enum.Font.GothamBold
+MinimizeIconText.Text = "F"
+MinimizeIconText.TextColor3 = Color3.fromRGB(255, 255, 255)
+MinimizeIconText.TextSize = 24
+MinimizeIconText.TextXAlignment = Enum.TextXAlignment.Center
+MinimizeIconText.TextYAlignment = Enum.TextYAlignment.Center
+MinimizeIconText.ZIndex = 101
+
+-- Icon click detector
+local MinimizeIconButton = Instance.new("TextButton")
+MinimizeIconButton.Name = "MinimizeIconButton"
+MinimizeIconButton.Parent = MinimizeIcon
+MinimizeIconButton.BackgroundTransparency = 1
+MinimizeIconButton.Size = UDim2.new(1, 0, 1, 0)
+MinimizeIconButton.Text = ""
+MinimizeIconButton.ZIndex = 102
+
+-- Function to get current size based on default values
 local function getCurrentSizeValues()
-    if currentSize == "Very Small" then
-        return 500, 350
-    elseif currentSize == "Small" then
-        return 600, 400
-    elseif currentSize == "Medium" then
-        return 700, 500
-    elseif currentSize == "Large" then
-        return 800, 600
-    else
-        return 500, 350 -- Default fallback
-    end
+    return 500, 350 -- Default size since settings are removed
 end
 
+-- Minimize button functionality
 MinimizeButton.MouseButton1Click:Connect(function()
     if not isMinimized then
         -- Store current size before minimizing
         currentHubSize.width, currentHubSize.height = getCurrentSizeValues()
         
-        -- Minimize to small Flix icon (80x50)
-        local minimizeTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, 80, 0, 50),
-            Position = UDim2.new(0.5, -40, 0.5, -25)
+        -- Hide main frame completely with fade out animation
+        local fadeOut = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundTransparency = 1
+        })
+        local shadowFadeOut = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundTransparency = 1
+        })
+        local shadow2FadeOut = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundTransparency = 1
+        })
+        local ambientFadeOut = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            BackgroundTransparency = 1
         })
         
-        -- Fix all shadows for minimize
-        local shadowMinimizeTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, 80, 0, 50),
-            Position = UDim2.new(0.5, -38, 0.5, -23)
-        })
-        local shadow2MinimizeTween = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, 80, 0, 50),
-            Position = UDim2.new(0.5, -42, 0.5, -27)
-        })
-        local ambientMinimizeTween = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, 90, 0, 60),
-            Position = UDim2.new(0.5, -45, 0.5, -30)
-        })
+        fadeOut:Play()
+        shadowFadeOut:Play()
+        shadow2FadeOut:Play()
+        ambientFadeOut:Play()
         
-        minimizeTween:Play()
-        shadowMinimizeTween:Play()
-        shadow2MinimizeTween:Play()
-        ambientMinimizeTween:Play()
+        -- After fade out, hide main frame and show minimize icon
+        fadeOut.Completed:Connect(function()
+            MainFrame.Visible = false
+            Shadow.Visible = false
+            Shadow2.Visible = false
+            AmbientShadow.Visible = false
+            
+            -- Show minimize icon with animation
+            MinimizeIcon.Visible = true
+            MinimizeIconShadow.Visible = true
+            
+            local iconAppear = TweenService:Create(MinimizeIcon, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+                Size = UDim2.new(0, 60, 0, 60)
+            })
+            iconAppear:Play()
+        end)
+        
         isMinimized = true
-        MinimizeButton.Text = "+"
         
-        -- Hide other elements when minimized
-        Sidebar.Visible = false
-        ContentArea.Visible = false
-        CloseButton.Visible = false
-        
-        -- Change title to just "Flix"
-        TitleText.Text = "Flix"
-        TitleText.TextSize = 14
-        TitleText.Position = UDim2.new(0, 10, 0, 0)
-    else
-        -- Restore to previous size
-        local restoreTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, currentHubSize.width, 0, currentHubSize.height),
-            Position = UDim2.new(0.5, -currentHubSize.width/2, 0.5, -currentHubSize.height/2)
+        -- Show notification
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub";
+            Text = "Hub minimized to icon. Click icon to restore.";
+            Duration = 3;
         })
-        
-        -- Restore all shadows to original positions
-        local shadowRestoreTween = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, currentHubSize.width, 0, currentHubSize.height),
-            Position = UDim2.new(0.5, -currentHubSize.width/2 + 8, 0.5, -currentHubSize.height/2 + 8)
-        })
-        local shadow2RestoreTween = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, currentHubSize.width, 0, currentHubSize.height),
-            Position = UDim2.new(0.5, -currentHubSize.width/2 + 2, 0.5, -currentHubSize.height/2 + 2)
-        })
-        local ambientRestoreTween = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            Size = UDim2.new(0, currentHubSize.width + 20, 0, currentHubSize.height + 20),
-            Position = UDim2.new(0.5, -currentHubSize.width/2 - 10, 0.5, -currentHubSize.height/2 - 10)
-        })
-        
-        restoreTween:Play()
-        shadowRestoreTween:Play()
-        shadow2RestoreTween:Play()
-        ambientRestoreTween:Play()
-        isMinimized = false
-        MinimizeButton.Text = "-"
-        
-        -- Show other elements when restored
-        Sidebar.Visible = true
-        ContentArea.Visible = true
-        CloseButton.Visible = true
-        
-        -- Restore title
-        TitleText.Text = "FlixHub v2.0"
-        TitleText.TextSize = 16
-        TitleText.Position = UDim2.new(0, 15, 0, 0)
     end
+end)
+
+-- Minimize icon click functionality (restore hub)
+MinimizeIconButton.MouseButton1Click:Connect(function()
+    if isMinimized then
+        -- Hide minimize icon with animation
+        local iconDisappear = TweenService:Create(MinimizeIcon, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In), {
+            Size = UDim2.new(0, 0, 0, 0)
+        })
+        iconDisappear:Play()
+        
+        iconDisappear.Completed:Connect(function()
+            MinimizeIcon.Visible = false
+            MinimizeIconShadow.Visible = false
+            
+            -- Restore main frame
+            MainFrame.Visible = true
+            Shadow.Visible = true
+            Shadow2.Visible = true
+            AmbientShadow.Visible = true
+            
+            -- Reset transparencies and animate in
+            MainFrame.BackgroundTransparency = 0.1
+            Shadow.BackgroundTransparency = 0.3
+            Shadow2.BackgroundTransparency = 0.15
+            AmbientShadow.BackgroundTransparency = 0.8
+            
+            local fadeIn = TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quad), {
+                BackgroundTransparency = 0.1
+            })
+            fadeIn:Play()
+        end)
+        
+        isMinimized = false
+        
+        -- Show notification
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub";
+            Text = "Hub restored successfully!";
+            Duration = 2;
+        })
+    end
+end)
+
+-- Add hover effects to minimize icon
+MinimizeIconButton.MouseEnter:Connect(function()
+    TweenService:Create(MinimizeIcon, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, 70, 0, 70)
+    }):Play()
+    TweenService:Create(MinimizeIconStroke, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+        Transparency = 0.2
+    }):Play()
+end)
+
+MinimizeIconButton.MouseLeave:Connect(function()
+    TweenService:Create(MinimizeIcon, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+        Size = UDim2.new(0, 60, 0, 60)
+    }):Play()
+    TweenService:Create(MinimizeIconStroke, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+        Transparency = 0.5
+    }):Play()
 end)
 
 -- Duplicate function removed - using the original changeHubSize function
