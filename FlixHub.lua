@@ -492,7 +492,7 @@ MinimizeCorner.Parent = MinimizeButton
 local SettingsButton = Instance.new("TextButton")
 SettingsButton.Name = "SettingsButton"
 SettingsButton.Parent = TitleBar
-SettingsButton.BackgroundColor3 = Color3.fromRGB(120, 120, 140)
+SettingsButton.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
 SettingsButton.BackgroundTransparency = 0.1
 SettingsButton.BorderSizePixel = 0
 SettingsButton.Position = UDim2.new(1, -110, 0, 8)
@@ -1150,7 +1150,8 @@ local function detectCurrentGame()
         ["fisch"] = "Fisch",
         ["build a boat"] = "Build A Boat",
         ["build a boat for treasure"] = "Build A Boat",
-        ["basketball legends"] = "Basketball Legends"
+        ["basketball legends"] = "Basketball Legends",
+        ["touch football"] = "Touch Football"
     }
     
     -- Check if current game matches any of our script categories
@@ -1251,11 +1252,18 @@ local function createHomeContent()
             -- Set current tab to detected game
             currentTab = detectedCategory
             
-            -- Refresh tabs and update script list with a slight delay to ensure proper tab creation
+            -- Refresh tabs and update script list with proper sequencing
             spawn(function()
                 refreshTabs()
-                wait(0.3) -- Wait for tabs to be created
+                wait(0.5) -- Increased wait time for proper tab creation
+                
+                -- Ensure the correct tab is selected and update scripts
+                currentTab = detectedCategory
                 updateScriptList()
+                
+                -- Force refresh the tabs again to ensure proper highlighting
+                wait(0.1)
+                refreshTabs()
             end)
             
             -- Show notification
