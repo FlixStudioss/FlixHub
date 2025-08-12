@@ -523,143 +523,6 @@ local SettingsCorner = Instance.new("UICorner")
 SettingsCorner.CornerRadius = UDim.new(0, 6)
 SettingsCorner.Parent = SettingsButton
 
--- Settings Panel for Minimize Icon Configuration
-local SettingsPanel = Instance.new("Frame")
-SettingsPanel.Name = "SettingsPanel"
-SettingsPanel.Parent = MainFrame
-SettingsPanel.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
-SettingsPanel.BackgroundTransparency = 0.1
-SettingsPanel.BorderSizePixel = 0
-SettingsPanel.Position = UDim2.new(0.5, -125, 0.5, -150)
-SettingsPanel.Size = UDim2.new(0, 250, 0, 300)
-SettingsPanel.Visible = false
-SettingsPanel.ZIndex = 15
-
-local SettingsShadow = Instance.new("Frame")
-SettingsShadow.Name = "SettingsShadow"
-SettingsShadow.Parent = SettingsPanel
-SettingsShadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-SettingsShadow.BackgroundTransparency = 0.7
-SettingsShadow.BorderSizePixel = 0
-SettingsShadow.Position = UDim2.new(0, 2, 0, 2)
-SettingsShadow.Size = UDim2.new(1, 0, 1, 0)
-SettingsShadow.ZIndex = 14
-
-local SettingsTitle = Instance.new("TextLabel")
-SettingsTitle.Name = "SettingsTitle"
-SettingsTitle.Parent = SettingsPanel
-SettingsTitle.BackgroundTransparency = 1
-SettingsTitle.Position = UDim2.new(0, 0, 0, 0)
-SettingsTitle.Size = UDim2.new(1, 0, 0, 40)
-SettingsTitle.Font = Enum.Font.GothamBold
-SettingsTitle.Text = "Minimize Icon Settings"
-SettingsTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
-SettingsTitle.TextSize = 16
-SettingsTitle.ZIndex = 16
-
-local SettingsClose = Instance.new("TextButton")
-SettingsClose.Name = "SettingsClose"
-SettingsClose.Parent = SettingsPanel
-SettingsClose.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
-SettingsClose.BackgroundTransparency = 0.2
-SettingsClose.BorderSizePixel = 0
-SettingsClose.Position = UDim2.new(1, -30, 0, 5)
-SettingsClose.Size = UDim2.new(0, 25, 0, 25)
-SettingsClose.Font = Enum.Font.GothamBold
-SettingsClose.Text = "✕"
-SettingsClose.TextColor3 = Color3.fromRGB(255, 255, 255)
-SettingsClose.TextSize = 14
-SettingsClose.ZIndex = 16
-
--- Position Selection
-local PositionLabel = Instance.new("TextLabel")
-PositionLabel.Name = "PositionLabel"
-PositionLabel.Parent = SettingsPanel
-PositionLabel.BackgroundTransparency = 1
-PositionLabel.Position = UDim2.new(0, 10, 0, 50)
-PositionLabel.Size = UDim2.new(1, -20, 0, 20)
-PositionLabel.Font = Enum.Font.GothamMedium
-PositionLabel.Text = "Icon Position:"
-PositionLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-PositionLabel.TextSize = 12
-PositionLabel.TextXAlignment = Enum.TextXAlignment.Left
-PositionLabel.ZIndex = 16
-
--- Position Selection Buttons
-local PositionButtons = {}
-local positions = {
-    "Top Left", "Top Middle", "Top Right",
-    "Bottom Left", "Bottom Middle", "Bottom Right"
-}
-local currentPosition = "Bottom Right" -- Default
-
-for i, position in ipairs(positions) do
-    local posButton = Instance.new("TextButton")
-    posButton.Name = "PosButton_" .. position
-    posButton.Parent = SettingsPanel
-    posButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
-    posButton.BackgroundTransparency = 0.3
-    posButton.BorderSizePixel = 0
-    posButton.Position = UDim2.new(0.05 + ((i-1) % 3) * 0.3, 0, 0.28 + math.floor((i-1)/3) * 0.08, 0)
-    posButton.Size = UDim2.new(0.28, 0, 0.06, 0)
-    posButton.Font = Enum.Font.Gotham
-    posButton.Text = position
-    posButton.TextColor3 = position == currentPosition and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(180, 180, 180)
-    posButton.TextSize = 10
-    posButton.ZIndex = 16
-    
-    local posCorner = Instance.new("UICorner")
-    posCorner.CornerRadius = UDim.new(0, 4)
-    posCorner.Parent = posButton
-    
-    table.insert(PositionButtons, posButton)
-end
-
--- Movability Toggle
-local MovableToggle = Instance.new("Frame")
-MovableToggle.Name = "MovableToggle"
-MovableToggle.Parent = SettingsPanel
-MovableToggle.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
-MovableToggle.BackgroundTransparency = 0.3
-MovableToggle.BorderSizePixel = 0
-MovableToggle.Position = UDim2.new(0.1, 0, 0.45, 0)
-MovableToggle.Size = UDim2.new(0.8, 0, 0.08, 0)
-MovableToggle.ZIndex = 16
-
-local MovableLabel = Instance.new("TextLabel")
-MovableLabel.Name = "MovableLabel"
-MovableLabel.Parent = MovableToggle
-MovableLabel.BackgroundTransparency = 1
-MovableLabel.Position = UDim2.new(0, 10, 0, 0)
-MovableLabel.Size = UDim2.new(0.7, -10, 1, 0)
-MovableLabel.Font = Enum.Font.GothamMedium
-MovableLabel.Text = "Allow Dragging"
-MovableLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-MovableLabel.TextSize = 12
-MovableLabel.TextXAlignment = Enum.TextXAlignment.Left
-MovableLabel.ZIndex = 16
-
-local MovableSwitch = Instance.new("TextButton")
-MovableSwitch.Name = "MovableSwitch"
-MovableSwitch.Parent = MovableToggle
-MovableSwitch.BackgroundColor3 = Color3.fromRGB(100, 100, 120)
-MovableSwitch.BorderSizePixel = 0
-MovableSwitch.Position = UDim2.new(0.8, 0, 0.2, 0)
-MovableSwitch.Size = UDim2.new(0.15, 0, 0.6, 0)
-MovableSwitch.Font = Enum.Font.GothamBold
-MovableSwitch.Text = "OFF"
-MovableSwitch.TextColor3 = Color3.fromRGB(255, 255, 255)
-MovableSwitch.TextSize = 10
-MovableSwitch.ZIndex = 16
-
-local toggleCorner = Instance.new("UICorner")
-toggleCorner.CornerRadius = UDim.new(0, 3)
-toggleCorner.Parent = MovableSwitch
-
-local settingsCorner = Instance.new("UICorner")
-settingsCorner.CornerRadius = UDim.new(0, 8)
-settingsCorner.Parent = SettingsPanel
-
 -- Modern Sidebar with Glassmorphism
 local Sidebar = Instance.new("Frame")
 Sidebar.Name = "Sidebar"
@@ -1868,148 +1731,278 @@ MinimizeIconButton.Size = UDim2.new(1, 0, 1, 0)
 MinimizeIconButton.Text = ""
 MinimizeIconButton.ZIndex = 102
 
--- Settings variables for minimize icon
-local iconPosition = "Bottom Right" -- Default position
-local isIconMovable = false -- Default movability
-local isDragging = false
-local dragConnection = nil
+-- Minimize Icon Settings Variables
+local iconPosition = "bottom_right" -- default position
+local iconMovable = false -- default not movable
 
--- Function to get current size based on default values
-local function getCurrentSizeValues()
-    return 500, 350 -- Default size since settings are removed
-end
+-- Position mappings for the minimize icon
+local iconPositions = {
+    ["top_left"] = {anchor = UDim2.new(0, 20, 0, 20), shadow = UDim2.new(0, 25, 0, 25)},
+    ["top_middle"] = {anchor = UDim2.new(0.5, -30, 0, 20), shadow = UDim2.new(0.5, -25, 0, 25)},
+    ["top_right"] = {anchor = UDim2.new(1, -80, 0, 20), shadow = UDim2.new(1, -75, 0, 25)},
+    ["bottom_left"] = {anchor = UDim2.new(0, 20, 1, -80), shadow = UDim2.new(0, 25, 1, -75)},
+    ["bottom_middle"] = {anchor = UDim2.new(0.5, -30, 1, -80), shadow = UDim2.new(0.5, -25, 1, -75)},
+    ["bottom_right"] = {anchor = UDim2.new(1, -80, 1, -80), shadow = UDim2.new(1, -75, 1, -75)}
+}
 
 -- Function to update minimize icon position
-local function updateMinimizeIconPosition()
-    local screenSize = workspace.CurrentCamera.ViewportSize
-    local iconSize = 60
-    
-    local positions = {
-        ["Top Left"] = UDim2.new(0, 20, 0, 20),
-        ["Top Middle"] = UDim2.new(0.5, -iconSize/2, 0, 20),
-        ["Top Right"] = UDim2.new(1, -iconSize - 20, 0, 20),
-        ["Bottom Left"] = UDim2.new(0, 20, 1, -iconSize - 20),
-        ["Bottom Middle"] = UDim2.new(0.5, -iconSize/2, 1, -iconSize - 20),
-        ["Bottom Right"] = UDim2.new(1, -iconSize - 20, 1, -iconSize - 20)
-    }
-    
-    MinimizeIcon.Position = positions[iconPosition] or positions["Bottom Right"]
-end
-
--- Function to update position buttons styling
-local function updatePositionButtons()
-    for _, button in ipairs(PositionButtons) do
-        local positionName = button.Name:gsub("PosButton_", "")
-        button.TextColor3 = positionName == iconPosition and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(180, 180, 180)
-        button.BackgroundColor3 = positionName == iconPosition and Color3.fromRGB(100, 100, 255) or Color3.fromRGB(60, 60, 80)
+local function updateIconPosition(position)
+    iconPosition = position
+    local pos = iconPositions[position]
+    if pos then
+        MinimizeIcon.Position = pos.anchor
+        MinimizeIconShadow.Position = pos.shadow
     end
 end
 
--- Function to update movable switch
-local function updateMovableSwitch()
-    MovableSwitch.Text = isIconMovable and "ON" or "OFF"
-    MovableSwitch.BackgroundColor3 = isIconMovable and Color3.fromRGB(100, 255, 100) or Color3.fromRGB(100, 100, 120)
-end
+-- Settings Panel for Minimize Icon
+local SettingsPanel = Instance.new("Frame")
+SettingsPanel.Name = "SettingsPanel"
+SettingsPanel.Parent = FlixHub
+SettingsPanel.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+SettingsPanel.BorderSizePixel = 0
+SettingsPanel.Position = UDim2.new(0.5, -200, 0.5, -150)
+SettingsPanel.Size = UDim2.new(0, 400, 0, 300)
+SettingsPanel.Visible = false
+SettingsPanel.ZIndex = 200
 
--- Settings panel functionality
-SettingsButton.MouseButton1Click:Connect(function()
-    SettingsPanel.Visible = true
-    updatePositionButtons()
-    updateMovableSwitch()
+local SettingsPanelCorner = Instance.new("UICorner")
+SettingsPanelCorner.CornerRadius = UDim.new(0, 12)
+SettingsPanelCorner.Parent = SettingsPanel
+
+-- Settings Panel Shadow
+local SettingsPanelShadow = Instance.new("Frame")
+SettingsPanelShadow.Name = "SettingsPanelShadow"
+SettingsPanelShadow.Parent = FlixHub
+SettingsPanelShadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+SettingsPanelShadow.BackgroundTransparency = 0.3
+SettingsPanelShadow.BorderSizePixel = 0
+SettingsPanelShadow.Position = UDim2.new(0.5, -195, 0.5, -145)
+SettingsPanelShadow.Size = UDim2.new(0, 400, 0, 300)
+SettingsPanelShadow.Visible = false
+SettingsPanelShadow.ZIndex = 199
+
+local SettingsPanelShadowCorner = Instance.new("UICorner")
+SettingsPanelShadowCorner.CornerRadius = UDim.new(0, 12)
+SettingsPanelShadowCorner.Parent = SettingsPanelShadow
+
+-- Settings Panel Title
+local SettingsTitle = Instance.new("TextLabel")
+SettingsTitle.Name = "SettingsTitle"
+SettingsTitle.Parent = SettingsPanel
+SettingsTitle.BackgroundTransparency = 1
+SettingsTitle.Position = UDim2.new(0, 20, 0, 15)
+SettingsTitle.Size = UDim2.new(1, -40, 0, 30)
+SettingsTitle.Font = Enum.Font.GothamBold
+SettingsTitle.Text = "⚙️ Minimize Icon Settings"
+SettingsTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+SettingsTitle.TextSize = 16
+SettingsTitle.TextXAlignment = Enum.TextXAlignment.Left
+SettingsTitle.ZIndex = 201
+
+-- Close Settings Button
+local CloseSettingsButton = Instance.new("TextButton")
+CloseSettingsButton.Name = "CloseSettingsButton"
+CloseSettingsButton.Parent = SettingsPanel
+CloseSettingsButton.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+CloseSettingsButton.BorderSizePixel = 0
+CloseSettingsButton.Position = UDim2.new(1, -35, 0, 10)
+CloseSettingsButton.Size = UDim2.new(0, 25, 0, 25)
+CloseSettingsButton.Font = Enum.Font.GothamBold
+CloseSettingsButton.Text = "×"
+CloseSettingsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseSettingsButton.TextSize = 14
+CloseSettingsButton.ZIndex = 201
+
+local CloseSettingsCorner = Instance.new("UICorner")
+CloseSettingsCorner.CornerRadius = UDim.new(0, 4)
+CloseSettingsCorner.Parent = CloseSettingsButton
+
+-- Position Label
+local PositionLabel = Instance.new("TextLabel")
+PositionLabel.Name = "PositionLabel"
+PositionLabel.Parent = SettingsPanel
+PositionLabel.BackgroundTransparency = 1
+PositionLabel.Position = UDim2.new(0, 20, 0, 60)
+PositionLabel.Size = UDim2.new(1, -40, 0, 25)
+PositionLabel.Font = Enum.Font.GothamMedium
+PositionLabel.Text = "Icon Position:"
+PositionLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+PositionLabel.TextSize = 14
+PositionLabel.TextXAlignment = Enum.TextXAlignment.Left
+PositionLabel.ZIndex = 201
+
+-- Position Buttons Container
+local PositionGrid = Instance.new("Frame")
+PositionGrid.Name = "PositionGrid"
+PositionGrid.Parent = SettingsPanel
+PositionGrid.BackgroundTransparency = 1
+PositionGrid.Position = UDim2.new(0, 20, 0, 90)
+PositionGrid.Size = UDim2.new(1, -40, 0, 120)
+PositionGrid.ZIndex = 201
+
+-- Position button data
+local positionButtons = {
+    {key = "top_left", text = "Top Left", pos = UDim2.new(0, 0, 0, 0)},
+    {key = "top_middle", text = "Top Middle", pos = UDim2.new(0.33, 5, 0, 0)},
+    {key = "top_right", text = "Top Right", pos = UDim2.new(0.66, 10, 0, 0)},
+    {key = "bottom_left", text = "Bottom Left", pos = UDim2.new(0, 0, 0, 40)},
+    {key = "bottom_middle", text = "Bottom Middle", pos = UDim2.new(0.33, 5, 0, 40)},
+    {key = "bottom_right", text = "Bottom Right", pos = UDim2.new(0.66, 10, 0, 40)}
+}
+
+-- Create position buttons
+for _, buttonData in pairs(positionButtons) do
+    local button = Instance.new("TextButton")
+    button.Name = buttonData.key .. "Button"
+    button.Parent = PositionGrid
+    button.BackgroundColor3 = (buttonData.key == iconPosition) and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(40, 40, 60)
+    button.BorderSizePixel = 0
+    button.Position = buttonData.pos
+    button.Size = UDim2.new(0.3, -5, 0, 35)
+    button.Font = Enum.Font.GothamMedium
+    button.Text = buttonData.text
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.TextSize = 11
+    button.ZIndex = 202
     
-    -- Show notification
-    StarterGui:SetCore("SendNotification", {
-        Title = "FlixHub Settings";
-        Text = "Minimize icon settings opened!";
-        Duration = 1;
-    })
-end)
-
-SettingsClose.MouseButton1Click:Connect(function()
-    SettingsPanel.Visible = false
-end)
-
--- Position button functionality
-for i, posButton in ipairs(PositionButtons) do
-    posButton.MouseButton1Click:Connect(function()
-        local positionName = posButton.Name:gsub("PosButton_", "")
-        iconPosition = positionName
-        updateMinimizeIconPosition()
-        updatePositionButtons()
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 6)
+    corner.Parent = button
+    
+    -- Button click handler
+    button.MouseButton1Click:Connect(function()
+        -- Update all buttons appearance
+        for _, child in pairs(PositionGrid:GetChildren()) do
+            if child:IsA("TextButton") then
+                child.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+            end
+        end
+        -- Highlight selected button
+        button.BackgroundColor3 = Color3.fromRGB(75, 125, 255)
         
+        -- Update icon position
+        updateIconPosition(buttonData.key)
+        
+        -- Show notification
         StarterGui:SetCore("SendNotification", {
             Title = "FlixHub Settings";
-            Text = "Icon position set to " .. positionName .. "!";
+            Text = "Icon position changed to " .. buttonData.text;
             Duration = 2;
         })
     end)
 end
 
--- Movable toggle functionality
-MovableSwitch.MouseButton1Click:Connect(function()
-    isIconMovable = not isIconMovable
-    updateMovableSwitch()
-    
-    -- Enable/disable dragging
-    if isIconMovable then
-        MinimizeIconButton.Active = true
-        MinimizeIconButton.Selectable = true
-    else
-        MinimizeIconButton.Active = false
-        MinimizeIconButton.Selectable = false
-        isDragging = false
+-- Movable Toggle Label
+local MovableLabel = Instance.new("TextLabel")
+MovableLabel.Name = "MovableLabel"
+MovableLabel.Parent = SettingsPanel
+MovableLabel.BackgroundTransparency = 1
+MovableLabel.Position = UDim2.new(0, 20, 0, 220)
+MovableLabel.Size = UDim2.new(1, -40, 0, 25)
+MovableLabel.Font = Enum.Font.GothamMedium
+MovableLabel.Text = "Make Icon Draggable:"
+MovableLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+MovableLabel.TextSize = 14
+MovableLabel.TextXAlignment = Enum.TextXAlignment.Left
+MovableLabel.ZIndex = 201
+
+-- Movable Toggle Button
+local MovableToggle = Instance.new("TextButton")
+MovableToggle.Name = "MovableToggle"
+MovableToggle.Parent = SettingsPanel
+MovableToggle.BackgroundColor3 = iconMovable and Color3.fromRGB(100, 255, 100) or Color3.fromRGB(255, 100, 100)
+MovableToggle.BorderSizePixel = 0
+MovableToggle.Position = UDim2.new(0, 20, 0, 250)
+MovableToggle.Size = UDim2.new(0, 100, 0, 30)
+MovableToggle.Font = Enum.Font.GothamMedium
+MovableToggle.Text = iconMovable and "Enabled" or "Disabled"
+MovableToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+MovableToggle.TextSize = 12
+MovableToggle.ZIndex = 202
+
+local MovableToggleCorner = Instance.new("UICorner")
+MovableToggleCorner.CornerRadius = UDim.new(0, 6)
+MovableToggleCorner.Parent = MovableToggle
+
+-- Dragging variables
+local dragging = false
+local dragStart = nil
+local startPos = nil
+
+-- Function to enable/disable draggable behavior
+local function updateMovableBehavior()
+    if iconMovable then
+        -- Enable dragging
+        MinimizeIconButton.MouseButton1Down:Connect(function()
+            if not dragging then
+                dragging = true
+                dragStart = UserInputService:GetMouseLocation()
+                startPos = MinimizeIcon.Position
+            end
+        end)
+        
+        UserInputService.InputChanged:Connect(function(input)
+            if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+                local delta = UserInputService:GetMouseLocation() - dragStart
+                local newPos = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+                
+                -- Keep icon within screen bounds
+                local clampedX = math.max(0, math.min(newPos.X.Offset, workspace.CurrentCamera.ViewportSize.X - 60))
+                local clampedY = math.max(0, math.min(newPos.Y.Offset, workspace.CurrentCamera.ViewportSize.Y - 60))
+                
+                MinimizeIcon.Position = UDim2.new(0, clampedX, 0, clampedY)
+                MinimizeIconShadow.Position = UDim2.new(0, clampedX + 5, 0, clampedY + 5)
+            end
+        end)
+        
+        UserInputService.InputEnded:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 then
+                dragging = false
+            end
+        end)
     end
+end
+
+-- Movable Toggle Click Handler
+MovableToggle.MouseButton1Click:Connect(function()
+    iconMovable = not iconMovable
+    MovableToggle.BackgroundColor3 = iconMovable and Color3.fromRGB(100, 255, 100) or Color3.fromRGB(255, 100, 100)
+    MovableToggle.Text = iconMovable and "Enabled" or "Disabled"
+    
+    updateMovableBehavior()
     
     StarterGui:SetCore("SendNotification", {
         Title = "FlixHub Settings";
-        Text = "Icon dragging " .. (isIconMovable and "enabled" or "disabled") .. "!";
+        Text = iconMovable and "Icon dragging enabled!" or "Icon dragging disabled!";
         Duration = 2;
     })
-end
+end)
 
--- Drag functionality for minimize icon
-local function enableDragging()
-    local dragStartPos = nil
-    local dragStartMouse = nil
+-- Settings Button Click Handler
+SettingsButton.MouseButton1Click:Connect(function()
+    SettingsPanel.Visible = not SettingsPanel.Visible
+    SettingsPanelShadow.Visible = SettingsPanel.Visible
     
-    MinimizeIconButton.MouseButton1Down:Connect(function(input)
-        if isIconMovable then
-            isDragging = true
-            dragStartPos = MinimizeIcon.Position
-            
-            -- Create drag connection
-            if dragConnection then
-                dragConnection:Disconnect()
-            end
-            
-            dragConnection = game:GetService("UserInputService").InputChanged:Connect(function(input)
-                if input.UserInputType == Enum.UserInputType.MouseMovement and isDragging then
-                    local mousePos = input.Position
-                    local screenSize = workspace.CurrentCamera.ViewportSize
-                    
-                    -- Calculate new position based on mouse
-                    local newX = UDim.new(math.clamp(mousePos.X / screenSize.X, 0.05, 0.95), 0)
-                    local newY = UDim.new(math.clamp(mousePos.Y / screenSize.Y, 0.05, 0.95), 0)
-                    
-                    MinimizeIcon.Position = UDim2.new(newX.Scale, 0, newY.Scale, 0)
-                end
-            end)
-        end
-    end)
-    
-    MinimizeIconButton.MouseButton1Up:Connect(function()
-        if isDragging then
-            isDragging = false
-            if dragConnection then
-                dragConnection:Disconnect()
-                dragConnection = nil
-            end
-        end
-    end)
-end
+    if SettingsPanel.Visible then
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub Settings";
+            Text = "Settings panel opened!";
+            Duration = 1;
+        })
+    end
+end)
 
--- Initialize dragging
-enableDragging()
+-- Close Settings Button Click Handler
+CloseSettingsButton.MouseButton1Click:Connect(function()
+    SettingsPanel.Visible = false
+    SettingsPanelShadow.Visible = false
+end)
+
+-- Function to get current size based on default values
+local function getCurrentSizeValues()
+    return 500, 350 -- Default size since settings are removed
+end
 
 -- Minimize button functionality
 MinimizeButton.MouseButton1Click:Connect(function()
