@@ -523,6 +523,42 @@ local SettingsCorner = Instance.new("UICorner")
 SettingsCorner.CornerRadius = UDim.new(0, 6)
 SettingsCorner.Parent = SettingsButton
 
+-- Search Button for ScriptBlox (initially hidden)
+local SearchButton = Instance.new("TextButton")
+SearchButton.Name = "SearchButton"
+SearchButton.Parent = TitleBar
+SearchButton.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
+SearchButton.BackgroundTransparency = 0.1
+SearchButton.BorderSizePixel = 0
+SearchButton.Position = UDim2.new(1, -145, 0, 8)
+SearchButton.Size = UDim2.new(0, 28, 0, 28)
+SearchButton.Font = Enum.Font.GothamBold
+SearchButton.Text = "🔍"
+SearchButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+SearchButton.TextSize = 12
+SearchButton.ZIndex = 4
+SearchButton.Visible = false -- Hidden by default
+
+-- Search Button Gradient
+local SearchGradient = Instance.new("UIGradient")
+SearchGradient.Parent = SearchButton
+SearchGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(140, 140, 160)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 100, 120))
+}
+SearchGradient.Rotation = 45
+
+-- Search Button Glow
+local SearchStroke = Instance.new("UIStroke")
+SearchStroke.Parent = SearchButton
+SearchStroke.Color = Color3.fromRGB(150, 150, 180)
+SearchStroke.Transparency = 0.6
+SearchStroke.Thickness = 1
+
+local SearchCorner = Instance.new("UICorner")
+SearchCorner.CornerRadius = UDim.new(0, 6)
+SearchCorner.Parent = SearchButton
+
 -- Modern Sidebar with Glassmorphism
 local Sidebar = Instance.new("Frame")
 Sidebar.Name = "Sidebar"
@@ -1050,6 +1086,25 @@ end]]
             description = "Auto Goal script for Touch Football game",
             script = [[loadstring(game:HttpGet("https://pastefy.app/HHVkOaR9/raw"))()]]
         }
+    },
+    ["Brainrot Evolution"] = {
+        {
+            name = "OP Auto Farm",
+            description = "OP Auto Farm script for Brainrot Evolution game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/BrySadW/BrainrotEvolution/refs/heads/main/Protected_9771535026490697.lua"))()]]
+        }
+    },
+    ["Slap Tower"] = {
+        {
+            name = "Trolling Gui",
+            description = "Trolling Gui script for Slap Tower game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Rawbr10/Roblox-Scripts/refs/heads/main/Slap-Tower-Script"))()]]
+        },
+        {
+            name = "Get All Slaps",
+            description = "Get All Slaps script for Slap Tower game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/DdeM3zz/TwinScripts/refs/heads/main/Slap%20Tower", true))()]]
+        }
     }
 }
 
@@ -1151,7 +1206,9 @@ local function detectCurrentGame()
         ["build a boat"] = "Build A Boat",
         ["build a boat for treasure"] = "Build A Boat",
         ["basketball legends"] = "Basketball Legends",
-        ["touch football"] = "Touch Football"
+        ["touch football"] = "Touch Football",
+        ["brainrot evolution"] = "Brainrot Evolution",
+        ["slap tower"] = "Slap Tower"
     }
     
     -- Check if current game matches any of our script categories
@@ -1209,100 +1266,27 @@ local function createHomeContent()
     GameLabel.TextSize = 14
     GameLabel.TextXAlignment = Enum.TextXAlignment.Left
     
-    -- Quick Access Button (if game has scripts)
+    -- Game Support Status (no navigation button)
+    local SupportStatusLabel = Instance.new("TextLabel")
+    SupportStatusLabel.Name = "SupportStatusLabel"
+    SupportStatusLabel.Parent = HomeFrame
+    SupportStatusLabel.BackgroundTransparency = 1
+    SupportStatusLabel.Position = UDim2.new(0, 20, 0, 110)
+    SupportStatusLabel.Size = UDim2.new(1, -40, 0, 80)
+    SupportStatusLabel.Font = Enum.Font.GothamMedium
+    SupportStatusLabel.TextSize = 12
+    SupportStatusLabel.TextWrapped = true
+    SupportStatusLabel.TextXAlignment = Enum.TextXAlignment.Left
+    SupportStatusLabel.TextYAlignment = Enum.TextYAlignment.Top
+    
     if detectedCategory and GameScripts[detectedCategory] then
-        local QuickAccessButton = Instance.new("TextButton")
-        QuickAccessButton.Name = "QuickAccessButton"
-        QuickAccessButton.Parent = HomeFrame
-        QuickAccessButton.BackgroundColor3 = Color3.fromRGB(75, 125, 255)
-        QuickAccessButton.BorderSizePixel = 0
-        QuickAccessButton.Position = UDim2.new(0, 20, 0, 110)
-        QuickAccessButton.Size = UDim2.new(0, 200, 0, 40)
-        QuickAccessButton.Font = Enum.Font.GothamBold
-        QuickAccessButton.Text = "🚀 Go to " .. detectedCategory .. " Scripts"
-        QuickAccessButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-        QuickAccessButton.TextSize = 12
-        
-        local QuickAccessCorner = Instance.new("UICorner")
-        QuickAccessCorner.CornerRadius = UDim.new(0, 8)
-        QuickAccessCorner.Parent = QuickAccessButton
-        
-        -- Hover effects
-        QuickAccessButton.MouseEnter:Connect(function()
-            TweenService:Create(QuickAccessButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
-                BackgroundColor3 = Color3.fromRGB(85, 145, 255),
-                Size = UDim2.new(0, 210, 0, 42)
-            }):Play()
-        end)
-        
-        QuickAccessButton.MouseLeave:Connect(function()
-            TweenService:Create(QuickAccessButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
-                BackgroundColor3 = Color3.fromRGB(75, 125, 255),
-                Size = UDim2.new(0, 200, 0, 40)
-            }):Play()
-        end)
-        
-        -- Click to navigate to game category
-        QuickAccessButton.MouseButton1Click:Connect(function()
-            -- Expand Games category if needed
-            if not isGamesExpanded then
-                isGamesExpanded = true
-            end
-            
-            -- Set current tab to detected game
-            currentTab = detectedCategory
-            
-            -- Refresh tabs and update script list with proper sequencing
-            spawn(function()
-                refreshTabs()
-                wait(0.5) -- Increased wait time for proper tab creation
-                
-                -- Ensure the correct tab is selected and update scripts
-                currentTab = detectedCategory
-                updateScriptList()
-                
-                -- Force refresh the tabs again to ensure proper highlighting
-                wait(0.1)
-                refreshTabs()
-            end)
-            
-            -- Show notification
-            StarterGui:SetCore("SendNotification", {
-                Title = "FlixHub Navigation";
-                Text = "Navigated to " .. detectedCategory .. " scripts!";
-                Duration = 2;
-            })
-        end)
-        
-        -- Info message
-        local InfoLabel = Instance.new("TextLabel")
-        InfoLabel.Name = "InfoLabel"
-        InfoLabel.Parent = HomeFrame
-        InfoLabel.BackgroundTransparency = 1
-        InfoLabel.Position = UDim2.new(0, 20, 0, 170)
-        InfoLabel.Size = UDim2.new(1, -40, 0, 60)
-        InfoLabel.Font = Enum.Font.Gotham
-        InfoLabel.Text = "✨ We detected you're playing " .. detectedCategory .. "!\nClick the button above to quickly access scripts for this game."
-        InfoLabel.TextColor3 = Color3.fromRGB(150, 200, 150)
-        InfoLabel.TextSize = 11
-        InfoLabel.TextWrapped = true
-        InfoLabel.TextXAlignment = Enum.TextXAlignment.Left
-        InfoLabel.TextYAlignment = Enum.TextYAlignment.Top
+        -- Game is supported
+        SupportStatusLabel.Text = "✅ Status: Supported\n📜 This game has scripts available in the " .. detectedCategory .. " category.\n\n💡 Navigate to the Games section to access scripts."
+        SupportStatusLabel.TextColor3 = Color3.fromRGB(150, 220, 150)
     else
-        -- No scripts available message
-        local NoScriptsLabel = Instance.new("TextLabel")
-        NoScriptsLabel.Name = "NoScriptsLabel"
-        NoScriptsLabel.Parent = HomeFrame
-        NoScriptsLabel.BackgroundTransparency = 1
-        NoScriptsLabel.Position = UDim2.new(0, 20, 0, 110)
-        NoScriptsLabel.Size = UDim2.new(1, -40, 0, 80)
-        NoScriptsLabel.Font = Enum.Font.Gotham
-        NoScriptsLabel.Text = "❌ This game isn't supported yet.\nCheck out Universal or FE scripts that work in any game!"
-        NoScriptsLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
-        NoScriptsLabel.TextSize = 11
-        NoScriptsLabel.TextWrapped = true
-        NoScriptsLabel.TextXAlignment = Enum.TextXAlignment.Left
-        NoScriptsLabel.TextYAlignment = Enum.TextYAlignment.Top
+        -- Game is not supported
+        SupportStatusLabel.Text = "❌ Status: Not Supported\n📜 This game doesn't have dedicated scripts yet.\n\n💡 Check out Universal or FE scripts that work in any game!"
+        SupportStatusLabel.TextColor3 = Color3.fromRGB(220, 150, 150)
     end
 end
 
@@ -1742,6 +1726,7 @@ MinimizeIconButton.ZIndex = 102
 -- Minimize Icon Settings Variables
 local iconPosition = "bottom_right" -- default position
 local iconMovable = false -- default not movable
+local experimentalSearch = false -- experimental ScriptBlox search feature
 
 -- Position mappings for the minimize icon
 local iconPositions = {
@@ -1933,6 +1918,38 @@ local MovableToggleCorner = Instance.new("UICorner")
 MovableToggleCorner.CornerRadius = UDim.new(0, 6)
 MovableToggleCorner.Parent = MovableToggle
 
+-- Experimental Search Label
+local ExperimentalLabel = Instance.new("TextLabel")
+ExperimentalLabel.Name = "ExperimentalLabel"
+ExperimentalLabel.Parent = SettingsPanel
+ExperimentalLabel.BackgroundTransparency = 1
+ExperimentalLabel.Position = UDim2.new(0, 130, 0, 220)
+ExperimentalLabel.Size = UDim2.new(1, -150, 0, 25)
+ExperimentalLabel.Font = Enum.Font.GothamMedium
+ExperimentalLabel.Text = "ScriptBlox Search:"
+ExperimentalLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+ExperimentalLabel.TextSize = 14
+ExperimentalLabel.TextXAlignment = Enum.TextXAlignment.Left
+ExperimentalLabel.ZIndex = 201
+
+-- Experimental Search Toggle Button
+local ExperimentalToggle = Instance.new("TextButton")
+ExperimentalToggle.Name = "ExperimentalToggle"
+ExperimentalToggle.Parent = SettingsPanel
+ExperimentalToggle.BackgroundColor3 = experimentalSearch and Color3.fromRGB(100, 255, 100) or Color3.fromRGB(255, 100, 100)
+ExperimentalToggle.BorderSizePixel = 0
+ExperimentalToggle.Position = UDim2.new(0, 130, 0, 250)
+ExperimentalToggle.Size = UDim2.new(0, 100, 0, 30)
+ExperimentalToggle.Font = Enum.Font.GothamMedium
+ExperimentalToggle.Text = experimentalSearch and "Enabled" or "Disabled"
+ExperimentalToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+ExperimentalToggle.TextSize = 12
+ExperimentalToggle.ZIndex = 202
+
+local ExperimentalToggleCorner = Instance.new("UICorner")
+ExperimentalToggleCorner.CornerRadius = UDim.new(0, 6)
+ExperimentalToggleCorner.Parent = ExperimentalToggle
+
 -- Dragging variables
 local dragging = false
 local dragStart = nil
@@ -1987,6 +2004,22 @@ MovableToggle.MouseButton1Click:Connect(function()
     })
 end)
 
+-- Experimental Search Toggle Click Handler
+ExperimentalToggle.MouseButton1Click:Connect(function()
+    experimentalSearch = not experimentalSearch
+    ExperimentalToggle.BackgroundColor3 = experimentalSearch and Color3.fromRGB(100, 255, 100) or Color3.fromRGB(255, 100, 100)
+    ExperimentalToggle.Text = experimentalSearch and "Enabled" or "Disabled"
+    
+    -- Show/hide search button based on experimental setting
+    SearchButton.Visible = experimentalSearch
+    
+    StarterGui:SetCore("SendNotification", {
+        Title = "FlixHub Experimental";
+        Text = experimentalSearch and "ScriptBlox search enabled!" or "ScriptBlox search disabled!";
+        Duration = 2;
+    })
+end)
+
 -- Settings Button Click Handler
 SettingsButton.MouseButton1Click:Connect(function()
     SettingsPanel.Visible = not SettingsPanel.Visible
@@ -2005,6 +2038,331 @@ end)
 CloseSettingsButton.MouseButton1Click:Connect(function()
     SettingsPanel.Visible = false
     SettingsPanelShadow.Visible = false
+end)
+
+-- ScriptBlox Search Panel
+local SearchPanel = Instance.new("Frame")
+SearchPanel.Name = "SearchPanel"
+SearchPanel.Parent = FlixHub
+SearchPanel.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+SearchPanel.BorderSizePixel = 0
+SearchPanel.Position = UDim2.new(0.5, -250, 0.5, -200)
+SearchPanel.Size = UDim2.new(0, 500, 0, 400)
+SearchPanel.Visible = false
+SearchPanel.ZIndex = 300
+
+local SearchPanelCorner = Instance.new("UICorner")
+SearchPanelCorner.CornerRadius = UDim.new(0, 12)
+SearchPanelCorner.Parent = SearchPanel
+
+-- Search Panel Shadow
+local SearchPanelShadow = Instance.new("Frame")
+SearchPanelShadow.Name = "SearchPanelShadow"
+SearchPanelShadow.Parent = FlixHub
+SearchPanelShadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+SearchPanelShadow.BackgroundTransparency = 0.3
+SearchPanelShadow.BorderSizePixel = 0
+SearchPanelShadow.Position = UDim2.new(0.5, -245, 0.5, -195)
+SearchPanelShadow.Size = UDim2.new(0, 500, 0, 400)
+SearchPanelShadow.Visible = false
+SearchPanelShadow.ZIndex = 299
+
+local SearchPanelShadowCorner = Instance.new("UICorner")
+SearchPanelShadowCorner.CornerRadius = UDim.new(0, 12)
+SearchPanelShadowCorner.Parent = SearchPanelShadow
+
+-- Search Panel Title
+local SearchTitle = Instance.new("TextLabel")
+SearchTitle.Name = "SearchTitle"
+SearchTitle.Parent = SearchPanel
+SearchTitle.BackgroundTransparency = 1
+SearchTitle.Position = UDim2.new(0, 20, 0, 15)
+SearchTitle.Size = UDim2.new(1, -40, 0, 30)
+SearchTitle.Font = Enum.Font.GothamBold
+SearchTitle.Text = "🔍 ScriptBlox Search (Experimental)"
+SearchTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+SearchTitle.TextSize = 16
+SearchTitle.TextXAlignment = Enum.TextXAlignment.Left
+SearchTitle.ZIndex = 301
+
+-- Close Search Button
+local CloseSearchButton = Instance.new("TextButton")
+CloseSearchButton.Name = "CloseSearchButton"
+CloseSearchButton.Parent = SearchPanel
+CloseSearchButton.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+CloseSearchButton.BorderSizePixel = 0
+CloseSearchButton.Position = UDim2.new(1, -35, 0, 10)
+CloseSearchButton.Size = UDim2.new(0, 25, 0, 25)
+CloseSearchButton.Font = Enum.Font.GothamBold
+CloseSearchButton.Text = "×"
+CloseSearchButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseSearchButton.TextSize = 14
+CloseSearchButton.ZIndex = 301
+
+local CloseSearchCorner = Instance.new("UICorner")
+CloseSearchCorner.CornerRadius = UDim.new(0, 4)
+CloseSearchCorner.Parent = CloseSearchButton
+
+-- Search Input Box
+local SearchInput = Instance.new("TextBox")
+SearchInput.Name = "SearchInput"
+SearchInput.Parent = SearchPanel
+SearchInput.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+SearchInput.BorderSizePixel = 0
+SearchInput.Position = UDim2.new(0, 20, 0, 60)
+SearchInput.Size = UDim2.new(1, -120, 0, 35)
+SearchInput.Font = Enum.Font.Gotham
+SearchInput.PlaceholderText = "Search for scripts... (keyless & verified only)"
+SearchInput.Text = ""
+SearchInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+SearchInput.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
+SearchInput.TextSize = 12
+SearchInput.ZIndex = 301
+
+local SearchInputCorner = Instance.new("UICorner")
+SearchInputCorner.CornerRadius = UDim.new(0, 6)
+SearchInputCorner.Parent = SearchInput
+
+-- Search Execute Button
+local SearchExecuteButton = Instance.new("TextButton")
+SearchExecuteButton.Name = "SearchExecuteButton"
+SearchExecuteButton.Parent = SearchPanel
+SearchExecuteButton.BackgroundColor3 = Color3.fromRGB(75, 125, 255)
+SearchExecuteButton.BorderSizePixel = 0
+SearchExecuteButton.Position = UDim2.new(1, -85, 0, 60)
+SearchExecuteButton.Size = UDim2.new(0, 65, 0, 35)
+SearchExecuteButton.Font = Enum.Font.GothamBold
+SearchExecuteButton.Text = "Search"
+SearchExecuteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+SearchExecuteButton.TextSize = 12
+SearchExecuteButton.ZIndex = 301
+
+local SearchExecuteCorner = Instance.new("UICorner")
+SearchExecuteCorner.CornerRadius = UDim.new(0, 6)
+SearchExecuteCorner.Parent = SearchExecuteButton
+
+-- Search Results Container
+local SearchResultsContainer = Instance.new("ScrollingFrame")
+SearchResultsContainer.Name = "SearchResultsContainer"
+SearchResultsContainer.Parent = SearchPanel
+SearchResultsContainer.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+SearchResultsContainer.BorderSizePixel = 0
+SearchResultsContainer.Position = UDim2.new(0, 20, 0, 110)
+SearchResultsContainer.Size = UDim2.new(1, -40, 1, -130)
+SearchResultsContainer.CanvasSize = UDim2.new(0, 0, 0, 0)
+SearchResultsContainer.ScrollBarThickness = 8
+SearchResultsContainer.ZIndex = 301
+
+local SearchResultsCorner = Instance.new("UICorner")
+SearchResultsCorner.CornerRadius = UDim.new(0, 8)
+SearchResultsCorner.Parent = SearchResultsContainer
+
+local SearchResultsLayout = Instance.new("UIListLayout")
+SearchResultsLayout.Parent = SearchResultsContainer
+SearchResultsLayout.SortOrder = Enum.SortOrder.LayoutOrder
+SearchResultsLayout.Padding = UDim.new(0, 5)
+
+-- Search Button Click Handler
+SearchButton.MouseButton1Click:Connect(function()
+    SearchPanel.Visible = not SearchPanel.Visible
+    SearchPanelShadow.Visible = SearchPanel.Visible
+    
+    if SearchPanel.Visible then
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub Search";
+            Text = "ScriptBlox search opened!";
+            Duration = 1;
+        })
+    end
+end)
+
+-- Close Search Button Click Handler
+CloseSearchButton.MouseButton1Click:Connect(function()
+    SearchPanel.Visible = false
+    SearchPanelShadow.Visible = false
+end)
+
+-- Function to create search result item
+local function createSearchResultItem(scriptData, index)
+    local ResultItem = Instance.new("Frame")
+    ResultItem.Name = "SearchResult" .. index
+    ResultItem.Parent = SearchResultsContainer
+    ResultItem.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+    ResultItem.BorderSizePixel = 0
+    ResultItem.Size = UDim2.new(1, -10, 0, 80)
+    ResultItem.ZIndex = 302
+    
+    local ResultCorner = Instance.new("UICorner")
+    ResultCorner.CornerRadius = UDim.new(0, 8)
+    ResultCorner.Parent = ResultItem
+    
+    -- Script Title
+    local ScriptTitle = Instance.new("TextLabel")
+    ScriptTitle.Name = "ScriptTitle"
+    ScriptTitle.Parent = ResultItem
+    ScriptTitle.BackgroundTransparency = 1
+    ScriptTitle.Position = UDim2.new(0, 10, 0, 5)
+    ScriptTitle.Size = UDim2.new(1, -120, 0, 25)
+    ScriptTitle.Font = Enum.Font.GothamBold
+    ScriptTitle.Text = scriptData.title or "Unknown Script"
+    ScriptTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ScriptTitle.TextSize = 12
+    ScriptTitle.TextXAlignment = Enum.TextXAlignment.Left
+    ScriptTitle.ZIndex = 303
+    
+    -- Script Game
+    local ScriptGame = Instance.new("TextLabel")
+    ScriptGame.Name = "ScriptGame"
+    ScriptGame.Parent = ResultItem
+    ScriptGame.BackgroundTransparency = 1
+    ScriptGame.Position = UDim2.new(0, 10, 0, 30)
+    ScriptGame.Size = UDim2.new(1, -120, 0, 20)
+    ScriptGame.Font = Enum.Font.Gotham
+    ScriptGame.Text = "Game: " .. (scriptData.game or "Universal")
+    ScriptGame.TextColor3 = Color3.fromRGB(180, 180, 180)
+    ScriptGame.TextSize = 10
+    ScriptGame.TextXAlignment = Enum.TextXAlignment.Left
+    ScriptGame.ZIndex = 303
+    
+    -- Script Status
+    local ScriptStatus = Instance.new("TextLabel")
+    ScriptStatus.Name = "ScriptStatus"
+    ScriptStatus.Parent = ResultItem
+    ScriptStatus.BackgroundTransparency = 1
+    ScriptStatus.Position = UDim2.new(0, 10, 0, 50)
+    ScriptStatus.Size = UDim2.new(1, -120, 0, 20)
+    ScriptStatus.Font = Enum.Font.Gotham
+    ScriptStatus.Text = "✅ Keyless & Verified"
+    ScriptStatus.TextColor3 = Color3.fromRGB(100, 255, 100)
+    ScriptStatus.TextSize = 9
+    ScriptStatus.TextXAlignment = Enum.TextXAlignment.Left
+    ScriptStatus.ZIndex = 303
+    
+    -- Execute Button
+    local ExecuteButton = Instance.new("TextButton")
+    ExecuteButton.Name = "ExecuteButton"
+    ExecuteButton.Parent = ResultItem
+    ExecuteButton.BackgroundColor3 = Color3.fromRGB(75, 125, 255)
+    ExecuteButton.BorderSizePixel = 0
+    ExecuteButton.Position = UDim2.new(1, -100, 0, 25)
+    ExecuteButton.Size = UDim2.new(0, 80, 0, 30)
+    ExecuteButton.Font = Enum.Font.GothamBold
+    ExecuteButton.Text = "Execute"
+    ExecuteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ExecuteButton.TextSize = 11
+    ExecuteButton.ZIndex = 303
+    
+    local ExecuteCorner = Instance.new("UICorner")
+    ExecuteCorner.CornerRadius = UDim.new(0, 6)
+    ExecuteCorner.Parent = ExecuteButton
+    
+    -- Execute button functionality
+    ExecuteButton.MouseButton1Click:Connect(function()
+        if scriptData.script then
+            pcall(function()
+                loadstring(scriptData.script)()
+            end)
+            
+            StarterGui:SetCore("SendNotification", {
+                Title = "FlixHub Search";
+                Text = "Executed: " .. (scriptData.title or "Script");
+                Duration = 2;
+            })
+        end
+    end)
+    
+    return ResultItem
+end
+
+-- Search Execute Button Click Handler
+SearchExecuteButton.MouseButton1Click:Connect(function()
+    local searchQuery = SearchInput.Text
+    if searchQuery == "" then
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub Search";
+            Text = "Please enter a search query!";
+            Duration = 2;
+        })
+        return
+    end
+    
+    -- Clear previous results
+    for _, child in pairs(SearchResultsContainer:GetChildren()) do
+        if child:IsA("Frame") then
+            child:Destroy()
+        end
+    end
+    
+    -- Show loading message
+    StarterGui:SetCore("SendNotification", {
+        Title = "FlixHub Search";
+        Text = "Searching ScriptBlox for: " .. searchQuery;
+        Duration = 2;
+    })
+    
+    -- Basic ScriptBlox API integration (simplified)
+    spawn(function()
+        pcall(function()
+            local HttpService = game:GetService("HttpService")
+            local apiUrl = "https://www.scriptblox.com/api/script/search?q=" .. HttpService:UrlEncode(searchQuery) .. "&mode=free"
+            
+            local success, response = pcall(function()
+                return HttpService:GetAsync(apiUrl)
+            end)
+            
+            if success then
+                local data = HttpService:JSONDecode(response)
+                
+                if data.result and data.result.scripts then
+                    local foundScripts = 0
+                    
+                    for i, script in pairs(data.result.scripts) do
+                        -- Only show keyless and verified scripts
+                        if script.key == false and script.verified == true and foundScripts < 10 then
+                            foundScripts = foundScripts + 1
+                            
+                            local scriptData = {
+                                title = script.title,
+                                game = script.game and script.game.name or "Universal",
+                                script = script.script
+                            }
+                            
+                            createSearchResultItem(scriptData, foundScripts)
+                        end
+                    end
+                    
+                    -- Update canvas size
+                    SearchResultsContainer.CanvasSize = UDim2.new(0, 0, 0, foundScripts * 85)
+                    
+                    if foundScripts == 0 then
+                        StarterGui:SetCore("SendNotification", {
+                            Title = "FlixHub Search";
+                            Text = "No keyless & verified scripts found!";
+                            Duration = 3;
+                        })
+                    else
+                        StarterGui:SetCore("SendNotification", {
+                            Title = "FlixHub Search";
+                            Text = "Found " .. foundScripts .. " scripts!";
+                            Duration = 2;
+                        })
+                    end
+                else
+                    StarterGui:SetCore("SendNotification", {
+                        Title = "FlixHub Search";
+                        Text = "No results found!";
+                        Duration = 2;
+                    })
+                end
+            else
+                StarterGui:SetCore("SendNotification", {
+                    Title = "FlixHub Search";
+                    Text = "Search failed! Check your internet connection.";
+                    Duration = 3;
+                })
+            end
+        end)
+    end)
 end)
 
 -- Function to get current size based on default values
