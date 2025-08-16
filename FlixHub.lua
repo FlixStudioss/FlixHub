@@ -900,6 +900,11 @@ local GameScripts = {
             name = "ShovelHub (Not Good)",
             description = "ShovelHub script - quality may vary",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/shvl00/shvled/refs/heads/main/l04d3r.bf"))()]]
+        },
+        {
+            name = "SpeedHubX (Keyless on Weekends)",
+            description = "SpeedHubX script for Grow A Garden - keyless on weekends",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()]]
         }
     },
     ["Poop Simulator"] = {
@@ -1105,6 +1110,13 @@ end]]
             description = "Get All Slaps script for Slap Tower game",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/DdeM3zz/TwinScripts/refs/heads/main/Slap%20Tower", true))()]]
         }
+    },
+    ["Arcade Basketball"] = {
+        {
+            name = "OP Script (Only PC)",
+            description = "OP Script for Arcade Basketball game (PC Only)",
+            script = [[loadstring(game:HttpGet("https://pastebin.com/raw/Vksx0XsH"))()]]
+        }
     }
 }
 
@@ -1208,7 +1220,8 @@ local function detectCurrentGame()
         ["basketball legends"] = "Basketball Legends",
         ["touch football"] = "Touch Football",
         ["brainrot evolution"] = "Brainrot Evolution",
-        ["slap tower"] = "Slap Tower"
+        ["slap tower"] = "Slap Tower",
+        ["arcade basketball"] = "Arcade Basketball"
     }
     
     -- Check if current game matches any of our script categories
