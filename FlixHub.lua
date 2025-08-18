@@ -975,7 +975,7 @@ end
 print("FlixHub Date Spoofer loaded successfully!")
 print("Current spoofed date: August 17, 2025")
 print("Use _G.resetDateSpoof() to disable spoofing")
-print("Use _G.changeSpoofedDate(year, month, day) to change the spoofed date")
+print("Use _G.changeSpoofedDate(year, month, day) to change the spoofed date")]]
     },
     {
         name = "Infinite Yield",
