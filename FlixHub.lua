@@ -821,6 +821,7 @@ local UniversalScripts = {
         name = "Date Spoofer (Aug 17, 2025)",
         description = "Changes Roblox date to August 17, 2025 - other scripts will see this fake date",
         script = [[-- FlixHub Date Spoofer Script
+-- Changes Roblox's date to August 17, 2025
 -- Other scripts will see this spoofed date instead of the real date
 
 local StarterGui = game:GetService("StarterGui")
