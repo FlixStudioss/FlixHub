@@ -827,7 +827,6 @@ local UniversalScripts = {
         description = "Advanced explorer for Roblox games",
         script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/BypassedDarkDexV3.lua", true))()]]
     },
-{{ ... }}
     {
         name = "Simple Spy",
         description = "Remote spy for debugging and scripting",
