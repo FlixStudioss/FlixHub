@@ -232,473 +232,636 @@ FlixHub.Parent = playerGui
 FlixHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 FlixHub.ResetOnSpawn = false
 
--- Main Frame (Hub Window) with Modern Glassmorphism
+-- Main Frame (Hub Window) with Modern Dark Theme
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "FlixHub"
 MainFrame.Parent = FlixHub
-MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
-MainFrame.BackgroundTransparency = 0.1 -- More transparency for glass effect
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+MainFrame.BackgroundTransparency = 0
 MainFrame.BorderSizePixel = 0
-MainFrame.Position = UDim2.new(0.5, -250, 0.5, -175)
-MainFrame.Size = UDim2.new(0, 500, 0, 350)
+MainFrame.Position = UDim2.new(0.5, -400, 0.5, -250)
+MainFrame.Size = UDim2.new(0, 800, 0, 500)
 MainFrame.ZIndex = 2
 MainFrame.Active = true
-MainFrame.Draggable = false -- Disabled to prevent shadow artifacts
+MainFrame.Draggable = false
 
--- Modern Gradient Overlay
-local GradientFrame = Instance.new("Frame")
-GradientFrame.Name = "GradientOverlay"
-GradientFrame.Parent = MainFrame
-GradientFrame.BackgroundTransparency = 1
-GradientFrame.BorderSizePixel = 0
-GradientFrame.Size = UDim2.new(1, 0, 1, 0)
-GradientFrame.ZIndex = 1
-
-local GradientBG = Instance.new("UIGradient")
-GradientBG.Parent = MainFrame
-GradientBG.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(35, 35, 50)),
-    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(25, 25, 35)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 30))
-}
-GradientBG.Rotation = 45
+-- Remove gradient overlay for cleaner look
 
 -- Corner rounding for main frame
 local MainCorner = Instance.new("UICorner")
-MainCorner.CornerRadius = UDim.new(0, 12)
+MainCorner.CornerRadius = UDim.new(0, 8)
 MainCorner.Parent = MainFrame
 
--- Enhanced Multi-Layered Shadow System
+-- Simple shadow for modern look
 local Shadow = Instance.new("Frame")
 Shadow.Name = "Shadow"
 Shadow.Parent = FlixHub
 Shadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Shadow.BackgroundTransparency = 0.3 -- Darker for more depth
+Shadow.BackgroundTransparency = 0.7
 Shadow.BorderSizePixel = 0
-Shadow.Position = UDim2.new(0.5, -242, 0.5, -167)
-Shadow.Size = UDim2.new(0, 500, 0, 350)
-Shadow.ZIndex = 0
+Shadow.Position = UDim2.new(0.5, -395, 0.5, -245)
+Shadow.Size = UDim2.new(0, 800, 0, 500)
+Shadow.ZIndex = 1
 
 local ShadowCorner = Instance.new("UICorner")
-ShadowCorner.CornerRadius = UDim.new(0, 12)
+ShadowCorner.CornerRadius = UDim.new(0, 8)
 ShadowCorner.Parent = Shadow
 
--- Secondary Shadow for Extra Depth
-local Shadow2 = Instance.new("Frame")
-Shadow2.Name = "Shadow2"
-Shadow2.Parent = FlixHub
-Shadow2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Shadow2.BackgroundTransparency = 0.6
-Shadow2.BorderSizePixel = 0
-Shadow2.Position = UDim2.new(0.5, -248, 0.5, -173)
-Shadow2.Size = UDim2.new(0, 500, 0, 350)
-Shadow2.ZIndex = -1
-
-local Shadow2Corner = Instance.new("UICorner")
-Shadow2Corner.CornerRadius = UDim.new(0, 12)
-Shadow2Corner.Parent = Shadow2
-
--- Ambient Shadow (Soft Glow)
-local AmbientShadow = Instance.new("Frame")
-AmbientShadow.Name = "AmbientShadow"
-AmbientShadow.Parent = FlixHub
-AmbientShadow.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
-AmbientShadow.BackgroundTransparency = 0.9
-AmbientShadow.BorderSizePixel = 0
-AmbientShadow.Position = UDim2.new(0.5, -260, 0.5, -185)
-AmbientShadow.Size = UDim2.new(0, 520, 0, 370)
-AmbientShadow.ZIndex = -2
-
-local AmbientCorner = Instance.new("UICorner")
-AmbientCorner.CornerRadius = UDim.new(0, 20)
-AmbientCorner.Parent = AmbientShadow
-
--- Modern Title Bar with Gradient
+-- Modern Title Bar
 local TitleBar = Instance.new("Frame")
 TitleBar.Name = "TitleBar"
 TitleBar.Parent = MainFrame
-TitleBar.BackgroundColor3 = Color3.fromRGB(45, 45, 60)
-TitleBar.BackgroundTransparency = 0.1
+TitleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+TitleBar.BackgroundTransparency = 0
 TitleBar.BorderSizePixel = 0
-TitleBar.Size = UDim2.new(1, 0, 0, 40) -- Slightly taller for modern look
+TitleBar.Size = UDim2.new(1, 0, 0, 50)
 TitleBar.ZIndex = 3
 
--- Title Bar Gradient
-local TitleGradient = Instance.new("UIGradient")
-TitleGradient.Parent = TitleBar
-TitleGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(50, 50, 70)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(35, 35, 50))
-}
-TitleGradient.Rotation = 90
-
--- Title Bar Glow Effect
-local TitleGlow = Instance.new("Frame")
-TitleGlow.Name = "TitleGlow"
-TitleGlow.Parent = TitleBar
-TitleGlow.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
-TitleGlow.BackgroundTransparency = 0.8
-TitleGlow.BorderSizePixel = 0
-TitleGlow.Size = UDim2.new(1, 0, 0, 2)
-TitleGlow.Position = UDim2.new(0, 0, 1, -2)
-TitleGlow.ZIndex = 4
-
 local TitleCorner = Instance.new("UICorner")
-TitleCorner.CornerRadius = UDim.new(0, 12)
+TitleCorner.CornerRadius = UDim.new(0, 8)
 TitleCorner.Parent = TitleBar
 
--- Custom Drag Controls with Shadow Synchronization
-local isDragging = false
-local dragStart = nil
-local startPos = nil
+-- Enable dragging
+MainFrame.Draggable = true
 
-TitleBar.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        isDragging = true
-        dragStart = input.Position
-        startPos = MainFrame.Position
-        
-        local connection
-        connection = input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then
-                isDragging = false
-                connection:Disconnect()
-            end
-        end)
-    end
-end)
+-- Title with icon and version
+local TitleIcon = Instance.new("ImageLabel")
+TitleIcon.Name = "TitleIcon"
+TitleIcon.Parent = TitleBar
+TitleIcon.BackgroundTransparency = 1
+TitleIcon.Position = UDim2.new(0, 15, 0, 12)
+TitleIcon.Size = UDim2.new(0, 26, 0, 26)
+TitleIcon.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
+TitleIcon.ImageColor3 = Color3.fromRGB(100, 150, 255)
+TitleIcon.ZIndex = 4
 
-TitleBar.InputChanged:Connect(function(input)
-    if isDragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
-        local delta = input.Position - dragStart
-        local newPosition = UDim2.new(
-            startPos.X.Scale, startPos.X.Offset + delta.X,
-            startPos.Y.Scale, startPos.Y.Offset + delta.Y
-        )
-        
-        -- Move main frame
-        MainFrame.Position = newPosition
-        
-        -- Move all shadows with main frame
-        Shadow.Position = UDim2.new(
-            newPosition.X.Scale, newPosition.X.Offset + 8,
-            newPosition.Y.Scale, newPosition.Y.Offset + 8
-        )
-        
-        Shadow2.Position = UDim2.new(
-            newPosition.X.Scale, newPosition.X.Offset + 2,
-            newPosition.Y.Scale, newPosition.Y.Offset + 2
-        )
-        
-        AmbientShadow.Position = UDim2.new(
-            newPosition.X.Scale, newPosition.X.Offset - 10,
-            newPosition.Y.Scale, newPosition.Y.Offset - 10
-        )
-    end
-end)
+local IconCorner = Instance.new("UICorner")
+IconCorner.CornerRadius = UDim.new(0, 4)
+IconCorner.Parent = TitleIcon
 
--- Modern Title Text with Enhanced Typography
 local TitleText = Instance.new("TextLabel")
 TitleText.Name = "TitleText"
 TitleText.Parent = TitleBar
 TitleText.BackgroundTransparency = 1
-TitleText.Position = UDim2.new(0, 20, 0, 0)
-TitleText.Size = UDim2.new(0, 250, 1, 0)
+TitleText.Position = UDim2.new(0, 50, 0, 0)
+TitleText.Size = UDim2.new(0, 200, 1, 0)
 TitleText.Font = Enum.Font.GothamBold
-TitleText.Text = "✨ FlixHub v2.0"
+TitleText.Text = "Made by Seth"
 TitleText.TextColor3 = Color3.fromRGB(255, 255, 255)
-TitleText.TextSize = 18
+TitleText.TextSize = 16
 TitleText.TextXAlignment = Enum.TextXAlignment.Left
 TitleText.ZIndex = 4
 
--- Title Text Glow Effect
-local TitleTextStroke = Instance.new("UIStroke")
-TitleTextStroke.Parent = TitleText
-TitleTextStroke.Color = Color3.fromRGB(100, 150, 255)
-TitleTextStroke.Transparency = 0.7
-TitleTextStroke.Thickness = 1
+-- Version badge
+local VersionBadge = Instance.new("Frame")
+VersionBadge.Name = "VersionBadge"
+VersionBadge.Parent = TitleBar
+VersionBadge.BackgroundColor3 = Color3.fromRGB(100, 200, 100)
+VersionBadge.BorderSizePixel = 0
+VersionBadge.Position = UDim2.new(0, 250, 0, 15)
+VersionBadge.Size = UDim2.new(0, 40, 0, 20)
+VersionBadge.ZIndex = 4
 
--- Modern Close Button with Gradient
-local CloseButton = Instance.new("TextButton")
-CloseButton.Name = "CloseButton"
-CloseButton.Parent = TitleBar
-CloseButton.BackgroundColor3 = Color3.fromRGB(220, 85, 85)
-CloseButton.BackgroundTransparency = 0.1
-CloseButton.BorderSizePixel = 0
-CloseButton.Position = UDim2.new(1, -40, 0, 8)
-CloseButton.Size = UDim2.new(0, 28, 0, 28)
-CloseButton.Font = Enum.Font.GothamBold
-CloseButton.Text = "×"
-CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-CloseButton.TextSize = 16
-CloseButton.ZIndex = 4
+local VersionCorner = Instance.new("UICorner")
+VersionCorner.CornerRadius = UDim.new(0, 10)
+VersionCorner.Parent = VersionBadge
 
--- Close Button Gradient
-local CloseGradient = Instance.new("UIGradient")
-CloseGradient.Parent = CloseButton
-CloseGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 95, 95)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(200, 65, 65))
-}
-CloseGradient.Rotation = 45
+local VersionText = Instance.new("TextLabel")
+VersionText.Name = "VersionText"
+VersionText.Parent = VersionBadge
+VersionText.BackgroundTransparency = 1
+VersionText.Size = UDim2.new(1, 0, 1, 0)
+VersionText.Font = Enum.Font.GothamBold
+VersionText.Text = "v1.6.4"
+VersionText.TextColor3 = Color3.fromRGB(255, 255, 255)
+VersionText.TextSize = 10
+VersionText.TextXAlignment = Enum.TextXAlignment.Center
+VersionText.ZIndex = 5
 
--- Close Button Glow Effect
-local CloseStroke = Instance.new("UIStroke")
-CloseStroke.Parent = CloseButton
-CloseStroke.Color = Color3.fromRGB(255, 120, 120)
-CloseStroke.Transparency = 0.6
-CloseStroke.Thickness = 1
+-- UI Library badge
+local UILibraryBadge = Instance.new("Frame")
+UILibraryBadge.Name = "UILibraryBadge"
+UILibraryBadge.Parent = TitleBar
+UILibraryBadge.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+UILibraryBadge.BorderSizePixel = 0
+UILibraryBadge.Position = UDim2.new(0, 300, 0, 15)
+UILibraryBadge.Size = UDim2.new(0, 60, 0, 20)
+UILibraryBadge.ZIndex = 4
 
-local CloseCorner = Instance.new("UICorner")
-CloseCorner.CornerRadius = UDim.new(0, 6)
-CloseCorner.Parent = CloseButton
+local UILibraryCorner = Instance.new("UICorner")
+UILibraryCorner.CornerRadius = UDim.new(0, 10)
+UILibraryCorner.Parent = UILibraryBadge
 
--- Modern Minimize Button with Gradient
+local UILibraryText = Instance.new("TextLabel")
+UILibraryText.Name = "UILibraryText"
+UILibraryText.Parent = UILibraryBadge
+UILibraryText.BackgroundTransparency = 1
+UILibraryText.Size = UDim2.new(1, 0, 1, 0)
+UILibraryText.Font = Enum.Font.GothamBold
+UILibraryText.Text = "UI Library"
+UILibraryText.TextColor3 = Color3.fromRGB(255, 255, 255)
+UILibraryText.TextSize = 10
+UILibraryText.TextXAlignment = Enum.TextXAlignment.Center
+UILibraryText.ZIndex = 5
+
+-- Title bar buttons
+local ButtonContainer = Instance.new("Frame")
+ButtonContainer.Name = "ButtonContainer"
+ButtonContainer.Parent = TitleBar
+ButtonContainer.BackgroundTransparency = 1
+ButtonContainer.Position = UDim2.new(1, -120, 0, 12)
+ButtonContainer.Size = UDim2.new(0, 110, 0, 26)
+ButtonContainer.ZIndex = 4
+
+-- Refresh button
+local RefreshButton = Instance.new("TextButton")
+RefreshButton.Name = "RefreshButton"
+RefreshButton.Parent = ButtonContainer
+RefreshButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+RefreshButton.BorderSizePixel = 0
+RefreshButton.Position = UDim2.new(0, 0, 0, 0)
+RefreshButton.Size = UDim2.new(0, 26, 0, 26)
+RefreshButton.Font = Enum.Font.GothamBold
+RefreshButton.Text = "🔄"
+RefreshButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+RefreshButton.TextSize = 12
+RefreshButton.ZIndex = 5
+
+local RefreshCorner = Instance.new("UICorner")
+RefreshCorner.CornerRadius = UDim.new(0, 4)
+RefreshCorner.Parent = RefreshButton
+
+-- Minimize button
 local MinimizeButton = Instance.new("TextButton")
 MinimizeButton.Name = "MinimizeButton"
-MinimizeButton.Parent = TitleBar
-MinimizeButton.BackgroundColor3 = Color3.fromRGB(120, 120, 140)
-MinimizeButton.BackgroundTransparency = 0.1
+MinimizeButton.Parent = ButtonContainer
+MinimizeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
 MinimizeButton.BorderSizePixel = 0
-MinimizeButton.Position = UDim2.new(1, -75, 0, 8)
-MinimizeButton.Size = UDim2.new(0, 28, 0, 28)
+MinimizeButton.Position = UDim2.new(0, 28, 0, 0)
+MinimizeButton.Size = UDim2.new(0, 26, 0, 26)
 MinimizeButton.Font = Enum.Font.GothamBold
 MinimizeButton.Text = "-"
-MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+MinimizeButton.TextColor3 = Color3.fromRGB(200, 200, 200)
 MinimizeButton.TextSize = 16
-MinimizeButton.ZIndex = 4
-
--- Minimize Button Gradient
-local MinimizeGradient = Instance.new("UIGradient")
-MinimizeGradient.Parent = MinimizeButton
-MinimizeGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(140, 140, 160)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 100, 120))
-}
-MinimizeGradient.Rotation = 45
-
--- Minimize Button Glow
-local MinimizeStroke = Instance.new("UIStroke")
-MinimizeStroke.Parent = MinimizeButton
-MinimizeStroke.Color = Color3.fromRGB(150, 150, 180)
-MinimizeStroke.Transparency = 0.6
-MinimizeStroke.Thickness = 1
+MinimizeButton.ZIndex = 5
 
 local MinimizeCorner = Instance.new("UICorner")
-MinimizeCorner.CornerRadius = UDim.new(0, 6)
+MinimizeCorner.CornerRadius = UDim.new(0, 4)
 MinimizeCorner.Parent = MinimizeButton
 
--- Settings Button for Minimize Icon
-local SettingsButton = Instance.new("TextButton")
-SettingsButton.Name = "SettingsButton"
-SettingsButton.Parent = TitleBar
-SettingsButton.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
-SettingsButton.BackgroundTransparency = 0.1
-SettingsButton.BorderSizePixel = 0
-SettingsButton.Position = UDim2.new(1, -110, 0, 8)
-SettingsButton.Size = UDim2.new(0, 28, 0, 28)
-SettingsButton.Font = Enum.Font.GothamBold
-SettingsButton.Text = "⚙️"
-SettingsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-SettingsButton.TextSize = 12
-SettingsButton.ZIndex = 4
+-- Fullscreen button
+local FullscreenButton = Instance.new("TextButton")
+FullscreenButton.Name = "FullscreenButton"
+FullscreenButton.Parent = ButtonContainer
+FullscreenButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+FullscreenButton.BorderSizePixel = 0
+FullscreenButton.Position = UDim2.new(0, 56, 0, 0)
+FullscreenButton.Size = UDim2.new(0, 26, 0, 26)
+FullscreenButton.Font = Enum.Font.GothamBold
+FullscreenButton.Text = "⛶"
+FullscreenButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+FullscreenButton.TextSize = 12
+FullscreenButton.ZIndex = 5
 
--- Settings Button Gradient
-local SettingsGradient = Instance.new("UIGradient")
-SettingsGradient.Parent = SettingsButton
-SettingsGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(140, 140, 160)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 100, 120))
-}
-SettingsGradient.Rotation = 45
+local FullscreenCorner = Instance.new("UICorner")
+FullscreenCorner.CornerRadius = UDim.new(0, 4)
+FullscreenCorner.Parent = FullscreenButton
 
--- Settings Button Glow
-local SettingsStroke = Instance.new("UIStroke")
-SettingsStroke.Parent = SettingsButton
-SettingsStroke.Color = Color3.fromRGB(150, 150, 180)
-SettingsStroke.Transparency = 0.6
-SettingsStroke.Thickness = 1
+-- Close button
+local CloseButton = Instance.new("TextButton")
+CloseButton.Name = "CloseButton"
+CloseButton.Parent = ButtonContainer
+CloseButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+CloseButton.BorderSizePixel = 0
+CloseButton.Position = UDim2.new(0, 84, 0, 0)
+CloseButton.Size = UDim2.new(0, 26, 0, 26)
+CloseButton.Font = Enum.Font.GothamBold
+CloseButton.Text = "×"
+CloseButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+CloseButton.TextSize = 16
+CloseButton.ZIndex = 5
 
-local SettingsCorner = Instance.new("UICorner")
-SettingsCorner.CornerRadius = UDim.new(0, 6)
-SettingsCorner.Parent = SettingsButton
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(0, 4)
+CloseCorner.Parent = CloseButton
 
--- Search Button for ScriptBlox (initially hidden)
-local SearchButton = Instance.new("TextButton")
-SearchButton.Name = "SearchButton"
-SearchButton.Parent = TitleBar
-SearchButton.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
-SearchButton.BackgroundTransparency = 0.1
-SearchButton.BorderSizePixel = 0
-SearchButton.Position = UDim2.new(1, -145, 0, 8)
-SearchButton.Size = UDim2.new(0, 28, 0, 28)
-SearchButton.Font = Enum.Font.GothamBold
-SearchButton.Text = "🔍"
-SearchButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-SearchButton.TextSize = 12
-SearchButton.ZIndex = 4
-SearchButton.Visible = false -- Hidden by default
 
--- Search Button Gradient
-local SearchGradient = Instance.new("UIGradient")
-SearchGradient.Parent = SearchButton
-SearchGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(140, 140, 160)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 100, 120))
-}
-SearchGradient.Rotation = 45
-
--- Search Button Glow
-local SearchStroke = Instance.new("UIStroke")
-SearchStroke.Parent = SearchButton
-SearchStroke.Color = Color3.fromRGB(150, 150, 180)
-SearchStroke.Transparency = 0.6
-SearchStroke.Thickness = 1
-
-local SearchCorner = Instance.new("UICorner")
-SearchCorner.CornerRadius = UDim.new(0, 6)
-SearchCorner.Parent = SearchButton
-
--- Modern Sidebar with Glassmorphism
+-- Modern Sidebar
 local Sidebar = Instance.new("Frame")
 Sidebar.Name = "Sidebar"
 Sidebar.Parent = MainFrame
-Sidebar.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
-Sidebar.BackgroundTransparency = 0.2
+Sidebar.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Sidebar.BackgroundTransparency = 0
 Sidebar.BorderSizePixel = 0
-Sidebar.Position = UDim2.new(0, 0, 0, 40)
-Sidebar.Size = UDim2.new(0, 160, 1, -40) -- Slightly wider
+Sidebar.Position = UDim2.new(0, 0, 0, 50)
+Sidebar.Size = UDim2.new(0, 250, 1, -50)
 Sidebar.ZIndex = 3
 
--- Sidebar Gradient
-local SidebarGradient = Instance.new("UIGradient")
-SidebarGradient.Parent = Sidebar
-SidebarGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(35, 35, 55)),
-    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(25, 25, 40)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 35))
-}
-SidebarGradient.Rotation = 15
+-- Sidebar separator line
+local SidebarSeparator = Instance.new("Frame")
+SidebarSeparator.Name = "SidebarSeparator"
+SidebarSeparator.Parent = Sidebar
+SidebarSeparator.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+SidebarSeparator.BorderSizePixel = 0
+SidebarSeparator.Position = UDim2.new(1, -1, 0, 0)
+SidebarSeparator.Size = UDim2.new(0, 1, 1, 0)
+SidebarSeparator.ZIndex = 4
 
--- Sidebar Glow Border
-local SidebarStroke = Instance.new("UIStroke")
-SidebarStroke.Parent = Sidebar
-SidebarStroke.Color = Color3.fromRGB(80, 120, 255)
-SidebarStroke.Transparency = 0.7
-SidebarStroke.Thickness = 1
+-- Features section header
+local FeaturesHeader = Instance.new("TextLabel")
+FeaturesHeader.Name = "FeaturesHeader"
+FeaturesHeader.Parent = Sidebar
+FeaturesHeader.BackgroundTransparency = 1
+FeaturesHeader.Position = UDim2.new(0, 20, 0, 20)
+FeaturesHeader.Size = UDim2.new(1, -40, 0, 30)
+FeaturesHeader.Font = Enum.Font.GothamBold
+FeaturesHeader.Text = "Features"
+FeaturesHeader.TextColor3 = Color3.fromRGB(150, 150, 150)
+FeaturesHeader.TextSize = 14
+FeaturesHeader.TextXAlignment = Enum.TextXAlignment.Left
+FeaturesHeader.ZIndex = 4
 
-local SidebarCorner = Instance.new("UICorner")
-SidebarCorner.CornerRadius = UDim.new(0, 0) -- Sharp corners for sidebar
-SidebarCorner.Parent = Sidebar
+-- Features container
+local FeaturesContainer = Instance.new("ScrollingFrame")
+FeaturesContainer.Name = "FeaturesContainer"
+FeaturesContainer.Parent = Sidebar
+FeaturesContainer.BackgroundTransparency = 1
+FeaturesContainer.BorderSizePixel = 0
+FeaturesContainer.Position = UDim2.new(0, 0, 0, 60)
+FeaturesContainer.Size = UDim2.new(1, 0, 0, 200)
+FeaturesContainer.ScrollingDirection = Enum.ScrollingDirection.Y
+FeaturesContainer.ScrollBarThickness = 0
+FeaturesContainer.CanvasSize = UDim2.new(0, 0, 0, 0)
+FeaturesContainer.ZIndex = 4
 
--- Sidebar Tabs Container (Scrollable)
-local TabContainer = Instance.new("ScrollingFrame")
-TabContainer.Name = "TabContainer"
-TabContainer.Parent = Sidebar
-TabContainer.BackgroundTransparency = 1
-TabContainer.BorderSizePixel = 0
-TabContainer.Position = UDim2.new(0, 0, 0, 10)
-TabContainer.Size = UDim2.new(1, 0, 1, -10)
-TabContainer.ScrollingDirection = Enum.ScrollingDirection.Y
-TabContainer.ScrollBarThickness = 4
-TabContainer.ScrollBarImageColor3 = Color3.fromRGB(75, 75, 100)
-TabContainer.ScrollBarImageTransparency = 0.3
-TabContainer.CanvasSize = UDim2.new(0, 0, 0, 0) -- Will be calculated dynamically
+local FeaturesLayout = Instance.new("UIListLayout")
+FeaturesLayout.Parent = FeaturesContainer
+FeaturesLayout.FillDirection = Enum.FillDirection.Vertical
+FeaturesLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+FeaturesLayout.SortOrder = Enum.SortOrder.LayoutOrder
+FeaturesLayout.Padding = UDim.new(0, 15)
 
-local TabLayout = Instance.new("UIListLayout")
-TabLayout.Parent = TabContainer
-TabLayout.FillDirection = Enum.FillDirection.Vertical
-TabLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-TabLayout.SortOrder = Enum.SortOrder.LayoutOrder
-TabLayout.Padding = UDim.new(0, 5)
+-- Settings section header
+local SettingsHeader = Instance.new("TextLabel")
+SettingsHeader.Name = "SettingsHeader"
+SettingsHeader.Parent = Sidebar
+SettingsHeader.BackgroundTransparency = 1
+SettingsHeader.Position = UDim2.new(0, 20, 0, 280)
+SettingsHeader.Size = UDim2.new(1, -40, 0, 30)
+SettingsHeader.Font = Enum.Font.GothamBold
+SettingsHeader.Text = "Settings"
+SettingsHeader.TextColor3 = Color3.fromRGB(150, 150, 150)
+SettingsHeader.TextSize = 14
+SettingsHeader.TextXAlignment = Enum.TextXAlignment.Left
+SettingsHeader.ZIndex = 4
 
--- Modern Content Area with Enhanced Design
+-- Settings container
+local SettingsContainer = Instance.new("ScrollingFrame")
+SettingsContainer.Name = "SettingsContainer"
+SettingsContainer.Parent = Sidebar
+SettingsContainer.BackgroundTransparency = 1
+SettingsContainer.BorderSizePixel = 0
+SettingsContainer.Position = UDim2.new(0, 0, 0, 320)
+SettingsContainer.Size = UDim2.new(1, 0, 1, -320)
+SettingsContainer.ScrollingDirection = Enum.ScrollingDirection.Y
+SettingsContainer.ScrollBarThickness = 0
+SettingsContainer.CanvasSize = UDim2.new(0, 0, 0, 0)
+SettingsContainer.ZIndex = 4
+
+local SettingsLayout = Instance.new("UIListLayout")
+SettingsLayout.Parent = SettingsContainer
+SettingsLayout.FillDirection = Enum.FillDirection.Vertical
+SettingsLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+SettingsLayout.SortOrder = Enum.SortOrder.LayoutOrder
+SettingsLayout.Padding = UDim.new(0, 15)
+
+-- Modern Content Area
 local ContentArea = Instance.new("Frame")
 ContentArea.Name = "ContentArea"
 ContentArea.Parent = MainFrame
-ContentArea.BackgroundColor3 = Color3.fromRGB(28, 28, 42)
-ContentArea.BackgroundTransparency = 0.3
+ContentArea.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+ContentArea.BackgroundTransparency = 0
 ContentArea.BorderSizePixel = 0
-ContentArea.Position = UDim2.new(0, 160, 0, 40)
-ContentArea.Size = UDim2.new(1, -160, 1, -40)
+ContentArea.Position = UDim2.new(0, 250, 0, 50)
+ContentArea.Size = UDim2.new(1, -250, 1, -50)
 ContentArea.ZIndex = 3
 
--- Content Area Gradient
-local ContentGradient = Instance.new("UIGradient")
-ContentGradient.Parent = ContentArea
-ContentGradient.Color = ColorSequence.new{
-    ColorSequenceKeypoint.new(0, Color3.fromRGB(32, 32, 48)),
-    ColorSequenceKeypoint.new(0.7, Color3.fromRGB(25, 25, 38)),
-    ColorSequenceKeypoint.new(1, Color3.fromRGB(22, 22, 35))
+-- Feature toggle states (removed instant steal as requested)
+local featureStates = {
+    ["Auto Collect Money"] = false,
+    ["Instant Prompt"] = false,
+    ["Auto Farm"] = false,
+    ["Speed Boost"] = false,
+    ["Jump Boost"] = false,
+    ["Infinite Health"] = false
 }
-ContentGradient.Rotation = -15
 
--- Content Area Subtle Glow
-local ContentStroke = Instance.new("UIStroke")
-ContentStroke.Parent = ContentArea
-ContentStroke.Color = Color3.fromRGB(60, 100, 255)
-ContentStroke.Transparency = 0.8
-ContentStroke.Thickness = 1
+-- Feature execution functions
+local activeFeatures = {}
 
--- Search Container (Now in Content Area)
-local SearchContainer = Instance.new("Frame")
-SearchContainer.Name = "SearchContainer"
-SearchContainer.Parent = ContentArea
-SearchContainer.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
-SearchContainer.BorderSizePixel = 0
-SearchContainer.Position = UDim2.new(0, 15, 0, 15)
-SearchContainer.Size = UDim2.new(1, -30, 0, 35)
+local function executeFeature(featureName)
+    if featureName == "Auto Collect Money" then
+        activeFeatures[featureName] = task.spawn(function()
+            while featureStates[featureName] do
+                -- Auto collect money logic here
+                pcall(function()
+                    for _, v in pairs(workspace:GetDescendants()) do
+                        if v.Name:find("Money") or v.Name:find("Cash") or v.Name:find("Coin") then
+                            if v:IsA("Part") and v.CanTouch then
+                                v.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+                            end
+                        end
+                    end
+                end)
+                task.wait(0.1)
+            end
+        end)
+    elseif featureName == "Instant Prompt" then
+        activeFeatures[featureName] = task.spawn(function()
+            while featureStates[featureName] do
+                -- Instant prompt logic here
+                pcall(function()
+                    for _, v in pairs(workspace:GetDescendants()) do
+                        if v:IsA("ProximityPrompt") then
+                            v.HoldDuration = 0
+                            v.RequiresLineOfSight = false
+                        end
+                    end
+                end)
+                task.wait(1)
+            end
+        end)
+    elseif featureName == "Auto Farm" then
+        activeFeatures[featureName] = task.spawn(function()
+            while featureStates[featureName] do
+                -- Auto farm logic here
+                pcall(function()
+                    -- Add your auto farm logic
+                end)
+                task.wait(0.1)
+            end
+        end)
+    elseif featureName == "Speed Boost" then
+        if Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+            Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
+        end
+    elseif featureName == "Jump Boost" then
+        if Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+            Players.LocalPlayer.Character.Humanoid.JumpPower = 100
+        end
+    elseif featureName == "Infinite Health" then
+        activeFeatures[featureName] = task.spawn(function()
+            while featureStates[featureName] do
+                pcall(function()
+                    if Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+                        Players.LocalPlayer.Character.Humanoid.Health = Players.LocalPlayer.Character.Humanoid.MaxHealth
+                    end
+                end)
+                task.wait(0.1)
+            end
+        end)
+    end
+end
 
-local SearchCorner = Instance.new("UICorner")
-SearchCorner.CornerRadius = UDim.new(0, 8)
-SearchCorner.Parent = SearchContainer
+local function stopFeature(featureName)
+    if activeFeatures[featureName] then
+        task.cancel(activeFeatures[featureName])
+        activeFeatures[featureName] = nil
+    end
+    
+    -- Reset values for certain features
+    if featureName == "Speed Boost" then
+        if Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+            Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
+        end
+    elseif featureName == "Jump Boost" then
+        if Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+            Players.LocalPlayer.Character.Humanoid.JumpPower = 50
+        end
+    end
+end
 
-local SearchBox = Instance.new("TextBox")
-SearchBox.Name = "SearchBox"
-SearchBox.Parent = SearchContainer
-SearchBox.BackgroundTransparency = 1
-SearchBox.Position = UDim2.new(0, 35, 0, 0)
-SearchBox.Size = UDim2.new(1, -35, 1, 0)
-SearchBox.Font = Enum.Font.Gotham
-SearchBox.PlaceholderText = "Search scripts..."
-SearchBox.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
-SearchBox.Text = ""
-SearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-SearchBox.TextSize = 14
-SearchBox.TextXAlignment = Enum.TextXAlignment.Left
+-- Function to create toggle switch
+local function createToggleSwitch(featureName, description, parent, layoutOrder)
+    local ToggleFrame = Instance.new("Frame")
+    ToggleFrame.Name = featureName .. "Toggle"
+    ToggleFrame.Parent = parent
+    ToggleFrame.BackgroundTransparency = 1
+    ToggleFrame.Size = UDim2.new(1, -40, 0, 60)
+    ToggleFrame.LayoutOrder = layoutOrder
+    ToggleFrame.ZIndex = 5
+    
+    -- Feature title
+    local FeatureTitle = Instance.new("TextLabel")
+    FeatureTitle.Name = "FeatureTitle"
+    FeatureTitle.Parent = ToggleFrame
+    FeatureTitle.BackgroundTransparency = 1
+    FeatureTitle.Position = UDim2.new(0, 20, 0, 0)
+    FeatureTitle.Size = UDim2.new(1, -80, 0, 20)
+    FeatureTitle.Font = Enum.Font.GothamBold
+    FeatureTitle.Text = featureName
+    FeatureTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+    FeatureTitle.TextSize = 14
+    FeatureTitle.TextXAlignment = Enum.TextXAlignment.Left
+    FeatureTitle.ZIndex = 6
+    
+    -- Feature description
+    local FeatureDesc = Instance.new("TextLabel")
+    FeatureDesc.Name = "FeatureDesc"
+    FeatureDesc.Parent = ToggleFrame
+    FeatureDesc.BackgroundTransparency = 1
+    FeatureDesc.Position = UDim2.new(0, 20, 0, 22)
+    FeatureDesc.Size = UDim2.new(1, -80, 0, 30)
+    FeatureDesc.Font = Enum.Font.Gotham
+    FeatureDesc.Text = description
+    FeatureDesc.TextColor3 = Color3.fromRGB(150, 150, 150)
+    FeatureDesc.TextSize = 11
+    FeatureDesc.TextWrapped = true
+    FeatureDesc.TextXAlignment = Enum.TextXAlignment.Left
+    FeatureDesc.TextYAlignment = Enum.TextYAlignment.Top
+    FeatureDesc.ZIndex = 6
+    
+    -- Toggle switch background
+    local ToggleBackground = Instance.new("Frame")
+    ToggleBackground.Name = "ToggleBackground"
+    ToggleBackground.Parent = ToggleFrame
+    ToggleBackground.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    ToggleBackground.BorderSizePixel = 0
+    ToggleBackground.Position = UDim2.new(1, -60, 0, 15)
+    ToggleBackground.Size = UDim2.new(0, 40, 0, 20)
+    ToggleBackground.ZIndex = 6
+    
+    local ToggleBGCorner = Instance.new("UICorner")
+    ToggleBGCorner.CornerRadius = UDim.new(0, 10)
+    ToggleBGCorner.Parent = ToggleBackground
+    
+    -- Toggle switch circle
+    local ToggleCircle = Instance.new("Frame")
+    ToggleCircle.Name = "ToggleCircle"
+    ToggleCircle.Parent = ToggleBackground
+    ToggleCircle.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+    ToggleCircle.BorderSizePixel = 0
+    ToggleCircle.Position = UDim2.new(0, 2, 0, 2)
+    ToggleCircle.Size = UDim2.new(0, 16, 0, 16)
+    ToggleCircle.ZIndex = 7
+    
+    local ToggleCircleCorner = Instance.new("UICorner")
+    ToggleCircleCorner.CornerRadius = UDim.new(0, 8)
+    ToggleCircleCorner.Parent = ToggleCircle
+    
+    -- Toggle button (invisible clickable area)
+    local ToggleButton = Instance.new("TextButton")
+    ToggleButton.Name = "ToggleButton"
+    ToggleButton.Parent = ToggleBackground
+    ToggleButton.BackgroundTransparency = 1
+    ToggleButton.Size = UDim2.new(1, 0, 1, 0)
+    ToggleButton.Text = ""
+    ToggleButton.ZIndex = 8
+    
+    -- Toggle functionality
+    local function updateToggle()
+        local isEnabled = featureStates[featureName]
+        local targetPos = isEnabled and UDim2.new(0, 22, 0, 2) or UDim2.new(0, 2, 0, 2)
+        local targetBGColor = isEnabled and Color3.fromRGB(100, 150, 255) or Color3.fromRGB(60, 60, 60)
+        local targetCircleColor = isEnabled and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(200, 200, 200)
+        
+        TweenService:Create(ToggleCircle, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+            Position = targetPos
+        }):Play()
+        
+        TweenService:Create(ToggleBackground, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = targetBGColor
+        }):Play()
+        
+        TweenService:Create(ToggleCircle, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
+            BackgroundColor3 = targetCircleColor
+        }):Play()
+    end
+    
+    ToggleButton.MouseButton1Click:Connect(function()
+        featureStates[featureName] = not featureStates[featureName]
+        updateToggle()
+        
+        -- Execute feature logic here
+        if featureStates[featureName] then
+            executeFeature(featureName)
+        else
+            stopFeature(featureName)
+        end
+    end)
+    
+    -- Initialize toggle state
+    updateToggle()
+    
+    return ToggleFrame
+end
 
-local SearchIcon = Instance.new("TextLabel")
-SearchIcon.Name = "SearchIcon"
-SearchIcon.Parent = SearchContainer
-SearchIcon.BackgroundTransparency = 1
-SearchIcon.Position = UDim2.new(0, 10, 0, 0)
-SearchIcon.Size = UDim2.new(0, 20, 1, 0)
-SearchIcon.Font = Enum.Font.GothamMedium
-SearchIcon.Text = "🔍"
-SearchIcon.TextColor3 = Color3.fromRGB(150, 150, 150)
-SearchIcon.TextSize = 16
-
--- Script Container (Now in Content Area)
-local ScriptContainer = Instance.new("ScrollingFrame")
-ScriptContainer.Name = "ScriptContainer"
-ScriptContainer.Parent = ContentArea
-ScriptContainer.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
-ScriptContainer.BorderSizePixel = 0
-ScriptContainer.Position = UDim2.new(0, 15, 0, 65) -- Below search bar
-ScriptContainer.Size = UDim2.new(1, -30, 1, -80) -- Full content area minus margins
-ScriptContainer.ScrollBarThickness = 6
-ScriptContainer.ScrollBarImageColor3 = Color3.fromRGB(75, 75, 100)
-
-local ScriptCorner = Instance.new("UICorner")
-ScriptCorner.CornerRadius = UDim.new(0, 8)
-ScriptCorner.Parent = ScriptContainer
-
-local ScriptLayout = Instance.new("UIListLayout")
-ScriptLayout.Parent = ScriptContainer
-ScriptLayout.SortOrder = Enum.SortOrder.LayoutOrder
-ScriptLayout.Padding = UDim.new(0, 5)
+-- Create feature toggles
+createToggleSwitch("Auto Collect Money", "Automatically collect money from your pads.", FeaturesContainer, 1)
+createToggleSwitch("Instant Prompt", "Makes all ProximityPrompts instantaneous.", FeaturesContainer, 2)
+createToggleSwitch("Auto Farm", "Automatically farm resources and items.", FeaturesContainer, 3)
+createToggleSwitch("Speed Boost", "Increases your character's movement speed.", FeaturesContainer, 4)
+createToggleSwitch("Jump Boost", "Increases your character's jump height.", FeaturesContainer, 5)
+createToggleSwitch("Infinite Health", "Keeps your character's health at maximum.", FeaturesContainer, 6)
 
 
+-- Update canvas size for features
+FeaturesContainer.CanvasSize = UDim2.new(0, 0, 0, 6 * 75)
+
+-- Create settings items
+local function createSettingsItem(itemName, itemType, parent, layoutOrder)
+    local SettingsItem = Instance.new("Frame")
+    SettingsItem.Name = itemName .. "Setting"
+    SettingsItem.Parent = parent
+    SettingsItem.BackgroundTransparency = 1
+    SettingsItem.Size = UDim2.new(1, -40, 0, 40)
+    SettingsItem.LayoutOrder = layoutOrder
+    SettingsItem.ZIndex = 5
+    
+    local SettingsIcon = Instance.new("TextLabel")
+    SettingsIcon.Name = "SettingsIcon"
+    SettingsIcon.Parent = SettingsItem
+    SettingsIcon.BackgroundTransparency = 1
+    SettingsIcon.Position = UDim2.new(0, 20, 0, 0)
+    SettingsIcon.Size = UDim2.new(0, 30, 1, 0)
+    SettingsIcon.Font = Enum.Font.GothamBold
+    SettingsIcon.Text = itemType == "Appearance" and "🎨" or "⚙️"
+    SettingsIcon.TextColor3 = Color3.fromRGB(150, 150, 150)
+    SettingsIcon.TextSize = 16
+    SettingsIcon.TextXAlignment = Enum.TextXAlignment.Center
+    SettingsIcon.ZIndex = 6
+    
+    local SettingsLabel = Instance.new("TextLabel")
+    SettingsLabel.Name = "SettingsLabel"
+    SettingsLabel.Parent = SettingsItem
+    SettingsLabel.BackgroundTransparency = 1
+    SettingsLabel.Position = UDim2.new(0, 55, 0, 0)
+    SettingsLabel.Size = UDim2.new(1, -75, 1, 0)
+    SettingsLabel.Font = Enum.Font.Gotham
+    SettingsLabel.Text = itemName
+    SettingsLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+    SettingsLabel.TextSize = 14
+    SettingsLabel.TextXAlignment = Enum.TextXAlignment.Left
+    SettingsLabel.ZIndex = 6
+    
+    return SettingsItem
+end
+
+createSettingsItem("Appearance", "Appearance", SettingsContainer, 1)
+createSettingsItem("Configuration", "Configuration", SettingsContainer, 2)
+
+-- Update canvas size for settings
+SettingsContainer.CanvasSize = UDim2.new(0, 0, 0, 2 * 55)
+
+-- Add user info at bottom of sidebar
+local UserInfoContainer = Instance.new("Frame")
+UserInfoContainer.Name = "UserInfoContainer"
+UserInfoContainer.Parent = Sidebar
+UserInfoContainer.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+UserInfoContainer.BorderSizePixel = 0
+UserInfoContainer.Position = UDim2.new(0, 0, 1, -60)
+UserInfoContainer.Size = UDim2.new(1, 0, 0, 60)
+UserInfoContainer.ZIndex = 4
+
+local UserAvatar = Instance.new("ImageLabel")
+UserAvatar.Name = "UserAvatar"
+UserAvatar.Parent = UserInfoContainer
+UserAvatar.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+UserAvatar.BorderSizePixel = 0
+UserAvatar.Position = UDim2.new(0, 15, 0, 15)
+UserAvatar.Size = UDim2.new(0, 30, 0, 30)
+UserAvatar.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
+UserAvatar.ZIndex = 5
+
+local AvatarCorner = Instance.new("UICorner")
+AvatarCorner.CornerRadius = UDim.new(0, 15)
+AvatarCorner.Parent = UserAvatar
+
+local UserNameLabel = Instance.new("TextLabel")
+UserNameLabel.Name = "UserNameLabel"
+UserNameLabel.Parent = UserInfoContainer
+UserNameLabel.BackgroundTransparency = 1
+UserNameLabel.Position = UDim2.new(0, 55, 0, 15)
+UserNameLabel.Size = UDim2.new(1, -70, 0, 15)
+UserNameLabel.Font = Enum.Font.GothamBold
+UserNameLabel.Text = "Anonymous"
+UserNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+UserNameLabel.TextSize = 14
+UserNameLabel.TextXAlignment = Enum.TextXAlignment.Left
+UserNameLabel.ZIndex = 5
+
+local UserStatusLabel = Instance.new("TextLabel")
+UserStatusLabel.Name = "UserStatusLabel"
+UserStatusLabel.Parent = UserInfoContainer
+UserStatusLabel.BackgroundTransparency = 1
+UserStatusLabel.Position = UDim2.new(0, 55, 0, 30)
+UserStatusLabel.Size = UDim2.new(1, -70, 0, 15)
+UserStatusLabel.Font = Enum.Font.Gotham
+UserStatusLabel.Text = "@anonymous"
+UserStatusLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
+UserStatusLabel.TextSize = 12
+UserStatusLabel.TextXAlignment = Enum.TextXAlignment.Left
+UserStatusLabel.ZIndex = 5
 
 
 
@@ -708,11 +871,8 @@ ScriptLayout.Padding = UDim.new(0, 5)
 
 
 
--- New Tab System Variables
-local currentTab = "Home"
-local isGamesExpanded = false
-local isVisualExpanded = false
-local filteredScripts = {}
+
+
 
 -- Theme System Variables
 local currentTheme = "Dark" -- Default theme
@@ -983,16 +1143,6 @@ local GameScripts = {
         }
     },
     ["Steal A Brainrot"] = {
-        {
-            name = "Instant Steal (Not Working)",
-            description = "Instant steal script for Steal A Brainrot game",
-            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/StealaBrainrotMOD"))()]]
-        },
-        {
-            name = "Instant Steal v2 (Not Working)",
-            description = "Second version of instant steal script (unverified)",
-            script = [[loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/ffdfeadf0af798741806ea404682a938.lua"))()]]
-        },
         {
             name = "MoonHub",
             description = "MoonHub script for Steal A Brainrot",
@@ -1646,18 +1796,40 @@ local function searchScripts(query)
     updateScriptList()
 end
 
--- Connect search functionality
-SearchBox:GetPropertyChangedSignal("Text"):Connect(function()
-    searchScripts(SearchBox.Text)
-end)
+-- Remove old search functionality
 
 
 
 
 
--- Close button functionality
+-- Button functionality
 CloseButton.MouseButton1Click:Connect(function()
     FlixHub:Destroy()
+end)
+
+RefreshButton.MouseButton1Click:Connect(function()
+    -- Refresh functionality
+    StarterGui:SetCore("SendNotification", {
+        Title = "FlixHub";
+        Text = "Interface refreshed!";
+        Duration = 2;
+    })
+end)
+
+MinimizeButton.MouseButton1Click:Connect(function()
+    -- Minimize functionality
+    MainFrame.Visible = not MainFrame.Visible
+end)
+
+FullscreenButton.MouseButton1Click:Connect(function()
+    -- Toggle fullscreen
+    if MainFrame.Size == UDim2.new(0, 800, 0, 500) then
+        MainFrame.Size = UDim2.new(0, 1200, 0, 700)
+        MainFrame.Position = UDim2.new(0.5, -600, 0.5, -350)
+    else
+        MainFrame.Size = UDim2.new(0, 800, 0, 500)
+        MainFrame.Position = UDim2.new(0.5, -400, 0.5, -250)
+    end
 end)
 
 
