@@ -1,229 +1,11 @@
--- FlixHub - Advanced Roblox Script Hub
--- Created by FlixHub Team
--- Features: Search, Categories, Keyless Scripts
-
+-- FlixHub - Simple Working Version
 local Players = game:GetService("Players")
 local StarterGui = game:GetService("StarterGui")
 local TweenService = game:GetService("TweenService")
-local HttpService = game:GetService("HttpService")
 local UserInputService = game:GetService("UserInputService")
 
 local player = Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
-
--- Key Authentication System
-local CORRECT_KEY = "FlixHubBest"
-local KEY_FILE = "FlixHub_Auth.txt"
-
--- Function to check if key is already authenticated
-local function isKeyAuthenticated()
-    if readfile and isfile then
-        if isfile(KEY_FILE) then
-            local savedKey = readfile(KEY_FILE)
-            return savedKey == CORRECT_KEY
-        end
-    end
-    return false
-end
-
--- Function to save authentication
-local function saveAuthentication()
-    if writefile then
-        writefile(KEY_FILE, CORRECT_KEY)
-    end
-end
-
--- Function to create and show key screen
-local function createKeyScreen()
-    local KeyScreen = Instance.new("ScreenGui")
-    KeyScreen.Name = "FlixHubKeyScreen"
-    KeyScreen.Parent = playerGui
-    KeyScreen.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    KeyScreen.ResetOnSpawn = false
-    
-    -- Background overlay
-    local Background = Instance.new("Frame")
-    Background.Name = "Background"
-    Background.Parent = KeyScreen
-    Background.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    Background.BackgroundTransparency = 0.3
-    Background.BorderSizePixel = 0
-    Background.Size = UDim2.new(1, 0, 1, 0)
-    Background.ZIndex = 1
-    
-    -- Key panel
-    local KeyPanel = Instance.new("Frame")
-    KeyPanel.Name = "KeyPanel"
-    KeyPanel.Parent = KeyScreen
-    KeyPanel.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
-    KeyPanel.BackgroundTransparency = 0.1
-    KeyPanel.BorderSizePixel = 0
-    KeyPanel.Position = UDim2.new(0.5, -200, 0.5, -100)
-    KeyPanel.Size = UDim2.new(0, 400, 0, 200)
-    KeyPanel.ZIndex = 5
-    
-    -- Panel gradient
-    local PanelGradient = Instance.new("UIGradient")
-    PanelGradient.Parent = KeyPanel
-    PanelGradient.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(35, 35, 50)),
-        ColorSequenceKeypoint.new(0.5, Color3.fromRGB(25, 25, 35)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 30))
-    }
-    PanelGradient.Rotation = 45
-    
-    local PanelCorner = Instance.new("UICorner")
-    PanelCorner.CornerRadius = UDim.new(0, 12)
-    PanelCorner.Parent = KeyPanel
-    
-    -- Panel glow
-    local PanelStroke = Instance.new("UIStroke")
-    PanelStroke.Parent = KeyPanel
-    PanelStroke.Color = Color3.fromRGB(100, 150, 255)
-    PanelStroke.Transparency = 0.7
-    PanelStroke.Thickness = 2
-    
-    -- Title
-    local Title = Instance.new("TextLabel")
-    Title.Name = "Title"
-    Title.Parent = KeyPanel
-    Title.BackgroundTransparency = 1
-    Title.Position = UDim2.new(0, 0, 0, 20)
-    Title.Size = UDim2.new(1, 0, 0, 40)
-    Title.Font = Enum.Font.GothamBold
-    Title.Text = "🔐 FlixHub Authentication"
-    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Title.TextSize = 20
-    Title.TextXAlignment = Enum.TextXAlignment.Center
-    Title.ZIndex = 6
-    
-    -- Title glow
-    local TitleStroke = Instance.new("UIStroke")
-    TitleStroke.Parent = Title
-    TitleStroke.Color = Color3.fromRGB(100, 150, 255)
-    TitleStroke.Transparency = 0.5
-    TitleStroke.Thickness = 1
-    
-    -- Instructions
-    local Instructions = Instance.new("TextLabel")
-    Instructions.Name = "Instructions"
-    Instructions.Parent = KeyPanel
-    Instructions.BackgroundTransparency = 1
-    Instructions.Position = UDim2.new(0, 20, 0, 70)
-    Instructions.Size = UDim2.new(1, -40, 0, 20)
-    Instructions.Font = Enum.Font.Gotham
-    Instructions.Text = "Enter the access key to continue:"
-    Instructions.TextColor3 = Color3.fromRGB(200, 200, 200)
-    Instructions.TextSize = 14
-    Instructions.TextXAlignment = Enum.TextXAlignment.Left
-    Instructions.ZIndex = 6
-    
-    -- Key input box
-    local KeyInput = Instance.new("TextBox")
-    KeyInput.Name = "KeyInput"
-    KeyInput.Parent = KeyPanel
-    KeyInput.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
-    KeyInput.BorderSizePixel = 0
-    KeyInput.Position = UDim2.new(0, 20, 0, 100)
-    KeyInput.Size = UDim2.new(1, -120, 0, 35)
-    KeyInput.Font = Enum.Font.Gotham
-    KeyInput.PlaceholderText = "Enter key here..."
-    KeyInput.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
-    KeyInput.Text = ""
-    KeyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
-    KeyInput.TextSize = 14
-    KeyInput.ZIndex = 6
-    
-    local InputCorner = Instance.new("UICorner")
-    InputCorner.CornerRadius = UDim.new(0, 6)
-    InputCorner.Parent = KeyInput
-    
-    -- Submit button
-    local SubmitButton = Instance.new("TextButton")
-    SubmitButton.Name = "SubmitButton"
-    SubmitButton.Parent = KeyPanel
-    SubmitButton.BackgroundColor3 = Color3.fromRGB(85, 135, 255)
-    SubmitButton.BorderSizePixel = 0
-    SubmitButton.Position = UDim2.new(1, -90, 0, 100)
-    SubmitButton.Size = UDim2.new(0, 70, 0, 35)
-    SubmitButton.Font = Enum.Font.GothamMedium
-    SubmitButton.Text = "Submit"
-    SubmitButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    SubmitButton.TextSize = 12
-    SubmitButton.ZIndex = 6
-    
-    local ButtonCorner = Instance.new("UICorner")
-    ButtonCorner.CornerRadius = UDim.new(0, 6)
-    ButtonCorner.Parent = SubmitButton
-    
-    -- Error message
-    local ErrorMessage = Instance.new("TextLabel")
-    ErrorMessage.Name = "ErrorMessage"
-    ErrorMessage.Parent = KeyPanel
-    ErrorMessage.BackgroundTransparency = 1
-    ErrorMessage.Position = UDim2.new(0, 20, 0, 145)
-    ErrorMessage.Size = UDim2.new(1, -40, 0, 20)
-    ErrorMessage.Font = Enum.Font.Gotham
-    ErrorMessage.Text = ""
-    ErrorMessage.TextColor3 = Color3.fromRGB(255, 100, 100)
-    ErrorMessage.TextSize = 12
-    ErrorMessage.TextXAlignment = Enum.TextXAlignment.Left
-    ErrorMessage.Visible = false
-    ErrorMessage.ZIndex = 6
-    
-    -- Authentication function
-    local function authenticateKey()
-        local enteredKey = KeyInput.Text
-        if enteredKey == CORRECT_KEY then
-            -- Save authentication for future use
-            saveAuthentication()
-            
-            -- Show success animation
-            ErrorMessage.Text = "✅ Authentication successful! Loading FlixHub..."
-            ErrorMessage.TextColor3 = Color3.fromRGB(100, 255, 100)
-            ErrorMessage.Visible = true
-            
-            -- Wait briefly to show success message, then load FlixHub
-            wait(1)
-            
-            -- Destroy key screen and create main FlixHub
-            KeyScreen:Destroy()
-            createMainFlixHub() -- Create the main FlixHub interface
-        else
-            -- Show error
-            ErrorMessage.Text = "❌ Invalid key. Please try again."
-            ErrorMessage.TextColor3 = Color3.fromRGB(255, 100, 100)
-            ErrorMessage.Visible = true
-            
-            -- Clear input
-            KeyInput.Text = ""
-            
-            -- Shake animation
-            local shake = TweenService:Create(KeyPanel, TweenInfo.new(0.1, Enum.EasingStyle.Quad), {
-                Position = UDim2.new(0.5, -190, 0.5, -100)
-            })
-            shake:Play()
-            
-            shake.Completed:Connect(function()
-                local returnPos = TweenService:Create(KeyPanel, TweenInfo.new(0.1, Enum.EasingStyle.Quad), {
-                    Position = UDim2.new(0.5, -200, 0.5, -100)
-                })
-                returnPos:Play()
-            end)
-        end
-    end
-    
-    -- Event connections
-    SubmitButton.MouseButton1Click:Connect(authenticateKey)
-    KeyInput.FocusLost:Connect(function(enterPressed)
-        if enterPressed then
-            authenticateKey()
-        end
-    end)
-end
-
--- Function to create the main FlixHub (will be moved below)
-local function createMainFlixHub()
 
 -- Create main ScreenGui
 local FlixHub = Instance.new("ScreenGui")
@@ -232,27 +14,23 @@ FlixHub.Parent = playerGui
 FlixHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 FlixHub.ResetOnSpawn = false
 
--- Main Frame (Hub Window) with Modern Dark Theme
+-- Main Frame (Hub Window)
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "FlixHub"
 MainFrame.Parent = FlixHub
 MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-MainFrame.BackgroundTransparency = 0
 MainFrame.BorderSizePixel = 0
 MainFrame.Position = UDim2.new(0.5, -400, 0.5, -250)
 MainFrame.Size = UDim2.new(0, 800, 0, 500)
-MainFrame.ZIndex = 2
 MainFrame.Active = true
-MainFrame.Draggable = false
+MainFrame.Draggable = true
 
--- Remove gradient overlay for cleaner look
-
--- Corner rounding for main frame
+-- Corner rounding
 local MainCorner = Instance.new("UICorner")
-MainCorner.CornerRadius = UDim.new(0, 8)
+MainCorner.CornerRadius = UDim.new(0, 12)
 MainCorner.Parent = MainFrame
 
--- Simple shadow for modern look
+-- Shadow
 local Shadow = Instance.new("Frame")
 Shadow.Name = "Shadow"
 Shadow.Parent = FlixHub
@@ -264,26 +42,21 @@ Shadow.Size = UDim2.new(0, 800, 0, 500)
 Shadow.ZIndex = 1
 
 local ShadowCorner = Instance.new("UICorner")
-ShadowCorner.CornerRadius = UDim.new(0, 8)
+ShadowCorner.CornerRadius = UDim.new(0, 12)
 ShadowCorner.Parent = Shadow
 
--- Modern Title Bar
+-- Title Bar
 local TitleBar = Instance.new("Frame")
 TitleBar.Name = "TitleBar"
 TitleBar.Parent = MainFrame
 TitleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-TitleBar.BackgroundTransparency = 0
 TitleBar.BorderSizePixel = 0
 TitleBar.Size = UDim2.new(1, 0, 0, 50)
 TitleBar.ZIndex = 3
 
 local TitleCorner = Instance.new("UICorner")
-TitleCorner.CornerRadius = UDim.new(0, 8)
+TitleCorner.CornerRadius = UDim.new(0, 12)
 TitleCorner.Parent = TitleBar
-
--- Enable dragging
-MainFrame.Draggable = true
-MainFrame.Active = true
 
 -- Title with icon and version
 local TitleIcon = Instance.new("ImageLabel")
