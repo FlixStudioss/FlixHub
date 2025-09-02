@@ -271,6 +271,11 @@ local UniversalScripts = {
         name = "Universal ESP",
         description = "See players through walls",
         script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua"))()]]
+    },
+    {
+        name = "Solara Hub",
+        description = "Really Good Scripts",
+        script = [[loadstring(game:HttpGet("https://pastebin.com/raw/ixdvHv2g"))()]]
     }
 }
 
@@ -284,6 +289,21 @@ local FEScripts = {
         name = "FE Troll Hub",
         description = "Frontend exploit Troll Hub script",
         script = [[loadstring(game:HttpGet("https://pastebin.com/raw/hkyuHQ7Y"))()]]
+    },
+    {
+        name = "FE Jerk Off",
+        description = "Frontend Jerk Off script for R6",
+        script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/imalwaysad/universal-gui/refs/heads/main/jerk%20off%20r6"))()]]
+    },
+    {
+        name = "FE Invisible",
+        description = "Frontend invisible script",
+        script = [[loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Invisible-script-20557"))()]]
+    },
+    {
+        name = "FE Fake Lag (R6 & R15)",
+        description = "Frontend fake lag script for R6 and R15",
+        script = [[loadstring(game:HttpGet('https://pastebin.com/raw/VM3b0Thg'))()]]
     }
 }
 
@@ -293,6 +313,11 @@ local VisualScripts = {
             name = "Pet,Seed Spawner",
             description = "Visual script for Grow A Garden pet and seed spawning",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/veryimportantrr/x/refs/heads/main/gag_visual.lua", true))("discord.gg/csxu2nCkw9")]]
+        },
+        {
+            name = "Garden Visualizer",
+            description = "Enhanced visual effects for Grow A Garden",
+            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/NoLag-id/No-Lag-HUB/refs/heads/main/Garden/Garden-V1.lua'))()]]
         }
     }
 }
