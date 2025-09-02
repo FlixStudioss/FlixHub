@@ -283,6 +283,7 @@ TitleCorner.Parent = TitleBar
 
 -- Enable dragging
 MainFrame.Draggable = true
+MainFrame.Active = true
 
 -- Title with icon and version
 local TitleIcon = Instance.new("ImageLabel")
@@ -384,7 +385,7 @@ local SettingsCorner = Instance.new("UICorner")
 SettingsCorner.CornerRadius = UDim.new(0, 4)
 SettingsCorner.Parent = SettingsButton
 
--- Minimize button (sparkle icon)
+-- Minimize button (minus icon when not minimized)
 local MinimizeButton = Instance.new("TextButton")
 MinimizeButton.Name = "MinimizeButton"
 MinimizeButton.Parent = ButtonContainer
@@ -393,9 +394,9 @@ MinimizeButton.BorderSizePixel = 0
 MinimizeButton.Position = UDim2.new(0, 56, 0, 0)
 MinimizeButton.Size = UDim2.new(0, 26, 0, 26)
 MinimizeButton.Font = Enum.Font.GothamBold
-MinimizeButton.Text = "✨"
+MinimizeButton.Text = "−"
 MinimizeButton.TextColor3 = Color3.fromRGB(200, 200, 200)
-MinimizeButton.TextSize = 12
+MinimizeButton.TextSize = 16
 MinimizeButton.ZIndex = 5
 
 local MinimizeCorner = Instance.new("UICorner")
@@ -492,11 +493,10 @@ ContentArea.Size = UDim2.new(1, -250, 1, -50)
 ContentArea.ZIndex = 3
 
 -- Tab system variables
-local currentTab = "Universal Scripts"
-local expandedCategories = {
-    ["Visual Script"] = false,
-    ["Games"] = false
-}
+local currentTab = "Home"
+local isGamesExpanded = false
+local isVisualExpanded = false
+local filteredScripts = {}
 
 -- Script display variables
 local ScriptContainer = nil
@@ -1438,8 +1438,9 @@ local function createTab(tabName, isGameTab, indentLevel)
     Tab.Name = tabName
     Tab.Parent = TabContainer
     
-    local theme = themes[currentTheme]
-    local isSelected = tabName == currentTab or tabName:gsub("[🏠⚡👁️🎮▼▶]", ""):gsub(" ", "") == currentTab
+    local theme = themes[currentTheme] or themes["Dark"]
+    local cleanTabName = tabName:gsub("[🏠⚡👁️🎮▼▶]", ""):gsub(" ", "")
+    local isSelected = cleanTabName == currentTab or tabName == currentTab
     
     Tab.BackgroundColor3 = isSelected and theme.accent or theme.tertiary
     Tab.BorderSizePixel = 0
@@ -1473,17 +1474,10 @@ local function createTab(tabName, isGameTab, indentLevel)
         end
     end)
     
-    -- Animate tab sliding in from the right
-    Tab.Position = UDim2.new(1, 0, 0, 0) -- Start off-screen
-    Tab.BackgroundTransparency = 1
-    Tab.TextTransparency = 1
-    
-    local slideInTween = TweenService:Create(Tab, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-        Position = UDim2.new(0, 5, 0, 0),
-        BackgroundTransparency = 0,
-        TextTransparency = 0
-    })
-    slideInTween:Play()
+    -- Set initial position without animation for now
+    Tab.Position = UDim2.new(0, 5, 0, 0)
+    Tab.BackgroundTransparency = 0
+    Tab.TextTransparency = 0
     
     return Tab
 end
@@ -1726,15 +1720,20 @@ local function refreshTabsOnResize()
     refreshTabs()
 end
 
+-- Fix for missing variables
+local Shadow2 = Shadow
+local AmbientShadow = Shadow
+
 local function createScriptItem(scriptData, index)
-    local theme = themes[currentTheme]
+    local theme = themes[currentTheme] or themes["Dark"]
     
     local ScriptItem = Instance.new("Frame")
     ScriptItem.Name = "ScriptItem" .. index
     ScriptItem.Parent = ScriptContainer
-    ScriptItem.BackgroundColor3 = theme.secondary
+    ScriptItem.BackgroundColor3 = theme.secondary or Color3.fromRGB(35, 35, 50)
     ScriptItem.BorderSizePixel = 0
     ScriptItem.Size = UDim2.new(1, -12, 0, 70)
+    ScriptItem.LayoutOrder = index
     
     local ItemCorner = Instance.new("UICorner")
     ItemCorner.CornerRadius = UDim.new(0, 8)
@@ -1760,18 +1759,9 @@ local function createScriptItem(scriptData, index)
         }):Play()
     end)
     
-    -- Animate script item sliding in from the right
-    ScriptItem.Position = UDim2.new(1, 0, 0, ScriptItem.Position.Y.Offset)
-    ScriptItem.BackgroundTransparency = 1
-    
-    local slideDelay = (index - 1) * 0.05 -- Staggered animation
-    wait(slideDelay)
-    
-    local slideInTween = TweenService:Create(ScriptItem, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
-        Position = UDim2.new(0, 6, 0, ScriptItem.Position.Y.Offset),
-        BackgroundTransparency = 0
-    })
-    slideInTween:Play()
+    -- Set initial position without animation for now
+    ScriptItem.Position = UDim2.new(0, 6, 0, 0)
+    ScriptItem.BackgroundTransparency = 0
     
     -- Script Name
     local ScriptName = Instance.new("TextLabel")
@@ -1953,6 +1943,15 @@ end
 
 
 
+-- Add rounded corners to main elements
+local SidebarCorner = Instance.new("UICorner")
+SidebarCorner.CornerRadius = UDim.new(0, 8)
+SidebarCorner.Parent = Sidebar
+
+local ContentCorner = Instance.new("UICorner")
+ContentCorner.CornerRadius = UDim.new(0, 8)
+ContentCorner.Parent = ContentArea
+
 -- Button functionality
 CloseButton.MouseButton1Click:Connect(function()
     FlixHub:Destroy()
@@ -1960,6 +1959,8 @@ end)
 
 RefreshButton.MouseButton1Click:Connect(function()
     -- Refresh functionality
+    refreshTabs()
+    updateScriptList()
     StarterGui:SetCore("SendNotification", {
         Title = "FlixHub";
         Text = "Interface refreshed!";
@@ -1967,19 +1968,18 @@ RefreshButton.MouseButton1Click:Connect(function()
     })
 end)
 
-MinimizeButton.MouseButton1Click:Connect(function()
-    -- Minimize functionality
-    MainFrame.Visible = not MainFrame.Visible
-end)
-
 FullscreenButton.MouseButton1Click:Connect(function()
     -- Toggle fullscreen
     if MainFrame.Size == UDim2.new(0, 800, 0, 500) then
         MainFrame.Size = UDim2.new(0, 1200, 0, 700)
         MainFrame.Position = UDim2.new(0.5, -600, 0.5, -350)
+        Shadow.Size = UDim2.new(0, 1200, 0, 700)
+        Shadow.Position = UDim2.new(0.5, -595, 0.5, -345)
     else
         MainFrame.Size = UDim2.new(0, 800, 0, 500)
         MainFrame.Position = UDim2.new(0.5, -400, 0.5, -250)
+        Shadow.Size = UDim2.new(0, 800, 0, 500)
+        Shadow.Position = UDim2.new(0.5, -395, 0.5, -245)
     end
 end)
 
@@ -1987,7 +1987,7 @@ end)
 
 -- Minimize functionality
 local isMinimized = false
-local currentHubSize = {width = 500, height = 350} -- Store current size
+local currentHubSize = {width = 800, height = 500} -- Store current size
 
 -- Create Minimize Icon (separate from main frame)
 local MinimizeIcon = Instance.new("Frame")
@@ -2036,7 +2036,7 @@ local MinimizeIconShadowCorner = Instance.new("UICorner")
 MinimizeIconShadowCorner.CornerRadius = UDim.new(0, 12)
 MinimizeIconShadowCorner.Parent = MinimizeIconShadow
 
--- Icon text/symbol
+-- Icon text/symbol (sparkles when minimized)
 local MinimizeIconText = Instance.new("TextLabel")
 MinimizeIconText.Name = "MinimizeIconText"
 MinimizeIconText.Parent = MinimizeIcon
@@ -2701,16 +2701,35 @@ SearchExecuteButton.MouseButton1Click:Connect(function()
     end)
 end)
 
+-- Search functionality
+local SearchButton = Instance.new("TextButton")
+SearchButton.Name = "SearchButton"
+SearchButton.Parent = ButtonContainer
+SearchButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+SearchButton.BorderSizePixel = 0
+SearchButton.Position = UDim2.new(0, 140, 0, 0)
+SearchButton.Size = UDim2.new(0, 26, 0, 26)
+SearchButton.Font = Enum.Font.GothamBold
+SearchButton.Text = "🔍"
+SearchButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+SearchButton.TextSize = 12
+SearchButton.ZIndex = 5
+SearchButton.Visible = false
+
+local SearchButtonCorner = Instance.new("UICorner")
+SearchButtonCorner.CornerRadius = UDim.new(0, 4)
+SearchButtonCorner.Parent = SearchButton
+
 -- Function to get current size based on default values
 local function getCurrentSizeValues()
-    return 500, 350 -- Default size since settings are removed
+    return 800, 500 -- Default size
 end
 
 -- Minimize button functionality
 MinimizeButton.MouseButton1Click:Connect(function()
     if not isMinimized then
-        -- Store current size before minimizing
-        currentHubSize.width, currentHubSize.height = getCurrentSizeValues()
+        -- Change minimize button to sparkles when minimizing
+        MinimizeButton.Text = "✨"
         
         -- Hide main frame completely with fade out animation
         local fadeOut = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
@@ -2719,24 +2738,14 @@ MinimizeButton.MouseButton1Click:Connect(function()
         local shadowFadeOut = TweenService:Create(Shadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
             BackgroundTransparency = 1
         })
-        local shadow2FadeOut = TweenService:Create(Shadow2, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            BackgroundTransparency = 1
-        })
-        local ambientFadeOut = TweenService:Create(AmbientShadow, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-            BackgroundTransparency = 1
-        })
         
         fadeOut:Play()
         shadowFadeOut:Play()
-        shadow2FadeOut:Play()
-        ambientFadeOut:Play()
         
         -- After fade out, hide main frame and show minimize icon
         fadeOut.Completed:Connect(function()
             MainFrame.Visible = false
             Shadow.Visible = false
-            Shadow2.Visible = false
-            AmbientShadow.Visible = false
             
             -- Show minimize icon with animation
             MinimizeIcon.Visible = true
@@ -2775,19 +2784,18 @@ MinimizeIconButton.MouseButton1Click:Connect(function()
             -- Restore main frame
             MainFrame.Visible = true
             Shadow.Visible = true
-            Shadow2.Visible = true
-            AmbientShadow.Visible = true
             
             -- Reset transparencies and animate in
-            MainFrame.BackgroundTransparency = 0.1
-            Shadow.BackgroundTransparency = 0.3
-            Shadow2.BackgroundTransparency = 0.15
-            AmbientShadow.BackgroundTransparency = 0.8
+            MainFrame.BackgroundTransparency = 0
+            Shadow.BackgroundTransparency = 0.7
             
             local fadeIn = TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quad), {
-                BackgroundTransparency = 0.1
+                BackgroundTransparency = 0
             })
             fadeIn:Play()
+            
+            -- Change minimize button back to minus
+            MinimizeButton.Text = "−"
         end)
         
         isMinimized = false
@@ -2867,6 +2875,7 @@ end
 
 
 -- Initialize the GUI with new tab system
+wait(0.1) -- Small delay to ensure all elements are created
 refreshTabs() -- Initialize tab system
 createHomeContent() -- Start with Home tab content
 
