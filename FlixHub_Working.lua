@@ -246,7 +246,7 @@ ScriptLayout.SortOrder = Enum.SortOrder.LayoutOrder
 ScriptLayout.Padding = UDim.new(0, 5)
 
 -- Variables
-local currentTab = "Home"
+local currentTab = "Universal"
 local isGamesExpanded = false
 local isVisualExpanded = false
 
@@ -287,6 +287,16 @@ local FEScripts = {
     }
 }
 
+local VisualScripts = {
+    ["Grow A Garden Visual"] = {
+        {
+            name = "Pet,Seed Spawner",
+            description = "Visual script for Grow A Garden pet and seed spawning",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/veryimportantrr/x/refs/heads/main/gag_visual.lua", true))("discord.gg/csxu2nCkw9")]]
+        }
+    }
+}
+
 local GameScripts = {
     ["Grow A Garden"] = {
         {
@@ -298,6 +308,149 @@ local GameScripts = {
             name = "eF Hub",
             description = "Multi-purpose exploit hub",
             script = [[loadstring(game:HttpGet('https://cdn.exploitingis.fun/loader', true))()]]
+        },
+        {
+            name = "Idiot Hub (Currently Down)",
+            description = "IdiotHub script loader for Grow A Garden",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/IdiotHub/Scripts/main/Loader"))()]]
+        },
+        {
+            name = "BlackHub",
+            description = "BlackHub script for Grow A Garden",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Skibidiking123/Fisch1/refs/heads/main/FischMain"))()]]
+        },
+        {
+            name = "ShovelHub (Not Good)",
+            description = "ShovelHub script - quality may vary",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/shvl00/shvled/refs/heads/main/l04d3r.bf"))()]]
+        },
+        {
+            name = "SpeedHubX (Keyless on Weekends)",
+            description = "SpeedHubX script for Grow A Garden - keyless on weekends",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()]]
+        }
+    },
+    ["Poop Simulator"] = {
+        {
+            name = "AUTO Poop & AUTO Sell",
+            description = "Automatic pooping and selling features",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/sylolua/mine/refs/heads/main/Poop",true))()]]
+        }
+    },
+    ["Slippery Stairs"] = {
+        {
+            name = "INF CRYSTALS",
+            description = "Infinite crystals exploit",
+            script = [[loadstring(game:HttpGet("https://pastebin.com/raw/5ez3xPtJ"))()]]
+        }
+    },
+    ["Strongest Battle"] = {
+        {
+            name = "TSB Auto Farm",
+            description = "Auto farm script for The Strongest Battleground",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Viunze/ZeCuree2/refs/heads/main/Zertex.lua"))()]]
+        }
+    },
+    ["99 Nights Forest"] = {
+        {
+            name = "eF Hub (Currently Down)",
+            description = "Overpowered farming script for 99 Nights",
+            script = [[loadstring(game:HttpGet('https://api.exploitingis.fun/loader', true))()]]
+        },
+        {
+            name = "GoaHub",
+            description = "GOA Hub script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Nevcit/GOA_HUB/refs/heads/main/99%20Nights%20In%20The%20Forest"))()]]
+        },
+        {
+            name = "SolunaHub (Solo)",
+            description = "Soluna Hub solo farming script for 99 Nights",
+            script = [[loadstring(game:HttpGet("https://soluna-script.vercel.app/99-Nights-in-the-Forest.lua",true))()]]
+        },
+        {
+            name = "FastHub (Only PC)",
+            description = "Fast farming hub for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/adibhub1/99-nighit-in-forest/refs/heads/main/99%20night%20in%20forest"))()]]
+        },
+        {
+            name = "OP Script",
+            description = "Best overpowered script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Iliankytb/Iliankytb/main/Best99NightsInTheForest"))()]]
+        },
+        {
+            name = "LinuxHub",
+            description = "LinuxHub script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/LinuxDevBr/99-Nights-In-the-Forest/refs/heads/main/Script.txt"))()]]
+        },
+        {
+            name = "HutaoHub",
+            description = "Hutao Hub script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/SLK-gaming/Hutao-Hub/refs/heads/main/99-Nights-In-The-Forest.txt"))()]]
+        },
+        {
+            name = "Vape Script (Not The Best)",
+            description = "Vape script for 99 Nights in the Forest (basic version)",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/VapeVoidware/VWExtra/main/NightsInTheForest.lua", true))()]]
+        },
+        {
+            name = "RingstaUI",
+            description = "RingstaUI script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/wefwef127382/99daysloader.github.io/refs/heads/main/ringta.lua"))()]]
+        }
+    },
+    ["Ink Game"] = {
+        {
+            name = "NeoxHub (Not Tested)",
+            description = "Automated farming script for Ink Game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/hassanxzayn-lua/NEOXHUBMAIN/refs/heads/main/InkGame"))()]]
+        }
+    },
+    ["Steal A Brainrot"] = {
+        {
+            name = "MoonHub",
+            description = "MoonHub script for Steal A Brainrot",
+            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/KaspikScriptsRb/steal-a-brainrot/refs/heads/main/.lua'))()]]
+        },
+        {
+            name = "Chilli Hub",
+            description = "Chilli Hub script for Steal A Brainrot",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua"))()]]
+        },
+        {
+            name = "CompHub",
+            description = "CompHub script for Steal A Brainrot",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/robloxcomphub/comphub/refs/heads/main/comphub.lua"))()]]
+        },
+        {
+            name = "BlindHub",
+            description = "BlindHub script for Steal A Brainrot",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Blind-Man-Walking/Steal-a-brain-rot/refs/heads/main/Test4"))()]]
+        }
+    },
+    ["Life Sentence"] = {
+        {
+            name = "BeanzHub",
+            description = "BeanzHub script for Life Sentence game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/pid4k/scripts/main/BeanzHub.lua", true))()]]
+        },
+        {
+            name = "Astral",
+            description = "Astral script for Life Sentence game",
+            script = [[loadstring(game:HttpGet("https://api.astral.gold/script"))()]]
+        }
+    },
+    ["Prospecting"] = {
+        {
+            name = "StellarHub",
+            description = "StellarHub script for Prospecting game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/x2zu/loader/main/games/Prospecting.lua"))()]]
+        }
+    },
+    ["VolleyBall Legends"] = {
+        {
+            name = "SigmaHub",
+            description = "SigmaHub script for VolleyBall Legends game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Xm2iufas09ijmF/sigma-hub/refs/heads/main/temp.lua"))()]]
         }
     },
     ["Fisch"] = {
@@ -306,22 +459,107 @@ local GameScripts = {
             description = "SpeedHub X script for Fisch game",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()]]
         }
+    },
+    ["Build A Boat"] = {
+        {
+            name = "Inf Save Slots",
+            description = "Get unlimited save slots for your boats",
+            script = [[local slotsyouwant = 100 -- Put the amount of slots you want
+
+-- ignore
+for i = 1, slotsyouwant do
+    task.spawn(function()
+        local args = {
+            [1] = 1,
+            [2] = tostring(i) .. "\0", 
+            [3] = 0,
+            [4] = ""
+        }
+
+        workspace:WaitForChild("UpdateSlotOrderRE"):FireServer(unpack(args))
+    end)
+end]]
+        },
+        {
+            name = "Auto Farm",
+            description = "Automatic farming script for Build A Boat",
+            script = [[loadstring(game:HttpGet("https://orbitsc.net/babft"))()]]
+        }
+    },
+    ["Basketball Legends"] = {
+        {
+            name = "Auto Green",
+            description = "Auto Green and Ball Magnet script for Basketball Legends",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/vnausea/absence-mini/refs/heads/main/absencemini.lua"))()]]
+        },
+        {
+            name = "Auto Green v2",
+            description = "Second version of Auto Green script for Basketball Legends",
+            script = [[loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/036662184673bfe9af11477616f25561.lua"))()]]
+        }
+    },
+    ["Touch Football"] = {
+        {
+            name = "Auto Goal",
+            description = "Auto Goal script for Touch Football game",
+            script = [[loadstring(game:HttpGet("https://pastefy.app/HHVkOaR9/raw"))()]]
+        }
+    },
+    ["Brainrot Evolution"] = {
+        {
+            name = "OP Auto Farm",
+            description = "OP Auto Farm script for Brainrot Evolution game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/BrySadW/BrainrotEvolution/refs/heads/main/Protected_9771535026490697.lua"))()]]
+        }
+    },
+    ["Slap Tower"] = {
+        {
+            name = "Trolling Gui",
+            description = "Trolling Gui script for Slap Tower game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Rawbr10/Roblox-Scripts/refs/heads/main/Slap-Tower-Script"))()]]
+        },
+        {
+            name = "Get All Slaps",
+            description = "Get All Slaps script for Slap Tower game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/DdeM3zz/TwinScripts/refs/heads/main/Slap%20Tower", true))()]]
+        }
+    },
+    ["Arcade Basketball"] = {
+        {
+            name = "OP Script (Only PC)",
+            description = "OP Script for Arcade Basketball game (PC Only)",
+            script = [[loadstring(game:HttpGet("https://pastebin.com/raw/Vksx0XsH"))()]]
+        }
     }
 }
 
 -- Functions
-local function createTab(tabName, layoutOrder)
+local function createTab(tabName, layoutOrder, isExpandable, indentLevel)
     local Tab = Instance.new("TextButton")
     Tab.Name = tabName
     Tab.Parent = TabContainer
-    Tab.BackgroundColor3 = currentTab == tabName and Color3.fromRGB(100, 150, 255) or Color3.fromRGB(40, 40, 40)
+    
+    local cleanTabName = tabName:gsub("[▼▶]", ""):gsub(" ", "")
+    local isSelected = cleanTabName == currentTab or tabName == currentTab
+    
+    Tab.BackgroundColor3 = isSelected and Color3.fromRGB(100, 150, 255) or Color3.fromRGB(40, 40, 40)
     Tab.BorderSizePixel = 0
     Tab.Size = UDim2.new(1, -20, 0, 35)
-    Tab.Position = UDim2.new(0, 10, 0, 0)
+    Tab.Position = UDim2.new(0, 10 + (indentLevel or 0) * 15, 0, 0)
     Tab.Font = Enum.Font.GothamMedium
-    Tab.Text = "  " .. tabName
+    
+    local expandIcon = ""
+    if isExpandable then
+        if tabName:find("Visual Script") then
+            expandIcon = isVisualExpanded and " ▼" or " ▶"
+        elseif tabName:find("Games") then
+            expandIcon = isGamesExpanded and " ▼" or " ▶"
+        end
+    end
+    
+    Tab.Text = "  " .. (indentLevel and string.rep("  ", indentLevel) or "") .. tabName:gsub("[▼▶]", "") .. expandIcon
     Tab.TextColor3 = Color3.fromRGB(255, 255, 255)
-    Tab.TextSize = 14
+    Tab.TextSize = (indentLevel and indentLevel > 0) and 12 or 14
     Tab.TextXAlignment = Enum.TextXAlignment.Left
     Tab.LayoutOrder = layoutOrder
     Tab.ZIndex = 5
@@ -440,6 +678,8 @@ local function updateScriptDisplay()
         scriptsToShow = UniversalScripts
     elseif currentTab == "FE Scripts" then
         scriptsToShow = FEScripts
+    elseif VisualScripts[currentTab] then
+        scriptsToShow = VisualScripts[currentTab]
     elseif GameScripts[currentTab] then
         scriptsToShow = GameScripts[currentTab]
     end
@@ -464,7 +704,7 @@ local function refreshTabs()
     local layoutOrder = 1
     
     -- Universal Scripts tab
-    local universalTab = createTab("Universal", layoutOrder)
+    local universalTab = createTab("Universal", layoutOrder, false, 0)
     universalTab.MouseButton1Click:Connect(function()
         currentTab = "Universal"
         refreshTabs()
@@ -473,7 +713,7 @@ local function refreshTabs()
     layoutOrder = layoutOrder + 1
     
     -- FE Scripts tab
-    local feTab = createTab("FE Scripts", layoutOrder)
+    local feTab = createTab("FE Scripts", layoutOrder, false, 0)
     feTab.MouseButton1Click:Connect(function()
         currentTab = "FE Scripts"
         refreshTabs()
@@ -481,15 +721,46 @@ local function refreshTabs()
     end)
     layoutOrder = layoutOrder + 1
     
-    -- Game tabs
-    for gameName, _ in pairs(GameScripts) do
-        local gameTab = createTab(gameName, layoutOrder)
-        gameTab.MouseButton1Click:Connect(function()
-            currentTab = gameName
-            refreshTabs()
-            updateScriptDisplay()
-        end)
-        layoutOrder = layoutOrder + 1
+    -- Visual Script expandable category
+    local visualTab = createTab("Visual Script", layoutOrder, true, 0)
+    visualTab.MouseButton1Click:Connect(function()
+        isVisualExpanded = not isVisualExpanded
+        refreshTabs()
+    end)
+    layoutOrder = layoutOrder + 1
+    
+    -- Show Visual Script subcategories if expanded
+    if isVisualExpanded then
+        for visualName, _ in pairs(VisualScripts) do
+            local visualSubTab = createTab(visualName:gsub(" Visual", ""), layoutOrder, false, 1)
+            visualSubTab.MouseButton1Click:Connect(function()
+                currentTab = visualName
+                refreshTabs()
+                updateScriptDisplay()
+            end)
+            layoutOrder = layoutOrder + 1
+        end
+    end
+    
+    -- Games expandable category
+    local gamesTab = createTab("Games", layoutOrder, true, 0)
+    gamesTab.MouseButton1Click:Connect(function()
+        isGamesExpanded = not isGamesExpanded
+        refreshTabs()
+    end)
+    layoutOrder = layoutOrder + 1
+    
+    -- Show game subcategories if expanded
+    if isGamesExpanded then
+        for gameName, _ in pairs(GameScripts) do
+            local gameTab = createTab(gameName, layoutOrder, false, 1)
+            gameTab.MouseButton1Click:Connect(function()
+                currentTab = gameName
+                refreshTabs()
+                updateScriptDisplay()
+            end)
+            layoutOrder = layoutOrder + 1
+        end
     end
     
     -- Update canvas size
