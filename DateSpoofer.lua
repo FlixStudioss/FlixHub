@@ -1,18 +1,18 @@
 -- FlixHub Date Spoofer Script
--- Changes Roblox's date to August 17, 2025
+-- Changes Roblox's date to September 7, 2025
 -- Other scripts will see this spoofed date instead of the real date
 
 local StarterGui = game:GetService("StarterGui")
 
--- Target date: August 17, 2025
+-- Target date: September 7, 2025
 local targetYear = 2025
-local targetMonth = 8
-local targetDay = 17
+local targetMonth = 9
+local targetDay = 7
 local targetHour = 12  -- Noon
 local targetMinute = 0
 local targetSecond = 0
 
--- Calculate the target timestamp (August 17, 2025 at 12:00:00)
+-- Calculate the target timestamp (September 7, 2025 at 12:00:00)
 local targetTimestamp = os.time({
     year = targetYear,
     month = targetMonth,
@@ -101,7 +101,7 @@ end
 -- Notification to user
 StarterGui:SetCore("SendNotification", {
     Title = "FlixHub Date Spoofer";
-    Text = "Date changed to August 17, 2025! Other scripts will see this date.";
+    Text = "Date changed to September 7, 2025! Other scripts will see this date.";
     Duration = 5;
 })
 
@@ -151,6 +151,6 @@ _G.changeSpoofedDate = function(year, month, day, hour, minute, second)
 end
 
 print("FlixHub Date Spoofer loaded successfully!")
-print("Current spoofed date: August 17, 2025")
+print("Current spoofed date: September 7, 2025")
 print("Use _G.resetDateSpoof() to disable spoofing")
 print("Use _G.changeSpoofedDate(year, month, day) to change the spoofed date")
