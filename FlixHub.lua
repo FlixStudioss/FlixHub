@@ -232,343 +232,487 @@ FlixHub.Parent = playerGui
 FlixHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 FlixHub.ResetOnSpawn = false
 
--- Main Frame (Hub Window) with Modern Dark Theme
+-- Main Frame (Hub Window) with Modern Glassmorphism
 local MainFrame = Instance.new("Frame")
 MainFrame.Name = "FlixHub"
 MainFrame.Parent = FlixHub
-MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-MainFrame.BackgroundTransparency = 0
+MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+MainFrame.BackgroundTransparency = 0.1 -- More transparency for glass effect
 MainFrame.BorderSizePixel = 0
-MainFrame.Position = UDim2.new(0.5, -400, 0.5, -250)
-MainFrame.Size = UDim2.new(0, 800, 0, 500)
+MainFrame.Position = UDim2.new(0.5, -250, 0.5, -175)
+MainFrame.Size = UDim2.new(0, 500, 0, 350)
 MainFrame.ZIndex = 2
 MainFrame.Active = true
-MainFrame.Draggable = false
+MainFrame.Draggable = false -- Disabled to prevent shadow artifacts
 
--- Remove gradient overlay for cleaner look
+-- Modern Gradient Overlay
+local GradientFrame = Instance.new("Frame")
+GradientFrame.Name = "GradientOverlay"
+GradientFrame.Parent = MainFrame
+GradientFrame.BackgroundTransparency = 1
+GradientFrame.BorderSizePixel = 0
+GradientFrame.Size = UDim2.new(1, 0, 1, 0)
+GradientFrame.ZIndex = 1
+
+local GradientBG = Instance.new("UIGradient")
+GradientBG.Parent = MainFrame
+GradientBG.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(35, 35, 50)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(25, 25, 35)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 30))
+}
+GradientBG.Rotation = 45
 
 -- Corner rounding for main frame
 local MainCorner = Instance.new("UICorner")
-MainCorner.CornerRadius = UDim.new(0, 8)
+MainCorner.CornerRadius = UDim.new(0, 12)
 MainCorner.Parent = MainFrame
 
--- Simple shadow for modern look
+-- Enhanced Multi-Layered Shadow System
 local Shadow = Instance.new("Frame")
 Shadow.Name = "Shadow"
 Shadow.Parent = FlixHub
 Shadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Shadow.BackgroundTransparency = 0.7
+Shadow.BackgroundTransparency = 0.3 -- Darker for more depth
 Shadow.BorderSizePixel = 0
-Shadow.Position = UDim2.new(0.5, -395, 0.5, -245)
-Shadow.Size = UDim2.new(0, 800, 0, 500)
-Shadow.ZIndex = 1
+Shadow.Position = UDim2.new(0.5, -242, 0.5, -167)
+Shadow.Size = UDim2.new(0, 500, 0, 350)
+Shadow.ZIndex = 0
 
 local ShadowCorner = Instance.new("UICorner")
-ShadowCorner.CornerRadius = UDim.new(0, 8)
+ShadowCorner.CornerRadius = UDim.new(0, 12)
 ShadowCorner.Parent = Shadow
 
--- Modern Title Bar
+-- Secondary Shadow for Extra Depth
+local Shadow2 = Instance.new("Frame")
+Shadow2.Name = "Shadow2"
+Shadow2.Parent = FlixHub
+Shadow2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Shadow2.BackgroundTransparency = 0.6
+Shadow2.BorderSizePixel = 0
+Shadow2.Position = UDim2.new(0.5, -248, 0.5, -173)
+Shadow2.Size = UDim2.new(0, 500, 0, 350)
+Shadow2.ZIndex = -1
+
+local Shadow2Corner = Instance.new("UICorner")
+Shadow2Corner.CornerRadius = UDim.new(0, 12)
+Shadow2Corner.Parent = Shadow2
+
+-- Ambient Shadow (Soft Glow)
+local AmbientShadow = Instance.new("Frame")
+AmbientShadow.Name = "AmbientShadow"
+AmbientShadow.Parent = FlixHub
+AmbientShadow.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+AmbientShadow.BackgroundTransparency = 0.9
+AmbientShadow.BorderSizePixel = 0
+AmbientShadow.Position = UDim2.new(0.5, -260, 0.5, -185)
+AmbientShadow.Size = UDim2.new(0, 520, 0, 370)
+AmbientShadow.ZIndex = -2
+
+local AmbientCorner = Instance.new("UICorner")
+AmbientCorner.CornerRadius = UDim.new(0, 20)
+AmbientCorner.Parent = AmbientShadow
+
+-- Modern Title Bar with Gradient
 local TitleBar = Instance.new("Frame")
 TitleBar.Name = "TitleBar"
 TitleBar.Parent = MainFrame
-TitleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-TitleBar.BackgroundTransparency = 0
+TitleBar.BackgroundColor3 = Color3.fromRGB(45, 45, 60)
+TitleBar.BackgroundTransparency = 0.1
 TitleBar.BorderSizePixel = 0
-TitleBar.Size = UDim2.new(1, 0, 0, 50)
+TitleBar.Size = UDim2.new(1, 0, 0, 40) -- Slightly taller for modern look
 TitleBar.ZIndex = 3
 
+-- Title Bar Gradient
+local TitleGradient = Instance.new("UIGradient")
+TitleGradient.Parent = TitleBar
+TitleGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(50, 50, 70)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(35, 35, 50))
+}
+TitleGradient.Rotation = 90
+
+-- Title Bar Glow Effect
+local TitleGlow = Instance.new("Frame")
+TitleGlow.Name = "TitleGlow"
+TitleGlow.Parent = TitleBar
+TitleGlow.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+TitleGlow.BackgroundTransparency = 0.8
+TitleGlow.BorderSizePixel = 0
+TitleGlow.Size = UDim2.new(1, 0, 0, 2)
+TitleGlow.Position = UDim2.new(0, 0, 1, -2)
+TitleGlow.ZIndex = 4
+
 local TitleCorner = Instance.new("UICorner")
-TitleCorner.CornerRadius = UDim.new(0, 8)
+TitleCorner.CornerRadius = UDim.new(0, 12)
 TitleCorner.Parent = TitleBar
 
--- Enable dragging
-MainFrame.Draggable = true
+-- Custom Drag Controls with Shadow Synchronization
+local isDragging = false
+local dragStart = nil
+local startPos = nil
 
--- Title with icon and version
-local TitleIcon = Instance.new("ImageLabel")
-TitleIcon.Name = "TitleIcon"
-TitleIcon.Parent = TitleBar
-TitleIcon.BackgroundTransparency = 1
-TitleIcon.Position = UDim2.new(0, 15, 0, 12)
-TitleIcon.Size = UDim2.new(0, 26, 0, 26)
-TitleIcon.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
-TitleIcon.ImageColor3 = Color3.fromRGB(100, 150, 255)
-TitleIcon.ZIndex = 4
+TitleBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        isDragging = true
+        dragStart = input.Position
+        startPos = MainFrame.Position
+        
+        local connection
+        connection = input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                isDragging = false
+                connection:Disconnect()
+            end
+        end)
+    end
+end)
 
-local IconCorner = Instance.new("UICorner")
-IconCorner.CornerRadius = UDim.new(0, 4)
-IconCorner.Parent = TitleIcon
+TitleBar.InputChanged:Connect(function(input)
+    if isDragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        local delta = input.Position - dragStart
+        local newPosition = UDim2.new(
+            startPos.X.Scale, startPos.X.Offset + delta.X,
+            startPos.Y.Scale, startPos.Y.Offset + delta.Y
+        )
+        
+        -- Move main frame
+        MainFrame.Position = newPosition
+        
+        -- Move all shadows with main frame
+        Shadow.Position = UDim2.new(
+            newPosition.X.Scale, newPosition.X.Offset + 8,
+            newPosition.Y.Scale, newPosition.Y.Offset + 8
+        )
+        
+        Shadow2.Position = UDim2.new(
+            newPosition.X.Scale, newPosition.X.Offset + 2,
+            newPosition.Y.Scale, newPosition.Y.Offset + 2
+        )
+        
+        AmbientShadow.Position = UDim2.new(
+            newPosition.X.Scale, newPosition.X.Offset - 10,
+            newPosition.Y.Scale, newPosition.Y.Offset - 10
+        )
+    end
+end)
 
+-- Modern Title Text with Enhanced Typography
 local TitleText = Instance.new("TextLabel")
 TitleText.Name = "TitleText"
 TitleText.Parent = TitleBar
 TitleText.BackgroundTransparency = 1
-TitleText.Position = UDim2.new(0, 50, 0, 0)
-TitleText.Size = UDim2.new(0, 200, 1, 0)
+TitleText.Position = UDim2.new(0, 20, 0, 0)
+TitleText.Size = UDim2.new(0, 250, 1, 0)
 TitleText.Font = Enum.Font.GothamBold
-TitleText.Text = "Made by Seth"
+TitleText.Text = "✨ FlixHub v2.0"
 TitleText.TextColor3 = Color3.fromRGB(255, 255, 255)
-TitleText.TextSize = 16
+TitleText.TextSize = 18
 TitleText.TextXAlignment = Enum.TextXAlignment.Left
 TitleText.ZIndex = 4
 
--- Version badge
-local VersionBadge = Instance.new("Frame")
-VersionBadge.Name = "VersionBadge"
-VersionBadge.Parent = TitleBar
-VersionBadge.BackgroundColor3 = Color3.fromRGB(100, 200, 100)
-VersionBadge.BorderSizePixel = 0
-VersionBadge.Position = UDim2.new(0, 250, 0, 15)
-VersionBadge.Size = UDim2.new(0, 40, 0, 20)
-VersionBadge.ZIndex = 4
+-- Title Text Glow Effect
+local TitleTextStroke = Instance.new("UIStroke")
+TitleTextStroke.Parent = TitleText
+TitleTextStroke.Color = Color3.fromRGB(100, 150, 255)
+TitleTextStroke.Transparency = 0.7
+TitleTextStroke.Thickness = 1
 
-local VersionCorner = Instance.new("UICorner")
-VersionCorner.CornerRadius = UDim.new(0, 10)
-VersionCorner.Parent = VersionBadge
-
-local VersionText = Instance.new("TextLabel")
-VersionText.Name = "VersionText"
-VersionText.Parent = VersionBadge
-VersionText.BackgroundTransparency = 1
-VersionText.Size = UDim2.new(1, 0, 1, 0)
-VersionText.Font = Enum.Font.GothamBold
-VersionText.Text = "v1.6.4"
-VersionText.TextColor3 = Color3.fromRGB(255, 255, 255)
-VersionText.TextSize = 10
-VersionText.TextXAlignment = Enum.TextXAlignment.Center
-VersionText.ZIndex = 5
-
--- UI Library badge
-local UILibraryBadge = Instance.new("Frame")
-UILibraryBadge.Name = "UILibraryBadge"
-UILibraryBadge.Parent = TitleBar
-UILibraryBadge.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
-UILibraryBadge.BorderSizePixel = 0
-UILibraryBadge.Position = UDim2.new(0, 300, 0, 15)
-UILibraryBadge.Size = UDim2.new(0, 60, 0, 20)
-UILibraryBadge.ZIndex = 4
-
-local UILibraryCorner = Instance.new("UICorner")
-UILibraryCorner.CornerRadius = UDim.new(0, 10)
-UILibraryCorner.Parent = UILibraryBadge
-
-local UILibraryText = Instance.new("TextLabel")
-UILibraryText.Name = "UILibraryText"
-UILibraryText.Parent = UILibraryBadge
-UILibraryText.BackgroundTransparency = 1
-UILibraryText.Size = UDim2.new(1, 0, 1, 0)
-UILibraryText.Font = Enum.Font.GothamBold
-UILibraryText.Text = "UI Library"
-UILibraryText.TextColor3 = Color3.fromRGB(255, 255, 255)
-UILibraryText.TextSize = 10
-UILibraryText.TextXAlignment = Enum.TextXAlignment.Center
-UILibraryText.ZIndex = 5
-
--- Title bar buttons
-local ButtonContainer = Instance.new("Frame")
-ButtonContainer.Name = "ButtonContainer"
-ButtonContainer.Parent = TitleBar
-ButtonContainer.BackgroundTransparency = 1
-ButtonContainer.Position = UDim2.new(1, -120, 0, 12)
-ButtonContainer.Size = UDim2.new(0, 110, 0, 26)
-ButtonContainer.ZIndex = 4
-
--- Refresh button
-local RefreshButton = Instance.new("TextButton")
-RefreshButton.Name = "RefreshButton"
-RefreshButton.Parent = ButtonContainer
-RefreshButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-RefreshButton.BorderSizePixel = 0
-RefreshButton.Position = UDim2.new(0, 0, 0, 0)
-RefreshButton.Size = UDim2.new(0, 26, 0, 26)
-RefreshButton.Font = Enum.Font.GothamBold
-RefreshButton.Text = "🔄"
-RefreshButton.TextColor3 = Color3.fromRGB(200, 200, 200)
-RefreshButton.TextSize = 12
-RefreshButton.ZIndex = 5
-
-local RefreshCorner = Instance.new("UICorner")
-RefreshCorner.CornerRadius = UDim.new(0, 4)
-RefreshCorner.Parent = RefreshButton
-
--- Minimize button
-local MinimizeButton = Instance.new("TextButton")
-MinimizeButton.Name = "MinimizeButton"
-MinimizeButton.Parent = ButtonContainer
-MinimizeButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-MinimizeButton.BorderSizePixel = 0
-MinimizeButton.Position = UDim2.new(0, 28, 0, 0)
-MinimizeButton.Size = UDim2.new(0, 26, 0, 26)
-MinimizeButton.Font = Enum.Font.GothamBold
-MinimizeButton.Text = "-"
-MinimizeButton.TextColor3 = Color3.fromRGB(200, 200, 200)
-MinimizeButton.TextSize = 16
-MinimizeButton.ZIndex = 5
-
-local MinimizeCorner = Instance.new("UICorner")
-MinimizeCorner.CornerRadius = UDim.new(0, 4)
-MinimizeCorner.Parent = MinimizeButton
-
--- Fullscreen button
-local FullscreenButton = Instance.new("TextButton")
-FullscreenButton.Name = "FullscreenButton"
-FullscreenButton.Parent = ButtonContainer
-FullscreenButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-FullscreenButton.BorderSizePixel = 0
-FullscreenButton.Position = UDim2.new(0, 56, 0, 0)
-FullscreenButton.Size = UDim2.new(0, 26, 0, 26)
-FullscreenButton.Font = Enum.Font.GothamBold
-FullscreenButton.Text = "⛶"
-FullscreenButton.TextColor3 = Color3.fromRGB(200, 200, 200)
-FullscreenButton.TextSize = 12
-FullscreenButton.ZIndex = 5
-
-local FullscreenCorner = Instance.new("UICorner")
-FullscreenCorner.CornerRadius = UDim.new(0, 4)
-FullscreenCorner.Parent = FullscreenButton
-
--- Close button
+-- Modern Close Button with Gradient
 local CloseButton = Instance.new("TextButton")
 CloseButton.Name = "CloseButton"
-CloseButton.Parent = ButtonContainer
-CloseButton.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+CloseButton.Parent = TitleBar
+CloseButton.BackgroundColor3 = Color3.fromRGB(220, 85, 85)
+CloseButton.BackgroundTransparency = 0.1
 CloseButton.BorderSizePixel = 0
-CloseButton.Position = UDim2.new(0, 84, 0, 0)
-CloseButton.Size = UDim2.new(0, 26, 0, 26)
+CloseButton.Position = UDim2.new(1, -40, 0, 8)
+CloseButton.Size = UDim2.new(0, 28, 0, 28)
 CloseButton.Font = Enum.Font.GothamBold
 CloseButton.Text = "×"
-CloseButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 CloseButton.TextSize = 16
-CloseButton.ZIndex = 5
+CloseButton.ZIndex = 4
+
+-- Close Button Gradient
+local CloseGradient = Instance.new("UIGradient")
+CloseGradient.Parent = CloseButton
+CloseGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 95, 95)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(200, 65, 65))
+}
+CloseGradient.Rotation = 45
+
+-- Close Button Glow Effect
+local CloseStroke = Instance.new("UIStroke")
+CloseStroke.Parent = CloseButton
+CloseStroke.Color = Color3.fromRGB(255, 120, 120)
+CloseStroke.Transparency = 0.6
+CloseStroke.Thickness = 1
 
 local CloseCorner = Instance.new("UICorner")
-CloseCorner.CornerRadius = UDim.new(0, 4)
+CloseCorner.CornerRadius = UDim.new(0, 6)
 CloseCorner.Parent = CloseButton
 
+-- Modern Minimize Button with Gradient
+local MinimizeButton = Instance.new("TextButton")
+MinimizeButton.Name = "MinimizeButton"
+MinimizeButton.Parent = TitleBar
+MinimizeButton.BackgroundColor3 = Color3.fromRGB(120, 120, 140)
+MinimizeButton.BackgroundTransparency = 0.1
+MinimizeButton.BorderSizePixel = 0
+MinimizeButton.Position = UDim2.new(1, -75, 0, 8)
+MinimizeButton.Size = UDim2.new(0, 28, 0, 28)
+MinimizeButton.Font = Enum.Font.GothamBold
+MinimizeButton.Text = "-"
+MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+MinimizeButton.TextSize = 16
+MinimizeButton.ZIndex = 4
 
--- Modern Sidebar
+-- Minimize Button Gradient
+local MinimizeGradient = Instance.new("UIGradient")
+MinimizeGradient.Parent = MinimizeButton
+MinimizeGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(140, 140, 160)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 100, 120))
+}
+MinimizeGradient.Rotation = 45
+
+-- Minimize Button Glow
+local MinimizeStroke = Instance.new("UIStroke")
+MinimizeStroke.Parent = MinimizeButton
+MinimizeStroke.Color = Color3.fromRGB(150, 150, 180)
+MinimizeStroke.Transparency = 0.6
+MinimizeStroke.Thickness = 1
+
+local MinimizeCorner = Instance.new("UICorner")
+MinimizeCorner.CornerRadius = UDim.new(0, 6)
+MinimizeCorner.Parent = MinimizeButton
+
+-- Settings Button for Minimize Icon
+local SettingsButton = Instance.new("TextButton")
+SettingsButton.Name = "SettingsButton"
+SettingsButton.Parent = TitleBar
+SettingsButton.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
+SettingsButton.BackgroundTransparency = 0.1
+SettingsButton.BorderSizePixel = 0
+SettingsButton.Position = UDim2.new(1, -110, 0, 8)
+SettingsButton.Size = UDim2.new(0, 28, 0, 28)
+SettingsButton.Font = Enum.Font.GothamBold
+SettingsButton.Text = "⚙️"
+SettingsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+SettingsButton.TextSize = 12
+SettingsButton.ZIndex = 4
+
+-- Settings Button Gradient
+local SettingsGradient = Instance.new("UIGradient")
+SettingsGradient.Parent = SettingsButton
+SettingsGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(140, 140, 160)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 100, 120))
+}
+SettingsGradient.Rotation = 45
+
+-- Settings Button Glow
+local SettingsStroke = Instance.new("UIStroke")
+SettingsStroke.Parent = SettingsButton
+SettingsStroke.Color = Color3.fromRGB(150, 150, 180)
+SettingsStroke.Transparency = 0.6
+SettingsStroke.Thickness = 1
+
+local SettingsCorner = Instance.new("UICorner")
+SettingsCorner.CornerRadius = UDim.new(0, 6)
+SettingsCorner.Parent = SettingsButton
+
+-- Search Button for ScriptBlox (initially hidden)
+local SearchButton = Instance.new("TextButton")
+SearchButton.Name = "SearchButton"
+SearchButton.Parent = TitleBar
+SearchButton.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
+SearchButton.BackgroundTransparency = 0.1
+SearchButton.BorderSizePixel = 0
+SearchButton.Position = UDim2.new(1, -145, 0, 8)
+SearchButton.Size = UDim2.new(0, 28, 0, 28)
+SearchButton.Font = Enum.Font.GothamBold
+SearchButton.Text = "🔍"
+SearchButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+SearchButton.TextSize = 12
+SearchButton.ZIndex = 4
+SearchButton.Visible = false -- Hidden by default
+
+-- Search Button Gradient
+local SearchGradient = Instance.new("UIGradient")
+SearchGradient.Parent = SearchButton
+SearchGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(140, 140, 160)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(100, 100, 120))
+}
+SearchGradient.Rotation = 45
+
+-- Search Button Glow
+local SearchStroke = Instance.new("UIStroke")
+SearchStroke.Parent = SearchButton
+SearchStroke.Color = Color3.fromRGB(150, 150, 180)
+SearchStroke.Transparency = 0.6
+SearchStroke.Thickness = 1
+
+local SearchCorner = Instance.new("UICorner")
+SearchCorner.CornerRadius = UDim.new(0, 6)
+SearchCorner.Parent = SearchButton
+
+-- Modern Sidebar with Glassmorphism
 local Sidebar = Instance.new("Frame")
 Sidebar.Name = "Sidebar"
 Sidebar.Parent = MainFrame
-Sidebar.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-Sidebar.BackgroundTransparency = 0
+Sidebar.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+Sidebar.BackgroundTransparency = 0.2
 Sidebar.BorderSizePixel = 0
-Sidebar.Position = UDim2.new(0, 0, 0, 50)
-Sidebar.Size = UDim2.new(0, 250, 1, -50)
+Sidebar.Position = UDim2.new(0, 0, 0, 40)
+Sidebar.Size = UDim2.new(0, 160, 1, -40) -- Slightly wider
 Sidebar.ZIndex = 3
 
--- Sidebar separator line
-local SidebarSeparator = Instance.new("Frame")
-SidebarSeparator.Name = "SidebarSeparator"
-SidebarSeparator.Parent = Sidebar
-SidebarSeparator.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
-SidebarSeparator.BorderSizePixel = 0
-SidebarSeparator.Position = UDim2.new(1, -1, 0, 0)
-SidebarSeparator.Size = UDim2.new(0, 1, 1, 0)
-SidebarSeparator.ZIndex = 4
+-- Sidebar Gradient
+local SidebarGradient = Instance.new("UIGradient")
+SidebarGradient.Parent = Sidebar
+SidebarGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(35, 35, 55)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(25, 25, 40)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 35))
+}
+SidebarGradient.Rotation = 15
 
--- Features section header
-local FeaturesHeader = Instance.new("TextLabel")
-FeaturesHeader.Name = "FeaturesHeader"
-FeaturesHeader.Parent = Sidebar
-FeaturesHeader.BackgroundTransparency = 1
-FeaturesHeader.Position = UDim2.new(0, 20, 0, 20)
-FeaturesHeader.Size = UDim2.new(1, -40, 0, 30)
-FeaturesHeader.Font = Enum.Font.GothamBold
-FeaturesHeader.Text = "Features"
-FeaturesHeader.TextColor3 = Color3.fromRGB(150, 150, 150)
-FeaturesHeader.TextSize = 14
-FeaturesHeader.TextXAlignment = Enum.TextXAlignment.Left
-FeaturesHeader.ZIndex = 4
+-- Sidebar Glow Border
+local SidebarStroke = Instance.new("UIStroke")
+SidebarStroke.Parent = Sidebar
+SidebarStroke.Color = Color3.fromRGB(80, 120, 255)
+SidebarStroke.Transparency = 0.7
+SidebarStroke.Thickness = 1
 
--- Features container
-local FeaturesContainer = Instance.new("ScrollingFrame")
-FeaturesContainer.Name = "FeaturesContainer"
-FeaturesContainer.Parent = Sidebar
-FeaturesContainer.BackgroundTransparency = 1
-FeaturesContainer.BorderSizePixel = 0
-FeaturesContainer.Position = UDim2.new(0, 0, 0, 60)
-FeaturesContainer.Size = UDim2.new(1, 0, 0, 200)
-FeaturesContainer.ScrollingDirection = Enum.ScrollingDirection.Y
-FeaturesContainer.ScrollBarThickness = 0
-FeaturesContainer.CanvasSize = UDim2.new(0, 0, 0, 0)
-FeaturesContainer.ZIndex = 4
+local SidebarCorner = Instance.new("UICorner")
+SidebarCorner.CornerRadius = UDim.new(0, 0) -- Sharp corners for sidebar
+SidebarCorner.Parent = Sidebar
 
-local FeaturesLayout = Instance.new("UIListLayout")
-FeaturesLayout.Parent = FeaturesContainer
-FeaturesLayout.FillDirection = Enum.FillDirection.Vertical
-FeaturesLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
-FeaturesLayout.SortOrder = Enum.SortOrder.LayoutOrder
-FeaturesLayout.Padding = UDim.new(0, 15)
+-- Sidebar Tabs Container (Scrollable)
+local TabContainer = Instance.new("ScrollingFrame")
+TabContainer.Name = "TabContainer"
+TabContainer.Parent = Sidebar
+TabContainer.BackgroundTransparency = 1
+TabContainer.BorderSizePixel = 0
+TabContainer.Position = UDim2.new(0, 0, 0, 10)
+TabContainer.Size = UDim2.new(1, 0, 1, -10)
+TabContainer.ScrollingDirection = Enum.ScrollingDirection.Y
+TabContainer.ScrollBarThickness = 4
+TabContainer.ScrollBarImageColor3 = Color3.fromRGB(75, 75, 100)
+TabContainer.ScrollBarImageTransparency = 0.3
+TabContainer.CanvasSize = UDim2.new(0, 0, 0, 0) -- Will be calculated dynamically
 
--- Settings section header
-local SettingsHeader = Instance.new("TextLabel")
-SettingsHeader.Name = "SettingsHeader"
-SettingsHeader.Parent = Sidebar
-SettingsHeader.BackgroundTransparency = 1
-SettingsHeader.Position = UDim2.new(0, 20, 0, 280)
-SettingsHeader.Size = UDim2.new(1, -40, 0, 30)
-SettingsHeader.Font = Enum.Font.GothamBold
-SettingsHeader.Text = "Settings"
-SettingsHeader.TextColor3 = Color3.fromRGB(150, 150, 150)
-SettingsHeader.TextSize = 14
-SettingsHeader.TextXAlignment = Enum.TextXAlignment.Left
-SettingsHeader.ZIndex = 4
+local TabLayout = Instance.new("UIListLayout")
+TabLayout.Parent = TabContainer
+TabLayout.FillDirection = Enum.FillDirection.Vertical
+TabLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+TabLayout.SortOrder = Enum.SortOrder.LayoutOrder
+TabLayout.Padding = UDim.new(0, 5)
 
--- Settings container
-local SettingsContainer = Instance.new("ScrollingFrame")
-SettingsContainer.Name = "SettingsContainer"
-SettingsContainer.Parent = Sidebar
-SettingsContainer.BackgroundTransparency = 1
-SettingsContainer.BorderSizePixel = 0
-SettingsContainer.Position = UDim2.new(0, 0, 0, 320)
-SettingsContainer.Size = UDim2.new(1, 0, 1, -320)
-SettingsContainer.ScrollingDirection = Enum.ScrollingDirection.Y
-SettingsContainer.ScrollBarThickness = 0
-SettingsContainer.CanvasSize = UDim2.new(0, 0, 0, 0)
-SettingsContainer.ZIndex = 4
-
-local SettingsLayout = Instance.new("UIListLayout")
-SettingsLayout.Parent = SettingsContainer
-SettingsLayout.FillDirection = Enum.FillDirection.Vertical
-SettingsLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
-SettingsLayout.SortOrder = Enum.SortOrder.LayoutOrder
-SettingsLayout.Padding = UDim.new(0, 15)
-
--- Modern Content Area
+-- Modern Content Area with Enhanced Design
 local ContentArea = Instance.new("Frame")
 ContentArea.Name = "ContentArea"
 ContentArea.Parent = MainFrame
-ContentArea.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-ContentArea.BackgroundTransparency = 0
+ContentArea.BackgroundColor3 = Color3.fromRGB(28, 28, 42)
+ContentArea.BackgroundTransparency = 0.3
 ContentArea.BorderSizePixel = 0
-ContentArea.Position = UDim2.new(0, 250, 0, 50)
-ContentArea.Size = UDim2.new(1, -250, 1, -50)
+ContentArea.Position = UDim2.new(0, 160, 0, 40)
+ContentArea.Size = UDim2.new(1, -160, 1, -40)
 ContentArea.ZIndex = 3
 
--- Remove search container for now
-
--- Content will be populated based on selected features
-
-
-
-
-
-
-
-
-
-
-
--- Feature toggle states
-local featureStates = {
-    ["Auto Collect Money"] = false,
-    ["Instant Prompt"] = false,
-    ["Auto Farm"] = false,
-    ["Speed Boost"] = false,
-    ["Jump Boost"] = false,
-    ["Infinite Health"] = false
+-- Content Area Gradient
+local ContentGradient = Instance.new("UIGradient")
+ContentGradient.Parent = ContentArea
+ContentGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(32, 32, 48)),
+    ColorSequenceKeypoint.new(0.7, Color3.fromRGB(25, 25, 38)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(22, 22, 35))
 }
+ContentGradient.Rotation = -15
+
+-- Content Area Subtle Glow
+local ContentStroke = Instance.new("UIStroke")
+ContentStroke.Parent = ContentArea
+ContentStroke.Color = Color3.fromRGB(60, 100, 255)
+ContentStroke.Transparency = 0.8
+ContentStroke.Thickness = 1
+
+-- Search Container (Now in Content Area)
+local SearchContainer = Instance.new("Frame")
+SearchContainer.Name = "SearchContainer"
+SearchContainer.Parent = ContentArea
+SearchContainer.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+SearchContainer.BorderSizePixel = 0
+SearchContainer.Position = UDim2.new(0, 15, 0, 15)
+SearchContainer.Size = UDim2.new(1, -30, 0, 35)
+
+local SearchCorner = Instance.new("UICorner")
+SearchCorner.CornerRadius = UDim.new(0, 8)
+SearchCorner.Parent = SearchContainer
+
+local SearchBox = Instance.new("TextBox")
+SearchBox.Name = "SearchBox"
+SearchBox.Parent = SearchContainer
+SearchBox.BackgroundTransparency = 1
+SearchBox.Position = UDim2.new(0, 35, 0, 0)
+SearchBox.Size = UDim2.new(1, -35, 1, 0)
+SearchBox.Font = Enum.Font.Gotham
+SearchBox.PlaceholderText = "Search scripts..."
+SearchBox.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
+SearchBox.Text = ""
+SearchBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+SearchBox.TextSize = 14
+SearchBox.TextXAlignment = Enum.TextXAlignment.Left
+
+local SearchIcon = Instance.new("TextLabel")
+SearchIcon.Name = "SearchIcon"
+SearchIcon.Parent = SearchContainer
+SearchIcon.BackgroundTransparency = 1
+SearchIcon.Position = UDim2.new(0, 10, 0, 0)
+SearchIcon.Size = UDim2.new(0, 20, 1, 0)
+SearchIcon.Font = Enum.Font.GothamMedium
+SearchIcon.Text = "🔍"
+SearchIcon.TextColor3 = Color3.fromRGB(150, 150, 150)
+SearchIcon.TextSize = 16
+
+-- Script Container (Now in Content Area)
+local ScriptContainer = Instance.new("ScrollingFrame")
+ScriptContainer.Name = "ScriptContainer"
+ScriptContainer.Parent = ContentArea
+ScriptContainer.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+ScriptContainer.BorderSizePixel = 0
+ScriptContainer.Position = UDim2.new(0, 15, 0, 65) -- Below search bar
+ScriptContainer.Size = UDim2.new(1, -30, 1, -80) -- Full content area minus margins
+ScriptContainer.ScrollBarThickness = 6
+ScriptContainer.ScrollBarImageColor3 = Color3.fromRGB(75, 75, 100)
+
+local ScriptCorner = Instance.new("UICorner")
+ScriptCorner.CornerRadius = UDim.new(0, 8)
+ScriptCorner.Parent = ScriptContainer
+
+local ScriptLayout = Instance.new("UIListLayout")
+ScriptLayout.Parent = ScriptContainer
+ScriptLayout.SortOrder = Enum.SortOrder.LayoutOrder
+ScriptLayout.Padding = UDim.new(0, 5)
+
+
+
+
+
+
+
+
+
+
+
+-- New Tab System Variables
+local currentTab = "Home"
+local isGamesExpanded = false
+local isVisualExpanded = false
+local filteredScripts = {}
 
 -- Theme System Variables
 local currentTheme = "Dark" -- Default theme
