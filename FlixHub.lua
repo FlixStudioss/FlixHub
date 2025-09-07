@@ -973,6 +973,16 @@ local GameScripts = {
             name = "RingstaUI",
             description = "RingstaUI script for 99 Nights in the Forest",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/wefwef127382/99daysloader.github.io/refs/heads/main/ringta.lua"))()]]
+        },
+        {
+            name = "Auto Farm Diamond",
+            description = "Automated diamond farming script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/collonroger/pigeonhub/refs/heads/main/autofarmdiamonds.lua"))()]]
+        },
+        {
+            name = "VoidWare",
+            description = "VoidWare script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet("https://pastefy.app/RXzul28o/raw"))()]]
         }
     },
     ["Ink Game"] = {
@@ -1045,6 +1055,13 @@ local GameScripts = {
             name = "SpeedHub X",
             description = "SpeedHub X script for Fisch game",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()]]
+        }
+    },
+    ["Underground War"] = {
+        {
+            name = "Aimbot",
+            description = "Aimbot script for Underground War",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-HttpSpy/Random-Silly-stuff/refs/heads/main/UW2-Panel.lua"))()]]
         }
     },
     ["Build A Boat"] = {
