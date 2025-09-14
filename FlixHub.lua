@@ -902,50 +902,8 @@ local function toggleAutoExecute(scriptData)
     return autoExecuteScripts[scriptId]
 end
 
--- Function to run auto-execute scripts
-local function runAutoExecuteScripts()
-    local executed = 0
-    
-    -- Check Universal scripts
-    for _, scriptData in pairs(UniversalScripts) do
-        if isAutoExecuteEnabled(scriptData) then
-            pcall(function()
-                loadstring(scriptData.script)()
-                executed = executed + 1
-            end)
-        end
-    end
-    
-    -- Check FE scripts
-    for _, scriptData in pairs(FEScripts) do
-        if isAutoExecuteEnabled(scriptData) then
-            pcall(function()
-                loadstring(scriptData.script)()
-                executed = executed + 1
-            end)
-        end
-    end
-    
-    -- Check game-specific scripts
-    for gameName, scripts in pairs(GameScripts) do
-        for _, scriptData in pairs(scripts) do
-            if isAutoExecuteEnabled(scriptData) then
-                pcall(function()
-                    loadstring(scriptData.script)()
-                    executed = executed + 1
-                end)
-            end
-        end
-    end
-    
-    if executed > 0 then
-        StarterGui:SetCore("SendNotification", {
-            Title = "FlixHub Auto-Execute";
-            Text = "Executed " .. executed .. " auto-execute scripts!";
-            Duration = 3;
-        })
-    end
-end
+-- Function to run auto-execute scripts (will be defined inside createMainFlixHub)
+local runAutoExecuteScripts
 
 -- Load favorites and auto-execute on startup
 loadFavorites()
@@ -3205,6 +3163,51 @@ end)
 -- Initialize the GUI with new tab system
 refreshTabs() -- Initialize tab system
 createHomeContent() -- Start with Home tab content
+
+-- Define auto-execute function inside createMainFlixHub where script arrays are available
+runAutoExecuteScripts = function()
+    local executed = 0
+    
+    -- Check Universal scripts
+    for _, scriptData in pairs(UniversalScripts) do
+        if isAutoExecuteEnabled(scriptData) then
+            pcall(function()
+                loadstring(scriptData.script)()
+                executed = executed + 1
+            end)
+        end
+    end
+    
+    -- Check FE scripts
+    for _, scriptData in pairs(FEScripts) do
+        if isAutoExecuteEnabled(scriptData) then
+            pcall(function()
+                loadstring(scriptData.script)()
+                executed = executed + 1
+            end)
+        end
+    end
+    
+    -- Check game-specific scripts
+    for gameName, scripts in pairs(GameScripts) do
+        for _, scriptData in pairs(scripts) do
+            if isAutoExecuteEnabled(scriptData) then
+                pcall(function()
+                    loadstring(scriptData.script)()
+                    executed = executed + 1
+                end)
+            end
+        end
+    end
+    
+    if executed > 0 then
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub Auto-Execute";
+            Text = "Executed " .. executed .. " auto-execute scripts!";
+            Duration = 3;
+        })
+    end
+end
 
 -- Load and apply saved theme after all UI components are created
 local savedTheme = loadTheme()
