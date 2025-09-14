@@ -819,10 +819,9 @@ local function loadTheme()
     if readfile and isfile then
         if isfile(THEME_FILE) then
             local savedTheme = readfile(THEME_FILE)
-            if themes[savedTheme] then
-                currentTheme = savedTheme
-                return savedTheme
-            end
+            -- Just return the saved theme name without validation
+            -- Validation will happen in applyTheme function
+            return savedTheme
         end
     end
     return "Dark" -- Default theme
