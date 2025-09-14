@@ -807,6 +807,10 @@ local FAVORITES_FILE = "FlixHub_Favorites.json"
 -- Theme Persistence Variables
 local THEME_FILE = "FlixHub_Theme.txt"
 
+-- Auto-Execute Variables
+local AUTO_EXECUTE_FILE = "FlixHub_AutoExecute.json"
+local autoExecuteScripts = {}
+
 -- Function to save current theme
 local function saveTheme()
     if writefile then
@@ -853,8 +857,99 @@ local function loadFavorites()
     end
 end
 
--- Load favorites on startup
+-- Auto-Execute Storage Functions
+local function saveAutoExecute()
+    if writefile then
+        local success, result = pcall(function()
+            return HttpService:JSONEncode(autoExecuteScripts)
+        end)
+        if success then
+            writefile(AUTO_EXECUTE_FILE, result)
+        end
+    end
+end
+
+local function loadAutoExecute()
+    if readfile and isfile then
+        if isfile(AUTO_EXECUTE_FILE) then
+            local success, result = pcall(function()
+                local data = readfile(AUTO_EXECUTE_FILE)
+                return HttpService:JSONDecode(data)
+            end)
+            if success and result then
+                autoExecuteScripts = result
+            end
+        end
+    end
+end
+
+-- Function to generate unique script ID
+local function getScriptId(scriptData)
+    return scriptData.name .. "_" .. (scriptData.description or "")
+end
+
+-- Function to check if script is set to auto-execute
+local function isAutoExecuteEnabled(scriptData)
+    local scriptId = getScriptId(scriptData)
+    return autoExecuteScripts[scriptId] == true
+end
+
+-- Function to toggle auto-execute for a script
+local function toggleAutoExecute(scriptData)
+    local scriptId = getScriptId(scriptData)
+    autoExecuteScripts[scriptId] = not autoExecuteScripts[scriptId]
+    saveAutoExecute()
+    return autoExecuteScripts[scriptId]
+end
+
+-- Function to run auto-execute scripts
+local function runAutoExecuteScripts()
+    local executed = 0
+    
+    -- Check Universal scripts
+    for _, scriptData in pairs(UniversalScripts) do
+        if isAutoExecuteEnabled(scriptData) then
+            pcall(function()
+                loadstring(scriptData.script)()
+                executed = executed + 1
+            end)
+        end
+    end
+    
+    -- Check FE scripts
+    for _, scriptData in pairs(FEScripts) do
+        if isAutoExecuteEnabled(scriptData) then
+            pcall(function()
+                loadstring(scriptData.script)()
+                executed = executed + 1
+            end)
+        end
+    end
+    
+    -- Check game-specific scripts
+    for gameName, scripts in pairs(GameScripts) do
+        for _, scriptData in pairs(scripts) do
+            if isAutoExecuteEnabled(scriptData) then
+                pcall(function()
+                    loadstring(scriptData.script)()
+                    executed = executed + 1
+                end)
+            end
+        end
+    end
+    
+    if executed > 0 then
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub Auto-Execute";
+            Text = "Executed " .. executed .. " auto-execute scripts!";
+            Duration = 3;
+        })
+    end
+end
+
+-- Load favorites and auto-execute on startup
 loadFavorites()
+loadAutoExecute()
 
 -- Function to refresh favorites display
 local function refreshFavorites()
@@ -1878,7 +1973,7 @@ local function createScriptItem(scriptData, index)
     FavoriteButton.Parent = ScriptItem
     FavoriteButton.BackgroundColor3 = isFavorited and Color3.fromRGB(255, 100, 150) or Color3.fromRGB(100, 100, 120)
     FavoriteButton.BorderSizePixel = 0
-    FavoriteButton.Position = UDim2.new(1, -85, 0, 20)
+    FavoriteButton.Position = UDim2.new(1, -120, 0, 20)
     FavoriteButton.Size = UDim2.new(0, 30, 0, 30)
     FavoriteButton.Font = Enum.Font.GothamBold
     FavoriteButton.Text = isFavorited and "❤️" or "🤍"
@@ -1889,6 +1984,24 @@ local function createScriptItem(scriptData, index)
     FavoriteCorner.CornerRadius = UDim.new(0, 6)
     FavoriteCorner.Parent = FavoriteButton
     
+    -- Auto-Execute Button (Toggle)
+    local isAutoEnabled = isAutoExecuteEnabled(scriptData)
+    local AutoExecuteButton = Instance.new("TextButton")
+    AutoExecuteButton.Name = "AutoExecuteButton"
+    AutoExecuteButton.Parent = ScriptItem
+    AutoExecuteButton.BackgroundColor3 = isAutoEnabled and Color3.fromRGB(255, 150, 50) or Color3.fromRGB(120, 120, 140)
+    AutoExecuteButton.BorderSizePixel = 0
+    AutoExecuteButton.Position = UDim2.new(1, -85, 0, 20)
+    AutoExecuteButton.Size = UDim2.new(0, 30, 0, 30)
+    AutoExecuteButton.Font = Enum.Font.GothamBold
+    AutoExecuteButton.Text = isAutoEnabled and "⚡" or "⚪"
+    AutoExecuteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    AutoExecuteButton.TextSize = 14
+    
+    local AutoExecuteCorner = Instance.new("UICorner")
+    AutoExecuteCorner.CornerRadius = UDim.new(0, 6)
+    AutoExecuteCorner.Parent = AutoExecuteButton
+
     -- Execute Button (Square with Play Icon)
     local ExecuteButton = Instance.new("TextButton")
     ExecuteButton.Name = "ExecuteButton"
@@ -1942,6 +2055,31 @@ local function createScriptItem(scriptData, index)
         refreshFavorites()
     end)
     
+    -- Auto-Execute Button Click
+    AutoExecuteButton.MouseButton1Click:Connect(function()
+        local newState = toggleAutoExecute(scriptData)
+        
+        if newState then
+            AutoExecuteButton.Text = "⚡"
+            AutoExecuteButton.BackgroundColor3 = Color3.fromRGB(255, 150, 50)
+            
+            StarterGui:SetCore("SendNotification", {
+                Title = "FlixHub Auto-Execute";
+                Text = "Enabled auto-execute for " .. scriptData.name;
+                Duration = 2;
+            })
+        else
+            AutoExecuteButton.Text = "⚪"
+            AutoExecuteButton.BackgroundColor3 = Color3.fromRGB(120, 120, 140)
+            
+            StarterGui:SetCore("SendNotification", {
+                Title = "FlixHub Auto-Execute";
+                Text = "Disabled auto-execute for " .. scriptData.name;
+                Duration = 2;
+            })
+        end
+    end)
+
     -- Execute Button Click
     ExecuteButton.MouseButton1Click:Connect(function()
         ExecuteButton.Text = "⏳" -- Loading icon
@@ -3073,6 +3211,12 @@ local savedTheme = loadTheme()
 if savedTheme then
     applyTheme(savedTheme)
 end
+
+-- Run auto-execute scripts after a short delay to ensure everything is loaded
+spawn(function()
+    wait(2) -- Wait for UI to fully load
+    runAutoExecuteScripts()
+end)
 
 -- Notification
 StarterGui:SetCore("SendNotification", {
