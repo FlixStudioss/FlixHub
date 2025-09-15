@@ -1158,11 +1158,6 @@ local function applyTheme(themeName)
     })
 end
 
--- Load and apply saved theme after themes table is defined
-local savedTheme = loadTheme()
-if savedTheme then
-    applyTheme(savedTheme)
-end
 
 -- Universal Scripts (Not in Games category)
 local UniversalScripts = {
@@ -3066,46 +3061,6 @@ end)
 
 -- Duplicate function removed - using the original changeHubSize function
 
--- Function to apply theme with smooth transitions
-local function applyTheme(themeName)
-    local themeData = themes[themeName]
-    if not themeData then
-        print("Theme not found: " .. themeName)
-        return
-    end
-    
-    currentTheme = themeName
-    
-    -- Apply theme to main components with tweens
-    local mainTween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-        BackgroundColor3 = themeData.MainFrame
-    })
-    
-    local sidebarTween = TweenService:Create(Sidebar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-        BackgroundColor3 = themeData.Sidebar
-    })
-    
-    local contentTween = TweenService:Create(ContentArea, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-        BackgroundColor3 = themeData.ContentArea
-    })
-    
-    local titleTween = TweenService:Create(TitleBar, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
-        BackgroundColor3 = themeData.TitleBar
-    })
-    
-    mainTween:Play()
-    sidebarTween:Play()
-    contentTween:Play()
-    titleTween:Play()
-    
-    -- Notification
-    StarterGui:SetCore("SendNotification", {
-        Title = "FlixHub";
-        Text = "Theme changed to " .. themeName;
-        Duration = 2;
-    })
-end
-
 
 
 
@@ -3113,6 +3068,12 @@ end
 -- Initialize the GUI with new tab system
 refreshTabs() -- Initialize tab system
 createHomeContent() -- Start with Home tab content
+
+-- Load and apply saved theme after all UI components are created
+local savedTheme = loadTheme()
+if savedTheme then
+    applyTheme(savedTheme)
+end
 
 -- Notification
 StarterGui:SetCore("SendNotification", {
