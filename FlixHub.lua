@@ -854,12 +854,8 @@ local function loadFavorites()
     end
 end
 
--- Load favorites and theme on startup
+-- Load favorites on startup
 loadFavorites()
-local savedTheme = loadTheme()
-if savedTheme then
-    applyTheme(savedTheme)
-end
 
 -- Function to refresh favorites display
 local function refreshFavorites()
@@ -1160,6 +1156,12 @@ local function applyTheme(themeName)
         Text = "Theme changed to " .. themeName;
         Duration = 2;
     })
+end
+
+-- Load and apply saved theme after themes table is defined
+local savedTheme = loadTheme()
+if savedTheme then
+    applyTheme(savedTheme)
 end
 
 -- Universal Scripts (Not in Games category)
