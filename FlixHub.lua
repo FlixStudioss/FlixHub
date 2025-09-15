@@ -2190,12 +2190,12 @@ end
 -- Modern Settings Panel
 local SettingsPanel = Instance.new("Frame")
 SettingsPanel.Name = "SettingsPanel"
-SettingsPanel.Parent = FlixHub
 SettingsPanel.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
-SettingsPanel.BorderSizePixel = 0
-SettingsPanel.Position = UDim2.new(0.5, -250, 0.5, -200)
-SettingsPanel.Size = UDim2.new(0, 500, 0, 400)
+SettingsPanel.Size = UDim2.new(0, 500, 0, 500)
+SettingsPanel.Position = UDim2.new(0.5, -250, 0.5, -250)
 SettingsPanel.Visible = false
+SettingsPanel.ZIndex = 200
+SettingsPanel.Parent = FlixHub
 SettingsPanel.ZIndex = 200
 
 -- Settings Panel Gradient
@@ -2348,56 +2348,75 @@ createThemeButton("Green", 5)
 createThemeButton("Red", 6)
 createThemeButton("Blue", 7)
 
+-- Icon Settings Section
+local IconLabel = Instance.new("TextLabel")
+IconLabel.Name = "IconLabel"
+IconLabel.Parent = SettingsPanel
+IconLabel.BackgroundTransparency = 1
+IconLabel.Position = UDim2.new(0, 25, 0, 320)
+IconLabel.Size = UDim2.new(1, -50, 0, 30)
+IconLabel.Font = Enum.Font.GothamBold
+IconLabel.Text = "📍 Minimize Icon Settings"
+IconLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+IconLabel.TextSize = 16
+IconLabel.TextXAlignment = Enum.TextXAlignment.Left
+IconLabel.ZIndex = 201
+
 -- Position Label
 local PositionLabel = Instance.new("TextLabel")
 PositionLabel.Name = "PositionLabel"
 PositionLabel.Parent = SettingsPanel
 PositionLabel.BackgroundTransparency = 1
-PositionLabel.Position = UDim2.new(0, 20, 0, 60)
-PositionLabel.Size = UDim2.new(1, -40, 0, 25)
+PositionLabel.Position = UDim2.new(0, 25, 0, 355)
+PositionLabel.Size = UDim2.new(0.45, 0, 0, 20)
 PositionLabel.Font = Enum.Font.GothamMedium
-PositionLabel.Text = "Icon Position:"
+PositionLabel.Text = "Position:"
 PositionLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-PositionLabel.TextSize = 14
+PositionLabel.TextSize = 12
 PositionLabel.TextXAlignment = Enum.TextXAlignment.Left
 PositionLabel.ZIndex = 201
 
--- Position Buttons Container
+-- Position Buttons Container (Compact)
 local PositionGrid = Instance.new("Frame")
 PositionGrid.Name = "PositionGrid"
 PositionGrid.Parent = SettingsPanel
 PositionGrid.BackgroundTransparency = 1
-PositionGrid.Position = UDim2.new(0, 20, 0, 90)
-PositionGrid.Size = UDim2.new(1, -40, 0, 120)
+PositionGrid.Position = UDim2.new(0, 25, 0, 375)
+PositionGrid.Size = UDim2.new(0.45, 0, 0, 20)
 PositionGrid.ZIndex = 201
 
--- Position button data
+local PositionGridLayout = Instance.new("UIListLayout")
+PositionGridLayout.Parent = PositionGrid
+PositionGridLayout.FillDirection = Enum.FillDirection.Horizontal
+PositionGridLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+PositionGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+PositionGridLayout.Padding = UDim.new(0, 5)
+
+-- Position button data (compact dropdown style)
 local positionButtons = {
-    {key = "top_left", text = "Top Left", pos = UDim2.new(0, 0, 0, 0)},
-    {key = "top_middle", text = "Top Middle", pos = UDim2.new(0.33, 5, 0, 0)},
-    {key = "top_right", text = "Top Right", pos = UDim2.new(0.66, 10, 0, 0)},
-    {key = "bottom_left", text = "Bottom Left", pos = UDim2.new(0, 0, 0, 40)},
-    {key = "bottom_middle", text = "Bottom Middle", pos = UDim2.new(0.33, 5, 0, 40)},
-    {key = "bottom_right", text = "Bottom Right", pos = UDim2.new(0.66, 10, 0, 40)}
+    {key = "top_left", text = "TL", tooltip = "Top Left"},
+    {key = "top_right", text = "TR", tooltip = "Top Right"},
+    {key = "bottom_left", text = "BL", tooltip = "Bottom Left"},
+    {key = "bottom_right", text = "BR", tooltip = "Bottom Right"}
 }
 
--- Create position buttons
-for _, buttonData in pairs(positionButtons) do
+-- Create position buttons (compact)
+for i, buttonData in pairs(positionButtons) do
     local button = Instance.new("TextButton")
     button.Name = buttonData.key .. "Button"
     button.Parent = PositionGrid
     button.BackgroundColor3 = (buttonData.key == iconPosition) and Color3.fromRGB(75, 125, 255) or Color3.fromRGB(40, 40, 60)
     button.BorderSizePixel = 0
-    button.Position = buttonData.pos
-    button.Size = UDim2.new(0.3, -5, 0, 35)
-    button.Font = Enum.Font.GothamMedium
+    button.Size = UDim2.new(0, 25, 1, 0)
+    button.Font = Enum.Font.GothamBold
     button.Text = buttonData.text
     button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    button.TextSize = 11
+    button.TextSize = 10
     button.ZIndex = 202
+    button.LayoutOrder = i
     
     local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 6)
+    corner.CornerRadius = UDim.new(0, 4)
     corner.Parent = button
     
     -- Button click handler
@@ -2417,7 +2436,7 @@ for _, buttonData in pairs(positionButtons) do
         -- Show notification
         StarterGui:SetCore("SendNotification", {
             Title = "FlixHub Settings";
-            Text = "Icon position changed to " .. buttonData.text;
+            Text = "Icon position changed to " .. buttonData.tooltip;
             Duration = 2;
         })
     end)
@@ -2428,12 +2447,12 @@ local MovableLabel = Instance.new("TextLabel")
 MovableLabel.Name = "MovableLabel"
 MovableLabel.Parent = SettingsPanel
 MovableLabel.BackgroundTransparency = 1
-MovableLabel.Position = UDim2.new(0, 20, 0, 220)
-MovableLabel.Size = UDim2.new(1, -40, 0, 25)
+MovableLabel.Position = UDim2.new(0.5, 10, 0, 355)
+MovableLabel.Size = UDim2.new(0.45, 0, 0, 20)
 MovableLabel.Font = Enum.Font.GothamMedium
-MovableLabel.Text = "Make Icon Draggable:"
+MovableLabel.Text = "Draggable:"
 MovableLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-MovableLabel.TextSize = 14
+MovableLabel.TextSize = 12
 MovableLabel.TextXAlignment = Enum.TextXAlignment.Left
 MovableLabel.ZIndex = 201
 
@@ -2443,10 +2462,10 @@ MovableToggle.Name = "MovableToggle"
 MovableToggle.Parent = SettingsPanel
 MovableToggle.BackgroundColor3 = iconMovable and Color3.fromRGB(100, 255, 100) or Color3.fromRGB(255, 100, 100)
 MovableToggle.BorderSizePixel = 0
-MovableToggle.Position = UDim2.new(0, 20, 0, 250)
-MovableToggle.Size = UDim2.new(0, 100, 0, 30)
+MovableToggle.Position = UDim2.new(0.5, 10, 0, 375)
+MovableToggle.Size = UDim2.new(0, 60, 0, 20)
 MovableToggle.Font = Enum.Font.GothamMedium
-MovableToggle.Text = iconMovable and "Enabled" or "Disabled"
+MovableToggle.Text = iconMovable and "ON" or "OFF"
 MovableToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
 MovableToggle.TextSize = 12
 MovableToggle.ZIndex = 202
@@ -2455,17 +2474,31 @@ local MovableToggleCorner = Instance.new("UICorner")
 MovableToggleCorner.CornerRadius = UDim.new(0, 6)
 MovableToggleCorner.Parent = MovableToggle
 
+-- Search Settings Section
+local SearchLabel = Instance.new("TextLabel")
+SearchLabel.Name = "SearchLabel"
+SearchLabel.Parent = SettingsPanel
+SearchLabel.BackgroundTransparency = 1
+SearchLabel.Position = UDim2.new(0, 25, 0, 410)
+SearchLabel.Size = UDim2.new(1, -50, 0, 30)
+SearchLabel.Font = Enum.Font.GothamBold
+SearchLabel.Text = "🔍 Search Settings"
+SearchLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+SearchLabel.TextSize = 16
+SearchLabel.TextXAlignment = Enum.TextXAlignment.Left
+SearchLabel.ZIndex = 201
+
 -- Experimental Search Label
 local ExperimentalLabel = Instance.new("TextLabel")
 ExperimentalLabel.Name = "ExperimentalLabel"
 ExperimentalLabel.Parent = SettingsPanel
 ExperimentalLabel.BackgroundTransparency = 1
-ExperimentalLabel.Position = UDim2.new(0, 130, 0, 220)
-ExperimentalLabel.Size = UDim2.new(1, -150, 0, 25)
+ExperimentalLabel.Position = UDim2.new(0, 25, 0, 445)
+ExperimentalLabel.Size = UDim2.new(0.7, 0, 0, 20)
 ExperimentalLabel.Font = Enum.Font.GothamMedium
-ExperimentalLabel.Text = "ScriptBlox Search:"
+ExperimentalLabel.Text = "ScriptBlox Experimental Search:"
 ExperimentalLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-ExperimentalLabel.TextSize = 14
+ExperimentalLabel.TextSize = 12
 ExperimentalLabel.TextXAlignment = Enum.TextXAlignment.Left
 ExperimentalLabel.ZIndex = 201
 
@@ -2475,16 +2508,16 @@ ExperimentalToggle.Name = "ExperimentalToggle"
 ExperimentalToggle.Parent = SettingsPanel
 ExperimentalToggle.BackgroundColor3 = experimentalSearch and Color3.fromRGB(100, 255, 100) or Color3.fromRGB(255, 100, 100)
 ExperimentalToggle.BorderSizePixel = 0
-ExperimentalToggle.Position = UDim2.new(0, 130, 0, 250)
-ExperimentalToggle.Size = UDim2.new(0, 100, 0, 30)
+ExperimentalToggle.Position = UDim2.new(0.75, 0, 0, 445)
+ExperimentalToggle.Size = UDim2.new(0, 60, 0, 20)
 ExperimentalToggle.Font = Enum.Font.GothamMedium
-ExperimentalToggle.Text = experimentalSearch and "Enabled" or "Disabled"
+ExperimentalToggle.Text = experimentalSearch and "ON" or "OFF"
 ExperimentalToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
-ExperimentalToggle.TextSize = 12
+ExperimentalToggle.TextSize = 10
 ExperimentalToggle.ZIndex = 202
 
 local ExperimentalToggleCorner = Instance.new("UICorner")
-ExperimentalToggleCorner.CornerRadius = UDim.new(0, 6)
+ExperimentalToggleCorner.CornerRadius = UDim.new(0, 4)
 ExperimentalToggleCorner.Parent = ExperimentalToggle
 
 -- Dragging variables
@@ -2530,7 +2563,7 @@ end
 MovableToggle.MouseButton1Click:Connect(function()
     iconMovable = not iconMovable
     MovableToggle.BackgroundColor3 = iconMovable and Color3.fromRGB(100, 255, 100) or Color3.fromRGB(255, 100, 100)
-    MovableToggle.Text = iconMovable and "Enabled" or "Disabled"
+    MovableToggle.Text = iconMovable and "ON" or "OFF"
     
     updateMovableBehavior()
     
@@ -2545,7 +2578,7 @@ end)
 ExperimentalToggle.MouseButton1Click:Connect(function()
     experimentalSearch = not experimentalSearch
     ExperimentalToggle.BackgroundColor3 = experimentalSearch and Color3.fromRGB(100, 255, 100) or Color3.fromRGB(255, 100, 100)
-    ExperimentalToggle.Text = experimentalSearch and "Enabled" or "Disabled"
+    ExperimentalToggle.Text = experimentalSearch and "ON" or "OFF"
     
     -- Show/hide search button based on experimental setting
     SearchButton.Visible = experimentalSearch
