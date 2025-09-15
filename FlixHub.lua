@@ -804,6 +804,30 @@ local favoriteScripts = {}
 local isFavoritesOpen = false
 local FAVORITES_FILE = "FlixHub_Favorites.json"
 
+-- Theme Persistence Variables
+local THEME_FILE = "FlixHub_Theme.txt"
+
+-- Function to save current theme
+local function saveTheme()
+    if writefile then
+        writefile(THEME_FILE, currentTheme)
+    end
+end
+
+-- Function to load saved theme
+local function loadTheme()
+    if readfile and isfile then
+        if isfile(THEME_FILE) then
+            local savedTheme = readfile(THEME_FILE)
+            if themes[savedTheme] then
+                currentTheme = savedTheme
+                return savedTheme
+            end
+        end
+    end
+    return "Dark" -- Default theme
+end
+
 -- Favorites Storage Functions
 local function saveFavorites()
     if writefile then
@@ -830,8 +854,9 @@ local function loadFavorites()
     end
 end
 
--- Load favorites on startup
+-- Load favorites and theme on startup
 loadFavorites()
+currentTheme = loadTheme()
 
 -- Function to refresh favorites display
 local function refreshFavorites()
@@ -1007,19 +1032,6 @@ local themes = {
         textSecondary = Color3.fromRGB(200, 200, 200),
         textTertiary = Color3.fromRGB(180, 180, 180)
     },
-    ["Ocean"] = {
-        primary = Color3.fromRGB(15, 30, 45),
-        secondary = Color3.fromRGB(25, 45, 65),
-        tertiary = Color3.fromRGB(35, 55, 75),
-        sidebar = Color3.fromRGB(10, 25, 40),
-        accent = Color3.fromRGB(100, 180, 255),
-        success = Color3.fromRGB(100, 220, 150),
-        error = Color3.fromRGB(255, 100, 120),
-        warning = Color3.fromRGB(255, 180, 100),
-        text = Color3.fromRGB(255, 255, 255),
-        textSecondary = Color3.fromRGB(200, 220, 240),
-        textTertiary = Color3.fromRGB(160, 180, 200)
-    },
     ["Purple"] = {
         primary = Color3.fromRGB(35, 20, 45),
         secondary = Color3.fromRGB(50, 35, 65),
@@ -1033,6 +1045,32 @@ local themes = {
         textSecondary = Color3.fromRGB(220, 200, 240),
         textTertiary = Color3.fromRGB(180, 160, 200)
     },
+    ["Black"] = {
+        primary = Color3.fromRGB(15, 15, 15),
+        secondary = Color3.fromRGB(25, 25, 25),
+        tertiary = Color3.fromRGB(35, 35, 35),
+        sidebar = Color3.fromRGB(10, 10, 10),
+        accent = Color3.fromRGB(255, 255, 255),
+        success = Color3.fromRGB(100, 255, 100),
+        error = Color3.fromRGB(255, 100, 100),
+        warning = Color3.fromRGB(255, 200, 100),
+        text = Color3.fromRGB(255, 255, 255),
+        textSecondary = Color3.fromRGB(200, 200, 200),
+        textTertiary = Color3.fromRGB(150, 150, 150)
+    },
+    ["Ocean"] = {
+        primary = Color3.fromRGB(15, 30, 45),
+        secondary = Color3.fromRGB(25, 45, 65),
+        tertiary = Color3.fromRGB(35, 55, 75),
+        sidebar = Color3.fromRGB(10, 25, 40),
+        accent = Color3.fromRGB(100, 180, 255),
+        success = Color3.fromRGB(100, 220, 150),
+        error = Color3.fromRGB(255, 100, 120),
+        warning = Color3.fromRGB(255, 180, 100),
+        text = Color3.fromRGB(255, 255, 255),
+        textSecondary = Color3.fromRGB(200, 220, 240),
+        textTertiary = Color3.fromRGB(160, 180, 200)
+    },
     ["Green"] = {
         primary = Color3.fromRGB(20, 35, 25),
         secondary = Color3.fromRGB(30, 50, 35),
@@ -1045,6 +1083,32 @@ local themes = {
         text = Color3.fromRGB(255, 255, 255),
         textSecondary = Color3.fromRGB(200, 240, 220),
         textTertiary = Color3.fromRGB(160, 200, 180)
+    },
+    ["Red"] = {
+        primary = Color3.fromRGB(45, 20, 20),
+        secondary = Color3.fromRGB(60, 30, 30),
+        tertiary = Color3.fromRGB(75, 40, 40),
+        sidebar = Color3.fromRGB(35, 15, 15),
+        accent = Color3.fromRGB(255, 100, 100),
+        success = Color3.fromRGB(100, 255, 100),
+        error = Color3.fromRGB(255, 50, 50),
+        warning = Color3.fromRGB(255, 150, 100),
+        text = Color3.fromRGB(255, 255, 255),
+        textSecondary = Color3.fromRGB(240, 200, 200),
+        textTertiary = Color3.fromRGB(200, 160, 160)
+    },
+    ["Blue"] = {
+        primary = Color3.fromRGB(20, 25, 45),
+        secondary = Color3.fromRGB(30, 35, 60),
+        tertiary = Color3.fromRGB(40, 45, 75),
+        sidebar = Color3.fromRGB(15, 20, 35),
+        accent = Color3.fromRGB(100, 150, 255),
+        success = Color3.fromRGB(100, 255, 150),
+        error = Color3.fromRGB(255, 100, 100),
+        warning = Color3.fromRGB(255, 200, 100),
+        text = Color3.fromRGB(255, 255, 255),
+        textSecondary = Color3.fromRGB(200, 220, 255),
+        textTertiary = Color3.fromRGB(160, 180, 220)
     }
 }
 
@@ -1054,6 +1118,7 @@ local function applyTheme(themeName)
     if not theme then return end
     
     currentTheme = themeName
+    saveTheme() -- Save the selected theme
     
     -- Main UI Elements with smooth transitions
     local transitionInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
@@ -1064,25 +1129,27 @@ local function applyTheme(themeName)
     TweenService:Create(Sidebar, transitionInfo, {BackgroundColor3 = theme.sidebar}):Play()
     TweenService:Create(SearchContainer, transitionInfo, {BackgroundColor3 = theme.secondary}):Play()
     TweenService:Create(ScriptContainer, transitionInfo, {BackgroundColor3 = theme.tertiary}):Play()
-    
-
+    TweenService:Create(FavoritesPanel, transitionInfo, {BackgroundColor3 = theme.tertiary}):Play()
+    TweenService:Create(FavoritesContainer, transitionInfo, {BackgroundColor3 = theme.secondary}):Play()
     
     -- Update text colors
     TitleText.TextColor3 = theme.text
     SearchBox.TextColor3 = theme.text
     SearchBox.PlaceholderColor3 = theme.textTertiary
     SearchIcon.TextColor3 = theme.textTertiary
-    SizeLabel.TextColor3 = theme.textSecondary
-    ThemeLabel.TextColor3 = theme.textSecondary
-    
-    -- Update theme button colors
-    DarkThemeButton.BackgroundColor3 = themeName == "Dark" and theme.accent or Color3.fromRGB(60, 60, 80)
-    OceanThemeButton.BackgroundColor3 = themeName == "Ocean" and theme.accent or Color3.fromRGB(60, 60, 80)
-    PurpleThemeButton.BackgroundColor3 = themeName == "Purple" and theme.accent or Color3.fromRGB(60, 60, 80)
-    GreenThemeButton.BackgroundColor3 = themeName == "Green" and theme.accent or Color3.fromRGB(60, 60, 80)
+    FavoritesTitle.TextColor3 = theme.text
     
     -- Refresh tabs with new theme
     refreshTabs()
+    
+    -- Update theme buttons if they exist
+    if _G.themeButtons then
+        for themeName, button in pairs(_G.themeButtons) do
+            if button and button.Parent then
+                button.BackgroundColor3 = themeName == currentTheme and theme.accent or Color3.fromRGB(60, 60, 80)
+            end
+        end
+    end
     
     -- Show notification
     StarterGui:SetCore("SendNotification", {
@@ -1115,7 +1182,7 @@ local UniversalScripts = {
         script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/ic3w0lf22/Unnamed-ESP/master/UnnamedESP.lua"))()]]
     },
     {
-        name = "Solara Hub",
+        name = "Solara Hub (Key)",
         description = "Really Good Scripts",
         script = [[loadstring(game:HttpGet("https://pastebin.com/raw/ixdvHv2g"))()]]
     }
@@ -1159,7 +1226,7 @@ local GameScripts = {
             script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/NoLag-id/No-Lag-HUB/refs/heads/main/Garden/Garden-V1.lua'))()]]
         },
         {
-            name = "eF Hub",
+            name = "eF Hub (Key)",
             description = "Multi-purpose exploit hub",
             script = [[loadstring(game:HttpGet('https://cdn.exploitingis.fun/loader', true))()]]
         },
@@ -1169,7 +1236,7 @@ local GameScripts = {
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/IdiotHub/Scripts/main/Loader"))()]]
         },
         {
-            name = "BlackHub",
+            name = "BlackHub (Key)",
             description = "BlackHub script for Grow A Garden",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Skibidiking123/Fisch1/refs/heads/main/FischMain"))()]]
         },
@@ -1207,7 +1274,7 @@ local GameScripts = {
     },
     ["99 Nights Forest"] = {
         {
-            name = "eF Hub (Currently Down)",
+            name = "eF Hub (Key)",
             description = "Overpowered farming script for 99 Nights",
             script = [[loadstring(game:HttpGet('https://api.exploitingis.fun/loader', true))()]]
         },
@@ -1296,12 +1363,12 @@ local GameScripts = {
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/tienkhanh1/spicy/main/Chilli.lua"))()]]
         },
         {
-            name = "CompHub",
+            name = "CompHub (Key)",
             description = "CompHub script for Steal A Brainrot",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/robloxcomphub/comphub/refs/heads/main/comphub.lua"))()]]
         },
         {
-            name = "BlindHub",
+            name = "BlindHub (Key)",
             description = "BlindHub script for Steal A Brainrot",
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Blind-Man-Walking/Steal-a-brain-rot/refs/heads/main/Test4"))()]]
         }
@@ -1779,7 +1846,11 @@ local function createScriptItem(scriptData, index)
     ScriptName.Position = UDim2.new(0, 15, 0, 5)
     ScriptName.Size = UDim2.new(0.6, 0, 0, 25)
     ScriptName.Font = Enum.Font.GothamBold
-    ScriptName.Text = scriptData.name
+    
+    -- Check if script requires a key (has "(Key)" in name) but exclude SpeedHub X
+    local hasKey = string.find(scriptData.name, "%(Key%)") and not string.find(scriptData.name, "SpeedHub X")
+    ScriptName.Text = hasKey and "🔑 " .. scriptData.name or scriptData.name
+    
     ScriptName.TextColor3 = Color3.fromRGB(255, 255, 255)
     ScriptName.TextSize = 14
     ScriptName.TextXAlignment = Enum.TextXAlignment.Left
@@ -2116,16 +2187,26 @@ local function updateIconPosition(position)
     end
 end
 
--- Settings Panel for Minimize Icon
+-- Modern Settings Panel
 local SettingsPanel = Instance.new("Frame")
 SettingsPanel.Name = "SettingsPanel"
 SettingsPanel.Parent = FlixHub
-SettingsPanel.BackgroundColor3 = Color3.fromRGB(20, 20, 30)
+SettingsPanel.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
 SettingsPanel.BorderSizePixel = 0
-SettingsPanel.Position = UDim2.new(0.5, -200, 0.5, -150)
-SettingsPanel.Size = UDim2.new(0, 400, 0, 300)
+SettingsPanel.Position = UDim2.new(0.5, -250, 0.5, -200)
+SettingsPanel.Size = UDim2.new(0, 500, 0, 400)
 SettingsPanel.Visible = false
 SettingsPanel.ZIndex = 200
+
+-- Settings Panel Gradient
+local SettingsPanelGradient = Instance.new("UIGradient")
+SettingsPanelGradient.Parent = SettingsPanel
+SettingsPanelGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(35, 35, 50)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(25, 25, 35)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 30))
+}
+SettingsPanelGradient.Rotation = 45
 
 local SettingsPanelCorner = Instance.new("UICorner")
 SettingsPanelCorner.CornerRadius = UDim.new(0, 12)
@@ -2138,8 +2219,8 @@ SettingsPanelShadow.Parent = FlixHub
 SettingsPanelShadow.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 SettingsPanelShadow.BackgroundTransparency = 0.3
 SettingsPanelShadow.BorderSizePixel = 0
-SettingsPanelShadow.Position = UDim2.new(0.5, -195, 0.5, -145)
-SettingsPanelShadow.Size = UDim2.new(0, 400, 0, 300)
+SettingsPanelShadow.Position = UDim2.new(0.5, -245, 0.5, -195)
+SettingsPanelShadow.Size = UDim2.new(0, 500, 0, 400)
 SettingsPanelShadow.Visible = false
 SettingsPanelShadow.ZIndex = 199
 
@@ -2147,19 +2228,26 @@ local SettingsPanelShadowCorner = Instance.new("UICorner")
 SettingsPanelShadowCorner.CornerRadius = UDim.new(0, 12)
 SettingsPanelShadowCorner.Parent = SettingsPanelShadow
 
--- Settings Panel Title
+-- Modern Settings Panel Title
 local SettingsTitle = Instance.new("TextLabel")
 SettingsTitle.Name = "SettingsTitle"
 SettingsTitle.Parent = SettingsPanel
 SettingsTitle.BackgroundTransparency = 1
-SettingsTitle.Position = UDim2.new(0, 20, 0, 15)
-SettingsTitle.Size = UDim2.new(1, -40, 0, 30)
+SettingsTitle.Position = UDim2.new(0, 25, 0, 20)
+SettingsTitle.Size = UDim2.new(1, -70, 0, 35)
 SettingsTitle.Font = Enum.Font.GothamBold
-SettingsTitle.Text = "⚙️ Minimize Icon Settings"
+SettingsTitle.Text = "⚙️ FlixHub Settings"
 SettingsTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
-SettingsTitle.TextSize = 16
+SettingsTitle.TextSize = 20
 SettingsTitle.TextXAlignment = Enum.TextXAlignment.Left
 SettingsTitle.ZIndex = 201
+
+-- Settings Title Glow
+local SettingsTitleStroke = Instance.new("UIStroke")
+SettingsTitleStroke.Parent = SettingsTitle
+SettingsTitleStroke.Color = Color3.fromRGB(100, 150, 255)
+SettingsTitleStroke.Transparency = 0.7
+SettingsTitleStroke.Thickness = 1
 
 -- Close Settings Button
 local CloseSettingsButton = Instance.new("TextButton")
@@ -2167,8 +2255,8 @@ CloseSettingsButton.Name = "CloseSettingsButton"
 CloseSettingsButton.Parent = SettingsPanel
 CloseSettingsButton.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
 CloseSettingsButton.BorderSizePixel = 0
-CloseSettingsButton.Position = UDim2.new(1, -35, 0, 10)
-CloseSettingsButton.Size = UDim2.new(0, 25, 0, 25)
+CloseSettingsButton.Position = UDim2.new(1, -45, 0, 20)
+CloseSettingsButton.Size = UDim2.new(0, 30, 0, 30)
 CloseSettingsButton.Font = Enum.Font.GothamBold
 CloseSettingsButton.Text = "×"
 CloseSettingsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -2176,8 +2264,89 @@ CloseSettingsButton.TextSize = 14
 CloseSettingsButton.ZIndex = 201
 
 local CloseSettingsCorner = Instance.new("UICorner")
-CloseSettingsCorner.CornerRadius = UDim.new(0, 4)
+CloseSettingsCorner.CornerRadius = UDim.new(0, 8)
 CloseSettingsCorner.Parent = CloseSettingsButton
+
+-- Theme Selection Section
+local ThemeLabel = Instance.new("TextLabel")
+ThemeLabel.Name = "ThemeLabel"
+ThemeLabel.Parent = SettingsPanel
+ThemeLabel.BackgroundTransparency = 1
+ThemeLabel.Position = UDim2.new(0, 25, 0, 70)
+ThemeLabel.Size = UDim2.new(1, -50, 0, 30)
+ThemeLabel.Font = Enum.Font.GothamBold
+ThemeLabel.Text = "🎨 Theme Selection"
+ThemeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+ThemeLabel.TextSize = 16
+ThemeLabel.TextXAlignment = Enum.TextXAlignment.Left
+ThemeLabel.ZIndex = 201
+
+-- Theme Grid Container
+local ThemeGrid = Instance.new("Frame")
+ThemeGrid.Name = "ThemeGrid"
+ThemeGrid.Parent = SettingsPanel
+ThemeGrid.BackgroundTransparency = 1
+ThemeGrid.Position = UDim2.new(0, 25, 0, 110)
+ThemeGrid.Size = UDim2.new(1, -50, 0, 200)
+ThemeGrid.ZIndex = 201
+
+local ThemeGridLayout = Instance.new("UIGridLayout")
+ThemeGridLayout.Parent = ThemeGrid
+ThemeGridLayout.CellSize = UDim2.new(0, 140, 0, 45)
+ThemeGridLayout.CellPadding = UDim2.new(0, 10, 0, 10)
+ThemeGridLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+-- Global theme buttons storage
+_G.themeButtons = {}
+
+-- Function to create theme button
+local function createThemeButton(themeName, layoutOrder)
+    local themeData = themes[themeName]
+    
+    local ThemeButton = Instance.new("TextButton")
+    ThemeButton.Name = themeName .. "ThemeButton"
+    ThemeButton.Parent = ThemeGrid
+    ThemeButton.BackgroundColor3 = themeName == currentTheme and themeData.accent or Color3.fromRGB(60, 60, 80)
+    ThemeButton.BorderSizePixel = 0
+    ThemeButton.Font = Enum.Font.GothamMedium
+    ThemeButton.Text = themeName
+    ThemeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ThemeButton.TextSize = 14
+    ThemeButton.LayoutOrder = layoutOrder
+    ThemeButton.ZIndex = 202
+    
+    local ThemeButtonCorner = Instance.new("UICorner")
+    ThemeButtonCorner.CornerRadius = UDim.new(0, 8)
+    ThemeButtonCorner.Parent = ThemeButton
+    
+    -- Theme button gradient
+    local ThemeButtonGradient = Instance.new("UIGradient")
+    ThemeButtonGradient.Parent = ThemeButton
+    ThemeButtonGradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, themeData.secondary),
+        ColorSequenceKeypoint.new(1, themeData.primary)
+    }
+    ThemeButtonGradient.Rotation = 45
+    
+    -- Store button reference
+    _G.themeButtons[themeName] = ThemeButton
+    
+    -- Theme button click handler
+    ThemeButton.MouseButton1Click:Connect(function()
+        applyTheme(themeName)
+    end)
+    
+    return ThemeButton
+end
+
+-- Create theme buttons
+createThemeButton("Dark", 1)
+createThemeButton("Purple", 2)
+createThemeButton("Black", 3)
+createThemeButton("Ocean", 4)
+createThemeButton("Green", 5)
+createThemeButton("Red", 6)
+createThemeButton("Blue", 7)
 
 -- Position Label
 local PositionLabel = Instance.new("TextLabel")
