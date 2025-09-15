@@ -856,7 +856,10 @@ end
 
 -- Load favorites and theme on startup
 loadFavorites()
-currentTheme = loadTheme()
+local savedTheme = loadTheme()
+if savedTheme then
+    applyTheme(savedTheme)
+end
 
 -- Function to refresh favorites display
 local function refreshFavorites()
