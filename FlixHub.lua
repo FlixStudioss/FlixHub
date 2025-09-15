@@ -488,6 +488,41 @@ local MinimizeCorner = Instance.new("UICorner")
 MinimizeCorner.CornerRadius = UDim.new(0, 6)
 MinimizeCorner.Parent = MinimizeButton
 
+-- Favorites Button
+local FavoritesButton = Instance.new("TextButton")
+FavoritesButton.Name = "FavoritesButton"
+FavoritesButton.Parent = TitleBar
+FavoritesButton.BackgroundColor3 = Color3.fromRGB(255, 150, 150)
+FavoritesButton.BackgroundTransparency = 0.1
+FavoritesButton.BorderSizePixel = 0
+FavoritesButton.Position = UDim2.new(1, -145, 0, 8)
+FavoritesButton.Size = UDim2.new(0, 28, 0, 28)
+FavoritesButton.Font = Enum.Font.GothamBold
+FavoritesButton.Text = "❤️"
+FavoritesButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+FavoritesButton.TextSize = 12
+FavoritesButton.ZIndex = 4
+
+-- Favorites Button Gradient
+local FavoritesGradient = Instance.new("UIGradient")
+FavoritesGradient.Parent = FavoritesButton
+FavoritesGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 120, 150)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(200, 80, 120))
+}
+FavoritesGradient.Rotation = 45
+
+-- Favorites Button Glow
+local FavoritesStroke = Instance.new("UIStroke")
+FavoritesStroke.Parent = FavoritesButton
+FavoritesStroke.Color = Color3.fromRGB(255, 150, 180)
+FavoritesStroke.Transparency = 0.6
+FavoritesStroke.Thickness = 1
+
+local FavoritesCorner = Instance.new("UICorner")
+FavoritesCorner.CornerRadius = UDim.new(0, 6)
+FavoritesCorner.Parent = FavoritesButton
+
 -- Settings Button for Minimize Icon
 local SettingsButton = Instance.new("TextButton")
 SettingsButton.Name = "SettingsButton"
@@ -698,6 +733,56 @@ ScriptLayout.Parent = ScriptContainer
 ScriptLayout.SortOrder = Enum.SortOrder.LayoutOrder
 ScriptLayout.Padding = UDim.new(0, 5)
 
+-- Favorites Panel (Initially Hidden)
+local FavoritesPanel = Instance.new("Frame")
+FavoritesPanel.Name = "FavoritesPanel"
+FavoritesPanel.Parent = ContentArea
+FavoritesPanel.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+FavoritesPanel.BorderSizePixel = 0
+FavoritesPanel.Position = UDim2.new(0, 15, 0, 15)
+FavoritesPanel.Size = UDim2.new(1, -30, 1, -30)
+FavoritesPanel.Visible = false
+FavoritesPanel.ZIndex = 5
+
+local FavoritesPanelCorner = Instance.new("UICorner")
+FavoritesPanelCorner.CornerRadius = UDim.new(0, 8)
+FavoritesPanelCorner.Parent = FavoritesPanel
+
+-- Favorites Panel Title
+local FavoritesTitle = Instance.new("TextLabel")
+FavoritesTitle.Name = "FavoritesTitle"
+FavoritesTitle.Parent = FavoritesPanel
+FavoritesTitle.BackgroundTransparency = 1
+FavoritesTitle.Position = UDim2.new(0, 15, 0, 10)
+FavoritesTitle.Size = UDim2.new(1, -30, 0, 30)
+FavoritesTitle.Font = Enum.Font.GothamBold
+FavoritesTitle.Text = "❤️ Favorite Scripts"
+FavoritesTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+FavoritesTitle.TextSize = 18
+FavoritesTitle.TextXAlignment = Enum.TextXAlignment.Left
+FavoritesTitle.ZIndex = 6
+
+-- Favorites Container (Scrollable)
+local FavoritesContainer = Instance.new("ScrollingFrame")
+FavoritesContainer.Name = "FavoritesContainer"
+FavoritesContainer.Parent = FavoritesPanel
+FavoritesContainer.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+FavoritesContainer.BorderSizePixel = 0
+FavoritesContainer.Position = UDim2.new(0, 15, 0, 50)
+FavoritesContainer.Size = UDim2.new(1, -30, 1, -65)
+FavoritesContainer.ScrollBarThickness = 6
+FavoritesContainer.ScrollBarImageColor3 = Color3.fromRGB(75, 75, 100)
+FavoritesContainer.ZIndex = 6
+
+local FavoritesContainerCorner = Instance.new("UICorner")
+FavoritesContainerCorner.CornerRadius = UDim.new(0, 6)
+FavoritesContainerCorner.Parent = FavoritesContainer
+
+local FavoritesLayout = Instance.new("UIListLayout")
+FavoritesLayout.Parent = FavoritesContainer
+FavoritesLayout.SortOrder = Enum.SortOrder.LayoutOrder
+FavoritesLayout.Padding = UDim.new(0, 5)
+
 
 
 
@@ -713,6 +798,198 @@ local currentTab = "Home"
 local isGamesExpanded = false
 local isVisualExpanded = false
 local filteredScripts = {}
+
+-- Favorites System Variables
+local favoriteScripts = {}
+local isFavoritesOpen = false
+local FAVORITES_FILE = "FlixHub_Favorites.json"
+
+-- Favorites Storage Functions
+local function saveFavorites()
+    if writefile then
+        local success, result = pcall(function()
+            return HttpService:JSONEncode(favoriteScripts)
+        end)
+        if success then
+            writefile(FAVORITES_FILE, result)
+        end
+    end
+end
+
+local function loadFavorites()
+    if readfile and isfile then
+        if isfile(FAVORITES_FILE) then
+            local success, result = pcall(function()
+                local data = readfile(FAVORITES_FILE)
+                return HttpService:JSONDecode(data)
+            end)
+            if success and result then
+                favoriteScripts = result
+            end
+        end
+    end
+end
+
+-- Load favorites on startup
+loadFavorites()
+
+-- Function to refresh favorites display
+local function refreshFavorites()
+    -- Clear existing favorites
+    for _, child in pairs(FavoritesContainer:GetChildren()) do
+        if child:IsA("Frame") then
+            child:Destroy()
+        end
+    end
+    
+    local index = 1
+    for scriptId, scriptData in pairs(favoriteScripts) do
+        local FavoriteItem = Instance.new("Frame")
+        FavoriteItem.Name = "FavoriteItem" .. index
+        FavoriteItem.Parent = FavoritesContainer
+        FavoriteItem.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+        FavoriteItem.BorderSizePixel = 0
+        FavoriteItem.Size = UDim2.new(1, -12, 0, 70)
+        
+        local FavoriteItemCorner = Instance.new("UICorner")
+        FavoriteItemCorner.CornerRadius = UDim.new(0, 8)
+        FavoriteItemCorner.Parent = FavoriteItem
+        
+        -- Script Name
+        local FavScriptName = Instance.new("TextLabel")
+        FavScriptName.Parent = FavoriteItem
+        FavScriptName.BackgroundTransparency = 1
+        FavScriptName.Position = UDim2.new(0, 15, 0, 5)
+        FavScriptName.Size = UDim2.new(0.6, 0, 0, 25)
+        FavScriptName.Font = Enum.Font.GothamBold
+        FavScriptName.Text = scriptData.name
+        FavScriptName.TextColor3 = Color3.fromRGB(255, 255, 255)
+        FavScriptName.TextSize = 14
+        FavScriptName.TextXAlignment = Enum.TextXAlignment.Left
+        
+        -- Script Description
+        local FavScriptDesc = Instance.new("TextLabel")
+        FavScriptDesc.Parent = FavoriteItem
+        FavScriptDesc.BackgroundTransparency = 1
+        FavScriptDesc.Position = UDim2.new(0, 15, 0, 30)
+        FavScriptDesc.Size = UDim2.new(0.6, 0, 0, 35)
+        FavScriptDesc.Font = Enum.Font.Gotham
+        FavScriptDesc.Text = scriptData.description
+        FavScriptDesc.TextColor3 = Color3.fromRGB(180, 180, 180)
+        FavScriptDesc.TextSize = 11
+        FavScriptDesc.TextWrapped = true
+        FavScriptDesc.TextXAlignment = Enum.TextXAlignment.Left
+        FavScriptDesc.TextYAlignment = Enum.TextYAlignment.Top
+        
+        -- Remove from Favorites Button
+        local RemoveFavButton = Instance.new("TextButton")
+        RemoveFavButton.Parent = FavoriteItem
+        RemoveFavButton.BackgroundColor3 = Color3.fromRGB(200, 75, 75)
+        RemoveFavButton.BorderSizePixel = 0
+        RemoveFavButton.Position = UDim2.new(1, -85, 0, 20)
+        RemoveFavButton.Size = UDim2.new(0, 30, 0, 30)
+        RemoveFavButton.Font = Enum.Font.GothamBold
+        RemoveFavButton.Text = "💔"
+        RemoveFavButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        RemoveFavButton.TextSize = 14
+        
+        local RemoveFavCorner = Instance.new("UICorner")
+        RemoveFavCorner.CornerRadius = UDim.new(0, 6)
+        RemoveFavCorner.Parent = RemoveFavButton
+        
+        -- Execute Button
+        local FavExecuteButton = Instance.new("TextButton")
+        FavExecuteButton.Parent = FavoriteItem
+        FavExecuteButton.BackgroundColor3 = Color3.fromRGB(75, 200, 75)
+        FavExecuteButton.BorderSizePixel = 0
+        FavExecuteButton.Position = UDim2.new(1, -50, 0, 20)
+        FavExecuteButton.Size = UDim2.new(0, 30, 0, 30)
+        FavExecuteButton.Font = Enum.Font.GothamBold
+        FavExecuteButton.Text = "▶"
+        FavExecuteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+        FavExecuteButton.TextSize = 16
+        
+        local FavExecuteCorner = Instance.new("UICorner")
+        FavExecuteCorner.CornerRadius = UDim.new(0, 6)
+        FavExecuteCorner.Parent = FavExecuteButton
+        
+        -- Remove from favorites click
+        RemoveFavButton.MouseButton1Click:Connect(function()
+            favoriteScripts[scriptId] = nil
+            saveFavorites()
+            refreshFavorites()
+            
+            StarterGui:SetCore("SendNotification", {
+                Title = "FlixHub Favorites";
+                Text = "Removed " .. scriptData.name .. " from favorites";
+                Duration = 2;
+            })
+        end)
+        
+        -- Execute script click
+        FavExecuteButton.MouseButton1Click:Connect(function()
+            FavExecuteButton.Text = "⏳"
+            FavExecuteButton.BackgroundColor3 = Color3.fromRGB(255, 150, 50)
+            
+            local success, error = pcall(function()
+                local func = loadstring(scriptData.script)
+                if func then
+                    func()
+                else
+                    error("Failed to load script")
+                end
+            end)
+            
+            if success then
+                FavExecuteButton.Text = "✓"
+                FavExecuteButton.BackgroundColor3 = Color3.fromRGB(75, 200, 75)
+                wait(2)
+                FavExecuteButton.Text = "▶"
+            else
+                FavExecuteButton.Text = "✗"
+                FavExecuteButton.BackgroundColor3 = Color3.fromRGB(200, 75, 75)
+                wait(2)
+                FavExecuteButton.Text = "▶"
+                FavExecuteButton.BackgroundColor3 = Color3.fromRGB(75, 200, 75)
+            end
+        end)
+        
+        index = index + 1
+    end
+    
+    -- Update canvas size
+    FavoritesContainer.CanvasSize = UDim2.new(0, 0, 0, index * 75)
+end
+
+-- Function to toggle favorites panel
+local function toggleFavorites()
+    isFavoritesOpen = not isFavoritesOpen
+    
+    if isFavoritesOpen then
+        -- Show favorites panel
+        FavoritesPanel.Visible = true
+        SearchContainer.Visible = false
+        ScriptContainer.Visible = false
+        refreshFavorites()
+        
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub Favorites";
+            Text = "Showing favorite scripts";
+            Duration = 1;
+        })
+    else
+        -- Hide favorites panel
+        FavoritesPanel.Visible = false
+        SearchContainer.Visible = true
+        ScriptContainer.Visible = true
+        
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub Favorites";
+            Text = "Favorites panel closed";
+            Duration = 1;
+        })
+    end
+end
 
 -- Theme System Variables
 local currentTheme = "Dark" -- Default theme
@@ -983,6 +1260,11 @@ local GameScripts = {
             name = "VoidWare",
             description = "VoidWare script for 99 Nights in the Forest",
             script = [[loadstring(game:HttpGet("https://pastefy.app/RXzul28o/raw"))()]]
+        },
+        {
+            name = "GFarm",
+            description = "GFarm script for 99 Nights in the Forest",
+            script = [[loadstring(game:HttpGet('https://raw.githubusercontent.com/MQPS7/99-Night-in-the-Forset/refs/heads/main/Gfarm'))()]]
         }
     },
     ["Ink Game"] = {
@@ -1517,6 +1799,26 @@ local function createScriptItem(scriptData, index)
     ScriptDesc.TextXAlignment = Enum.TextXAlignment.Left
     ScriptDesc.TextYAlignment = Enum.TextYAlignment.Top
     
+    -- Favorite Button (Heart Icon)
+    local scriptId = scriptData.name .. "_" .. scriptData.description -- Create unique ID
+    local isFavorited = favoriteScripts[scriptId] ~= nil
+    
+    local FavoriteButton = Instance.new("TextButton")
+    FavoriteButton.Name = "FavoriteButton"
+    FavoriteButton.Parent = ScriptItem
+    FavoriteButton.BackgroundColor3 = isFavorited and Color3.fromRGB(255, 100, 150) or Color3.fromRGB(100, 100, 120)
+    FavoriteButton.BorderSizePixel = 0
+    FavoriteButton.Position = UDim2.new(1, -85, 0, 20)
+    FavoriteButton.Size = UDim2.new(0, 30, 0, 30)
+    FavoriteButton.Font = Enum.Font.GothamBold
+    FavoriteButton.Text = isFavorited and "❤️" or "🤍"
+    FavoriteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    FavoriteButton.TextSize = 14
+    
+    local FavoriteCorner = Instance.new("UICorner")
+    FavoriteCorner.CornerRadius = UDim.new(0, 6)
+    FavoriteCorner.Parent = FavoriteButton
+    
     -- Execute Button (Square with Play Icon)
     local ExecuteButton = Instance.new("TextButton")
     ExecuteButton.Name = "ExecuteButton"
@@ -1533,6 +1835,42 @@ local function createScriptItem(scriptData, index)
     local ExecuteCorner = Instance.new("UICorner")
     ExecuteCorner.CornerRadius = UDim.new(0, 6)
     ExecuteCorner.Parent = ExecuteButton
+    
+    -- Favorite Button Click
+    FavoriteButton.MouseButton1Click:Connect(function()
+        local currentlyFavorited = favoriteScripts[scriptId] ~= nil
+        
+        if currentlyFavorited then
+            -- Remove from favorites
+            favoriteScripts[scriptId] = nil
+            FavoriteButton.Text = "🤍"
+            FavoriteButton.BackgroundColor3 = Color3.fromRGB(100, 100, 120)
+            
+            StarterGui:SetCore("SendNotification", {
+                Title = "FlixHub Favorites";
+                Text = "Removed " .. scriptData.name .. " from favorites";
+                Duration = 2;
+            })
+        else
+            -- Add to favorites
+            favoriteScripts[scriptId] = {
+                name = scriptData.name,
+                description = scriptData.description,
+                script = scriptData.script
+            }
+            FavoriteButton.Text = "❤️"
+            FavoriteButton.BackgroundColor3 = Color3.fromRGB(255, 100, 150)
+            
+            StarterGui:SetCore("SendNotification", {
+                Title = "FlixHub Favorites";
+                Text = "Added " .. scriptData.name .. " to favorites";
+                Duration = 2;
+            })
+        end
+        
+        saveFavorites()
+        refreshFavorites()
+    end)
     
     -- Execute Button Click
     ExecuteButton.MouseButton1Click:Connect(function()
@@ -2399,6 +2737,11 @@ end)
 local function getCurrentSizeValues()
     return 500, 350 -- Default size since settings are removed
 end
+
+-- Favorites button functionality
+FavoritesButton.MouseButton1Click:Connect(function()
+    toggleFavorites()
+end)
 
 -- Minimize button functionality
 MinimizeButton.MouseButton1Click:Connect(function()
