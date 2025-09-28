@@ -460,7 +460,7 @@ MinimizeButton.Parent = TitleBar
 MinimizeButton.BackgroundColor3 = Color3.fromRGB(120, 120, 140)
 MinimizeButton.BackgroundTransparency = 0.1
 MinimizeButton.BorderSizePixel = 0
-MinimizeButton.Position = UDim2.new(1, -75, 0, 8)
+MinimizeButton.Position = UDim2.new(1, -110, 0, 8)
 MinimizeButton.Size = UDim2.new(0, 28, 0, 28)
 MinimizeButton.Font = Enum.Font.GothamBold
 MinimizeButton.Text = "-"
@@ -488,6 +488,45 @@ local MinimizeCorner = Instance.new("UICorner")
 MinimizeCorner.CornerRadius = UDim.new(0, 6)
 MinimizeCorner.Parent = MinimizeButton
 
+-- Maximize/Restore Button
+local isMaximized = false
+local originalSize = UDim2.new(0, 500, 0, 350)
+local originalPosition = UDim2.new(0.5, -250, 0.5, -175)
+
+local MaximizeButton = Instance.new("TextButton")
+MaximizeButton.Name = "MaximizeButton"
+MaximizeButton.Parent = TitleBar
+MaximizeButton.BackgroundColor3 = Color3.fromRGB(85, 170, 85)
+MaximizeButton.BackgroundTransparency = 0.1
+MaximizeButton.BorderSizePixel = 0
+MaximizeButton.Position = UDim2.new(1, -75, 0, 8)
+MaximizeButton.Size = UDim2.new(0, 28, 0, 28)
+MaximizeButton.Font = Enum.Font.GothamBold
+MaximizeButton.Text = "□"
+MaximizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+MaximizeButton.TextSize = 14
+MaximizeButton.ZIndex = 4
+
+-- Maximize Button Gradient
+local MaximizeGradient = Instance.new("UIGradient")
+MaximizeGradient.Parent = MaximizeButton
+MaximizeGradient.Color = ColorSequence.new{
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(95, 190, 95)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(65, 150, 65))
+}
+MaximizeGradient.Rotation = 45
+
+-- Maximize Button Glow
+local MaximizeStroke = Instance.new("UIStroke")
+MaximizeStroke.Parent = MaximizeButton
+MaximizeStroke.Color = Color3.fromRGB(120, 200, 120)
+MaximizeStroke.Transparency = 0.6
+MaximizeStroke.Thickness = 1
+
+local MaximizeCorner = Instance.new("UICorner")
+MaximizeCorner.CornerRadius = UDim.new(0, 6)
+MaximizeCorner.Parent = MaximizeButton
+
 -- Favorites Button
 local FavoritesButton = Instance.new("TextButton")
 FavoritesButton.Name = "FavoritesButton"
@@ -495,7 +534,7 @@ FavoritesButton.Parent = TitleBar
 FavoritesButton.BackgroundColor3 = Color3.fromRGB(255, 150, 150)
 FavoritesButton.BackgroundTransparency = 0.1
 FavoritesButton.BorderSizePixel = 0
-FavoritesButton.Position = UDim2.new(1, -145, 0, 8)
+FavoritesButton.Position = UDim2.new(1, -180, 0, 8)
 FavoritesButton.Size = UDim2.new(0, 28, 0, 28)
 FavoritesButton.Font = Enum.Font.GothamBold
 FavoritesButton.Text = "❤️"
@@ -1465,6 +1504,13 @@ local GameScripts = {
             script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/Roblox-HttpSpy/Random-Silly-stuff/refs/heads/main/UW2-Panel.lua"))()]]
         }
     },
+    ["Plants Vs Brainrots"] = {
+        {
+            name = "PlantsVsBrainrots Gui",
+            description = "GUI script for Plants Vs Brainrots game",
+            script = [[loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/PlantsVsBrainrots"))()]]
+        }
+    },
     ["Build A Boat"] = {
         {
             name = "Inf Save Slots",
@@ -2175,6 +2221,46 @@ end)
 
 
 
+
+-- Maximize/Restore button functionality
+MaximizeButton.MouseButton1Click:Connect(function()
+    if not isMaximized then
+        -- Store original size and position
+        originalSize = MainFrame.Size
+        originalPosition = MainFrame.Position
+        
+        -- Maximize to full screen
+        local screenSize = workspace.CurrentCamera.ViewportSize
+        TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            Size = UDim2.new(0, screenSize.X - 20, 0, screenSize.Y - 20),
+            Position = UDim2.new(0, 10, 0, 10)
+        }):Play()
+        
+        MaximizeButton.Text = "❐" -- Restore icon
+        isMaximized = true
+        
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub";
+            Text = "GUI maximized";
+            Duration = 1;
+        })
+    else
+        -- Restore to original size
+        TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+            Size = originalSize,
+            Position = originalPosition
+        }):Play()
+        
+        MaximizeButton.Text = "□" -- Maximize icon
+        isMaximized = false
+        
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub";
+            Text = "GUI restored";
+            Duration = 1;
+        })
+    end
+end)
 
 -- Close button functionality
 CloseButton.MouseButton1Click:Connect(function()
@@ -3167,10 +3253,12 @@ createHomeContent() -- Start with Home tab content
 -- Define auto-execute function inside createMainFlixHub where script arrays are available
 runAutoExecuteScripts = function()
     local executed = 0
+    print("FlixHub: Starting auto-execute check...")
     
     -- Check Universal scripts
     for _, scriptData in pairs(UniversalScripts) do
         if isAutoExecuteEnabled(scriptData) then
+            print("FlixHub: Auto-executing Universal script:", scriptData.name)
             pcall(function()
                 loadstring(scriptData.script)()
                 executed = executed + 1
@@ -3181,6 +3269,7 @@ runAutoExecuteScripts = function()
     -- Check FE scripts
     for _, scriptData in pairs(FEScripts) do
         if isAutoExecuteEnabled(scriptData) then
+            print("FlixHub: Auto-executing FE script:", scriptData.name)
             pcall(function()
                 loadstring(scriptData.script)()
                 executed = executed + 1
@@ -3192,6 +3281,7 @@ runAutoExecuteScripts = function()
     for gameName, scripts in pairs(GameScripts) do
         for _, scriptData in pairs(scripts) do
             if isAutoExecuteEnabled(scriptData) then
+                print("FlixHub: Auto-executing Game script:", scriptData.name, "from", gameName)
                 pcall(function()
                     loadstring(scriptData.script)()
                     executed = executed + 1
@@ -3200,11 +3290,18 @@ runAutoExecuteScripts = function()
         end
     end
     
+    print("FlixHub: Auto-execute completed. Total executed:", executed)
     if executed > 0 then
         StarterGui:SetCore("SendNotification", {
             Title = "FlixHub Auto-Execute";
             Text = "Executed " .. executed .. " auto-execute scripts!";
             Duration = 3;
+        })
+    else
+        StarterGui:SetCore("SendNotification", {
+            Title = "FlixHub Auto-Execute";
+            Text = "No auto-execute scripts enabled";
+            Duration = 2;
         })
     end
 end
