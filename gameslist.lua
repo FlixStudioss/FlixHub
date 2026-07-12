@@ -1,0 +1,41 @@
+--[[
+	FLIXHUB - Games List
+	All supported games. Loaded automatically by script_hub.lua
+]]
+
+return {
+	{ placeId = 85050171250159,  name = "Poop a Big Poop" },
+	{ placeId = 74268130525137,  name = "Steal FPS from Others" },
+	{ placeId = 100070667273689, name = "Survive Flood for Brainrots" },
+	{ placeId = 100964511576728, name = "Smash Crate for Brainrots" },
+	{ placeId = 105215477731035, name = "Pole Obby for Brainrots" },
+	{ placeId = 106772177198260, name = "Reel for Brainrots" },
+	{ placeId = 108207853263201, name = "Rizz Tower" },
+	{ placeId = 109908567838703, name = "Nuke for Brainrots" },
+	{ placeId = 110373292461174, name = "Paper Plane for Brainrot" },
+	{ placeId = 110627433764494, name = "Fake a Brainrot" },
+	{ placeId = 112500097711893, name = "Lick a Brainrot" },
+	{ placeId = 114640202062357, name = "Swing Obby for Brainrots" },
+	{ placeId = 135882949571046, name = "Dream for Brainrots" },
+	{ placeId = 136919941417380, name = "Bike Obby for Brainrots" },
+	{ placeId = 137069154816703, name = "Hack Vault for Brainrots" },
+	{ placeId = 137233438285284, name = "Chicken Farm" },
+	{ placeId = 71213902019049,  name = "Cross Rivers for Brainrots" },
+	{ placeId = 74277864669743,  name = "Fly for Brainrots" },
+	{ placeId = 77862067599263,  name = "Obby as a Brainrot" },
+	{ placeId = 80234914611737,  name = "+1 Jetpack for Brainrots" },
+	{ placeId = 83569851223739,  name = "+1 Speed Evolve" },
+	{ placeId = 84332574190497,  name = "+1 Wings for Brainrot" },
+	{ placeId = 85411355002110,  name = "+1 Dash for Brainrots" },
+	{ placeId = 86614757217732,  name = "+1 Health for Brainrot" },
+	{ placeId = 89046742932569,  name = "Sail for Brainrots" },
+	{ placeId = 89072926726733,  name = "Cross Road for Brainrots" },
+	{ placeId = 94780005879799,  name = "Scream for Brainrots" },
+	{ placeId = 95082159892680,  name = "+1 Speed Keyboard Escape" },
+	{ placeId = 97508801613157,  name = "Parkour Run for Brainrots" },
+	{ placeId = 97931184538536,  name = "Skate for Brainrots" },
+	{ placeId = 98868317791094,  name = "Dump" },
+	{ placeId = 99255447043899,  name = "Become a Brainrot" },
+	{ placeId = 99435399946069,  name = "Reel for Brainrots (New)" },
+	{ placeId = 104522435597696, name = "The Animal Hospital" },
+}
